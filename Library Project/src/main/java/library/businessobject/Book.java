@@ -1,9 +1,13 @@
 package library.businessobject;
 
+import java.util.Set;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 
 @Entity
 public class Book {
@@ -11,6 +15,22 @@ public class Book {
 	private String Title, Description, Author;
 	private State state;
 	private Language Language;
+	
+	@ManyToOne
+	private Location location;
+	
+	@ManyToOne
+	private Library library;
+	
+	@ManyToMany
+	private Set<Reservation> Reservations;
+	
+	public Set<Reservation> getReservations() {
+		return Reservations;
+	}
+	public void setReservations(Set<Reservation> Reservations) {
+		this.Reservations = Reservations;
+	}
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType. IDENTITY)

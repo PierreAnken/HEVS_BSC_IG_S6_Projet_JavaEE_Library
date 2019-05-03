@@ -8,11 +8,9 @@ import javax.persistence.Id;
 @Entity
 public abstract class User {
 	
-	private String Email, Password, Firstname, Lastname;
-
 	@Id
-	@GeneratedValue(strategy = GenerationType. IDENTITY)
-	private Long id;
+	private String Email;
+	private String Password, Firstname, Lastname;
 	
 	public String getEmail() {
 		return Email;

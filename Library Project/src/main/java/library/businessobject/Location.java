@@ -1,9 +1,13 @@
 package library.businessobject;
 
+import java.util.Set;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 
 @Entity
 public class Location {
@@ -12,6 +16,12 @@ public class Location {
 	@Id
 	@GeneratedValue(strategy = GenerationType. IDENTITY)
 	private Long id;
+	
+	@OneToMany(mappedBy="location")
+	private Set<Book> books;
+	
+	@ManyToOne
+	private Library library;
 	
 	public int getFloor() {
 		return Floor;

@@ -16,7 +16,7 @@ import javax.persistence.Column;
 public class Account {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE)
+	@GeneratedValue(strategy = GenerationType. IDENTITY)
 	private Long id;
 	@Column(name="numero")
 	private String number;

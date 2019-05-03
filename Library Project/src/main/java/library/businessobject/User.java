@@ -1,16 +1,21 @@
 package library.businessobject;
 
+import javax.persistence.Embedded;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
 
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @Entity
 public abstract class User {
 	
 	@Id
 	private String Email;
 	private String Password, Firstname, Lastname;
+	
+	@Embedded
+	private Address address;
 	
 	public String getEmail() {
 		return Email;

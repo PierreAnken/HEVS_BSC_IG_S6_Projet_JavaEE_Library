@@ -3049,7 +3049,7 @@
 									"hostEdge": {
 										"$ref": "AAAAAAFqfKt4GvnJHxU="
 									},
-									"text": "0..1"
+									"text": "1"
 								},
 								{
 									"_type": "UMLQualifierCompartmentView",
@@ -4065,9 +4065,9 @@
 										"$ref": "AAAAAAFqfOAKWDbdvtQ="
 									},
 									"font": "Arial;13;0",
-									"left": 568,
+									"left": 561,
 									"top": 555,
-									"width": 7.22998046875,
+									"width": 21.68359375,
 									"height": 13,
 									"alpha": 0.5235987755982988,
 									"distance": 25,
@@ -4532,7 +4532,8 @@
 							"_parent": {
 								"$ref": "AAAAAAFqfJqnn75CMFA="
 							},
-							"name": "CardId"
+							"name": "CardId",
+							"type": ""
 						}
 					]
 				},
@@ -4715,7 +4716,7 @@
 								"reference": {
 									"$ref": "AAAAAAFqfJtJSL6i2YU="
 								},
-								"multiplicity": "0..1"
+								"multiplicity": "1"
 							}
 						},
 						{
@@ -4836,6 +4837,14 @@
 							"type": ""
 						}
 					]
+				},
+				{
+					"_type": "UMLDataType",
+					"_id": "AAAAAAFqfX4FJj1Pyn0=",
+					"_parent": {
+						"$ref": "AAAAAAFF+qBWK6M3Z8Y="
+					},
+					"name": "DataType1"
 				}
 			]
 		}

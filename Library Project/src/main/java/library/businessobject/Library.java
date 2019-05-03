@@ -2,6 +2,7 @@ package library.businessobject;
 
 import java.util.Set;
 
+import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -33,6 +34,9 @@ public class Library {
 	public void setLibrarians(Set<Librarian> librarians) {
 		this.librarians = librarians;
 	}
+	
+	@Embedded
+	private Address address;
 	
 	public String getName() {
 		return Name;

@@ -11,12 +11,12 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Column;
 
 
-@Entity
 @Table(name="Compte")
+@Entity
 public class Account {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType. IDENTITY)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	@Column(name="numero")
 	private String number;
@@ -27,7 +27,7 @@ public class Account {
 	// relations
 	@ManyToOne
 	@JoinColumn(name = "FK_CLIENT")
-	private Client owner;
+	private Customer owner;
 
 	// id 
 	public Long getId() {
@@ -41,6 +41,7 @@ public class Account {
 	public String getNumber() {
 		return number;
 	}
+	
 	public void setNumber(String number) {
 		this.number = number;
 	}
@@ -49,6 +50,7 @@ public class Account {
 	public long getSaldo() {
 		return saldo;
 	}
+	
 	public void setSaldo(long saldo) {
 		this.saldo = saldo;
 	}
@@ -57,15 +59,17 @@ public class Account {
 	public String getDescription() {
 		return description;
 	}
+	
 	public void setDescription(String description) {
 		this.description = description;
 	}
 	
 	// owner (from Client)
-	public Client getOwner() {
+	public Customer getOwner() {
 		return owner;
 	}
-	public void setOwner(Client owner) {
+	
+	public void setOwner(Customer owner) {
 		this.owner = owner;
 	}
 	
@@ -82,7 +86,8 @@ public class Account {
 	// constructors
 	public Account() {
 	}
-	public Account(String number, long saldo, Client owner,
+	
+	public Account(String number, long saldo, Customer owner,
 			String description) {
 		this.number = number;
 		this.saldo = saldo;

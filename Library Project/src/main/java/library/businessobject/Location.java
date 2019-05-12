@@ -11,7 +11,7 @@ import javax.persistence.OneToMany;
 
 @Entity
 public class Location {
-	private int Floor, Row, Shell;
+	private int floor, row, shelf;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType. IDENTITY)
@@ -24,27 +24,36 @@ public class Location {
 	private Library library;
 	
 	public int getFloor() {
-		return Floor;
+		return floor;
 	}
 
 	public void setFloor(int floor) {
-		Floor = floor;
+		this.floor = floor;
 	}
 
 	public int getRow() {
-		return Row;
+		return row;
 	}
 
 	public void setRow(int row) {
-		Row = row;
+		this.row = row;
 	}
 
-	public int getShell() {
-		return Shell;
+	public int getShelf() {
+		return shelf;
 	}
 
-	public void setShell(int shell) {
-		Shell = shell;
+	public void setShelf(int shelf) {
+		this.shelf = shelf;
 	}
 	
+	// constructors
+	public Location() {
+	}
+
+	public Location(int floor, int row, int shelf) {
+		this.floor = floor;
+		this.row = row;
+		this.shelf = shelf;
+	}
 }

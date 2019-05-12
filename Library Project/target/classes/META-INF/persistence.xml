@@ -8,7 +8,7 @@
 	<persistence-unit name="bankPU">
 		<jta-data-source>java:/labsDS</jta-data-source>
 		
-		<class>library.businessobject.Client</class>
+		<class>library.businessobject.Customer</class>
 		<class>library.businessobject.Account</class>
 		<properties>
 			<property name="hibernate.hbm2ddl.auto" value="update" />

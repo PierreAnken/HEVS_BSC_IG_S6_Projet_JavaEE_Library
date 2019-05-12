@@ -5,30 +5,39 @@ import javax.persistence.Embeddable;
 @Embeddable
 public class Address {
 	
-	private String Country, Street, City;
+	private String zipCode, street, city;
 
-	public String getCountry() {
-		return Country;
+	public String getzipCode() {
+		return zipCode;
 	}
 
-	public void setCountry(String country) {
-		Country = country;
+	public void setzipCode(String zipCode) {
+		this.zipCode = zipCode;
 	}
 
-	public String getStreet() {
-		return Street;
+	public String getstreet() {
+		return street;
 	}
 
-	public void setStreet(String street) {
-		Street = street;
+	public void setstreet(String street) {
+		this.street = street;
 	}
 
-	public String getCity() {
-		return City;
+	public String getcity() {
+		return city;
 	}
 
-	public void setCity(String city) {
-		City = city;
+	public void setcity(String city) {
+		this.city = city;
 	}
-	
+
+	// constructors
+	public Address() {
+	}
+
+	public Address(String zipCode, String street, String city) {
+		this.zipCode = zipCode;
+		this.street = street;
+		this.city = city;
+	}
 }

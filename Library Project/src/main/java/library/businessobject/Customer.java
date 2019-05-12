@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
+import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -11,9 +12,9 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-@Entity
 @Table(name="Client")
-public class Client {
+@Entity
+public class Customer {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE)
@@ -22,11 +23,12 @@ public class Client {
 	private String lastname;
 	@Column(name="prenom")
 	private String firstname;
-
+	@Embedded
+	private Address address;
+	
 	// relations
 	@OneToMany(mappedBy = "owner", cascade = CascadeType.ALL)//@JoinColumn(name = "FK_CLIENT")
 	private List<Account> accounts;
-	
 	
 	// id
 	public long getId() {
@@ -60,13 +62,27 @@ public class Client {
 		this.accounts = accounts;
 	}
 
-	
-	// constructors
-	public Client() {
+	// address
+	public Address getAddress() {
+		return address;
 	}
-	public Client(String firstname, String lastname) {
+	public void setAddress(Address address) {
+		this.address = address;
+	}
+
+	// constructors
+	public Customer() {
+	}
+	
+	public Customer(String firstname, String lastname) {
 		this.lastname = lastname;
 		this.firstname = firstname;
+	}
+	
+	public Customer(String firstname, String lastname, Address address) {
+		this.lastname = lastname;
+		this.firstname = firstname;
+		this.address = address;
 	}
 	
 	@Override

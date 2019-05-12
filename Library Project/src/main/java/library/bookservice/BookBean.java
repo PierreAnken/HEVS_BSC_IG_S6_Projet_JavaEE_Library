@@ -151,13 +151,6 @@ public class BookBean implements BookInterface {
 		// Creating the addresses - Librarians
 		Address lAddr1 = new Address("1234", "Dummystreet", "Testcity");
 		Address lAddr2 = new Address("1234", "Dummystreet", "Testcity");
-
-		// Creating the addresses - Customers
-		Address custAddr1 = new Address("1234", "Dummystreet", "Testcity");
-		Address custAddr2 = new Address("1234", "Dummystreet", "Testcity");
-		Address custAddr3 = new Address("1234", "Dummystreet", "Testcity");
-		Address custAddr4 = new Address("1234", "Dummystreet", "Testcity");
-		Address custAddr5 = new Address("1234", "Dummystreet", "Testcity");
 		
 		// Creating the states
 		State sGood = State.Good;

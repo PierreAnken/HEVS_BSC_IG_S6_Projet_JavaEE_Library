@@ -4,7 +4,6 @@ import java.util.List;
 import javax.ejb.Local;
 import library.businessobject.Address;
 import library.businessobject.Book;
-import library.businessobject.Customer;
 import library.businessobject.Librarian;
 import library.businessobject.Reader;
 
@@ -23,7 +22,6 @@ public interface BookInterface {
 	
 	public List<Librarian> getAllLibrarians();
 
-	public List<Customer> getAllCustomers();
 
 	public List<Reader> getAllReaders();
 

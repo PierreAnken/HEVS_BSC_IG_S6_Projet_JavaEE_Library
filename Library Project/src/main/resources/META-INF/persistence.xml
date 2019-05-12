@@ -7,9 +7,6 @@
 
 	<persistence-unit name="bookPU">
 		<jta-data-source>java:/labsDS</jta-data-source>
-		
-		<class>library.businessobject.Customer</class>
-		<class>library.businessobject.Account</class>
 		<class>library.businessobject.Book</class>
 		<class>library.businessobject.Librarian</class>
 		<class>library.businessobject.Library</class>

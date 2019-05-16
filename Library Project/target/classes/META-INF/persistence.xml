@@ -5,11 +5,14 @@
                 http://java.sun.com/xml/ns/persistence/persistence_1_0.xsd"
 	version="1.0">
 
-	<persistence-unit name="bankPU">
+	<persistence-unit name="bookPU">
 		<jta-data-source>java:/labsDS</jta-data-source>
-		
-		<class>library.businessobject.Client</class>
-		<class>library.businessobject.Account</class>
+		<class>library.businessobject.Book</class>
+		<class>library.businessobject.Librarian</class>
+		<class>library.businessobject.Library</class>
+		<class>library.businessobject.Location</class>
+		<class>library.businessobject.Reader</class>
+		<class>library.businessobject.Reservation</class>
 		<properties>
 			<property name="hibernate.hbm2ddl.auto" value="update" />
 			<property name="hibernate.show_sql" value="true" /> 

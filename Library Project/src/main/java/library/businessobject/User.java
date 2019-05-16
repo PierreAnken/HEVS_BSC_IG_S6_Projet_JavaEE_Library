@@ -11,41 +11,60 @@ import javax.persistence.InheritanceType;
 public abstract class User {
 	
 	@Id
-	private String Email;
-	private String Password, Firstname, Lastname;
+	private String email;
+	private String password, firstname, lastname;
 	
 	@Embedded
 	private Address address;
 	
 	public String getEmail() {
-		return Email;
+		return email;
 	}
 
 	public void setEmail(String email) {
-		Email = email;
+		this.email = email;
 	}
 
 	public String getFirstname() {
-		return Firstname;
+		return firstname;
 	}
 
 	public void setFirstname(String firstname) {
-		Firstname = firstname;
+		this.firstname = firstname;
 	}
 
 	public String getPassword() {
-		return Password;
+		return password;
 	}
 
 	public void setPassword(String password) {
-		Password = password;
+		this.password = password;
 	}
 
 	public String getLastname() {
-		return Lastname;
+		return lastname;
 	}
 
 	public void setLastname(String lastname) {
-		Lastname = lastname;
+		this.lastname = lastname;
+	}
+
+	// Constructors
+	public User() {
+	}
+
+	public User(String email, String password, String firstname, String lastname) {
+		this.email = email;
+		this.password = password;
+		this.firstname = firstname;
+		this.lastname = lastname;
+	}
+
+	public User(String email, String password, String firstname, String lastname, Address address) {
+		this.email = email;
+		this.password = password;
+		this.firstname = firstname;
+		this.lastname = lastname;
+		this.address = address;
 	}
 }

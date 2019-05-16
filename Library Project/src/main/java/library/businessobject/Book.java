@@ -12,10 +12,11 @@ import javax.persistence.ManyToOne;
 @Entity
 public class Book {
 	
-	private String Title, Description, Author;
-	private State state;
+	private String title, description, author;
+	private int currentOwner;
+	private State state; // good, used, trash
 	private Language Language;
-	
+
 	@ManyToOne
 	private Location location;
 	
@@ -37,33 +38,66 @@ public class Book {
 	private Long id;
 	
 	public String getTitle() {
-		return Title;
+		return title;
 	}
+	
 	public void setTitle(String title) {
-		Title = title;
+		this.title = title;
 	}
+	
 	public String getDescription() {
-		return Description;
+		return description;
 	}
+	
 	public void setDescription(String description) {
-		Description = description;
+		this.description = description;
 	}
+	
 	public String getAuthor() {
-		return Author;
+		return author;
 	}
+	
 	public void setAuthor(String author) {
-		Author = author;
+		this.author = author;
 	}
+	
 	public State getState() {
 		return state;
 	}
+	
 	public void setState(State state) {
 		this.state = state;
 	}
+	
 	public Language getLanguage() {
 		return Language;
 	}
+	
 	public void setLanguage(Language language) {
 		Language = language;
 	}
+	
+	public int getCurrentOwner() {
+		return currentOwner;
+	}
+	
+	public void setCurrentOwner(int currentOwner) {
+		this.currentOwner = currentOwner;
+	}
+
+	// constructors
+	public Book() {
+	}
+
+	public Book(String title, String description, String author, int currentOwner, State state, Language language, Location location, Library library) {
+		this.title = title;
+		this.description = description;
+		this.author = author;
+		this.currentOwner = currentOwner;
+		this.state = state;
+		this.Language = language;
+		this.location = location;
+		this.library = library;
+	}
+	
 }

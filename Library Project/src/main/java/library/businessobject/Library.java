@@ -13,10 +13,10 @@ import javax.persistence.OneToMany;
 @Entity
 public class Library {
 
-	private String Name;
+	private String name;
 
 	@Id
-	@GeneratedValue(strategy = GenerationType. IDENTITY)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
 	@OneToMany(mappedBy="library")
@@ -31,6 +31,7 @@ public class Library {
 	public Set<Librarian> getLibrarians() {
 		return librarians;
 	}
+	
 	public void setLibrarians(Set<Librarian> librarians) {
 		this.librarians = librarians;
 	}
@@ -38,11 +39,33 @@ public class Library {
 	@Embedded
 	private Address address;
 	
+	public Address getAddress() {
+		return address;
+	}
+
+	public void setAddress(Address address) {
+		this.address = address;
+	}
+
 	public String getName() {
-		return Name;
+		return name;
 	}
 
 	public void setName(String name) {
-		Name = name;
+		this.name = name;
 	}
+
+	// Constructors
+	public Library() {
+	}
+
+	public Library(String name, Address address) {
+		this.name = name;
+		this.address = address;
+	}
+	
+	public Library(String name) {
+		this.name = name;
+	}
+	
 }

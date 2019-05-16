@@ -14,7 +14,7 @@ import org.eclipse.persistence.jpa.jpql.parser.DateTime;
 @Entity
 public class Reservation {
 	
-	private DateTime StartDate, EndDate;
+	private DateTime startDate, endDate;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType. IDENTITY)
@@ -34,19 +34,19 @@ public class Reservation {
 	}
 	
 	public DateTime getStartDate() {
-		return StartDate;
+		return startDate;
 	}
 
 	public void setStartDate(DateTime startDate) {
-		StartDate = startDate;
+		this.startDate = startDate;
 	}
 
 	public DateTime getEndDate() {
-		return EndDate;
+		return endDate;
 	}
 
 	public void setEndDate(DateTime endDate) {
-		EndDate = endDate;
+		this.endDate = endDate;
 	}
 	
 }

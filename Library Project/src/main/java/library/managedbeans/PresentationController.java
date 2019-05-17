@@ -8,7 +8,6 @@ import javax.naming.NamingException;
 import library.businessobject.Librarian;
 import library.businessobject.Library;
 import library.businessobject.Reader;
-import library.businessobject.Customer;
 import library.businessobject.User;
 import library.bookservice.BookInterface;
 import library.businessobject.Book;
@@ -33,7 +32,6 @@ public class PresentationController
 	private Book selectedBook;
 
 	// Variable to store the customer-, librarian and userlist
-	private List<Customer> customers;
 	private List<Librarian> librarians;
 	private List<Reader> readers;
 
@@ -55,9 +53,6 @@ public class PresentationController
 
 		setLibrarians(new ArrayList<Librarian>());
 		setLibrarians(bookInterface.getAllLibrarians());
-
-		setCustomers(new ArrayList<Customer>());
-		setCustomers(bookInterface.getAllCustomers());
 
 		setReaders(new ArrayList<Reader>());
 		setReaders(bookInterface.getAllReaders());
@@ -137,14 +132,6 @@ public class PresentationController
 
 	public void setSelectedBook(Book selectedBook) {
 		this.selectedBook = selectedBook;
-	}
-
-	public List<Customer> getCustomers() {
-		return customers;
-	}
-
-	public void setCustomers(List<Customer> customers) {
-		this.customers = customers;
 	}
 
 	public List<Librarian> getLibrarians() {

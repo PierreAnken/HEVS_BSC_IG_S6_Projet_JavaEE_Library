@@ -8,7 +8,6 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import library.businessobject.Address;
 import library.businessobject.Book;
-import library.businessobject.Customer;
 import library.businessobject.Language;
 import library.businessobject.Librarian;
 import library.businessobject.Library;
@@ -71,10 +70,6 @@ public class BookBean implements BookInterface {
 		return (List<Librarian>) em.createQuery("FROM Librarian l").getResultList();
 	}
 
-	@Override
-	public List<Customer> getAllCustomers(){
-		return (List<Customer>) em.createQuery("FROM Customer c").getResultList();
-	}
 
 	@Override
 	public List<Reader> getAllReaders(){
@@ -137,13 +132,6 @@ public class BookBean implements BookInterface {
 		// Creating the addresses - Librarians
 		Address lAddr1 = new Address("1234", "Dummystreet", "Testcity");
 		Address lAddr2 = new Address("1234", "Dummystreet", "Testcity");
-
-		// Creating the addresses - Customers
-		Address custAddr1 = new Address("1234", "Dummystreet", "Testcity");
-		Address custAddr2 = new Address("1234", "Dummystreet", "Testcity");
-		Address custAddr3 = new Address("1234", "Dummystreet", "Testcity");
-		Address custAddr4 = new Address("1234", "Dummystreet", "Testcity");
-		Address custAddr5 = new Address("1234", "Dummystreet", "Testcity");
 		
 		// Creating the states
 		State sGood = State.Good;
@@ -185,13 +173,6 @@ public class BookBean implements BookInterface {
 		Book b9 = new Book("Testbook", "Description bla", "Heinrich Heine", 0, sGood, eng, loc9, lib3);
 		Book b10 = new Book("Testbook", "Description bla", "Heinrich Heine", 0, sGood, ger, loc10, lib3);
 	    
-	    // Creating the Customers
-	    Customer c1 = new Customer("Hans", "Muster", custAddr1);
-	    Customer c2 = new Customer("Müller", "Daniel", custAddr2);
-	    Customer c3 = new Customer("Meier", "Cornelia", custAddr3);
-	    Customer c4 = new Customer("Dupont", "Jean", custAddr4);
-	    Customer c5 = new Customer("Dubuis", "Caroline", custAddr5);
-	    
 	    // Creating the Librarians
 	    Librarian l1 = new Librarian("hans.walther@gotank.lib", "1234", "Hans", "Walther", 134, lAddr1);
 	    Librarian l2 = new Librarian("wilhelm.gebhardt@gotank.lib", "1234", "Wilhelm", "Gebhardt", 135, lAddr2);
@@ -210,12 +191,6 @@ public class BookBean implements BookInterface {
 		em.persist(b8);
 		em.persist(b9);
 		em.persist(b10);
-
-		em.persist(c1);
-		em.persist(c2);
-		em.persist(c3);
-		em.persist(c4);
-		em.persist(c5);
 		
 		em.persist(l1);
 		em.persist(l2);

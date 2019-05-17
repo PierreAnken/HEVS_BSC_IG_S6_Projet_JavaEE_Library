@@ -10,8 +10,8 @@ import library.businessobject.Library;
 import library.businessobject.Reader;
 import library.businessobject.Customer;
 import library.businessobject.User;
-import library.businessobject.Book;
 import library.bookservice.BookInterface;
+import library.businessobject.Book;
 
 public class PresentationController
 {
@@ -45,7 +45,7 @@ public class PresentationController
 
 		// Create reference to book EJB using JNDI
 		InitialContext ctx = new InitialContext();
-		bookInterface = (BookInterface) ctx.lookup("java:global/...");
+		bookInterface = (BookInterface) ctx.lookup("java:global/Library-0.0.1-SNAPSHOT/BookBean!library.bookservice.BookInterface");
 
 		setBookList(new ArrayList<Book>());
 		setBookList(bookInterface.getAllBooks());

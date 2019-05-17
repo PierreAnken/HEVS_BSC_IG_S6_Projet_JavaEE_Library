@@ -19,7 +19,6 @@ public interface BookInterface {
 	void deleteBook(Book b);
 	
 	Book getBookById(int id);
-	Book getBookByISBN(String isbn);
 	
 	public List<Librarian> getAllLibrarians();
 
@@ -32,9 +31,7 @@ public interface BookInterface {
 	public List<Book> getAllBooks();
 	List<String> getAllBookStrings();
 	public List<Book> getBooksByTextString(String text);
-	public List<Book> getBooksByRelaseYear(int year);
-	public List<Book> getBooksByAuthorID(int id);
-	public List<Book> getBooksByAuthorName(String lastname, String firstname);
+	public List<Book> getBooksByAuthorID(String author);
 
 	void addAddress(Address ad);
 	void updateAddress(Address ad);

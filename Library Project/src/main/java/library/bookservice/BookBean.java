@@ -30,11 +30,6 @@ public class BookBean implements BookInterface {
 	}
 
 	@Override
-	public Book getBookByISBN(String isbn) {
-		return (Book) em.createQuery("FROM Book b where b.isbn =:isbn").setParameter("id", isbn).getSingleResult();
-	}
-
-	@Override
 	public void lendBook(Book b, int customerID) {
 		b.setCurrentOwner(customerID);
 		em.persist(b);
@@ -97,22 +92,8 @@ public class BookBean implements BookInterface {
 	}
 
 	@Override
-	public List<Book> getBooksByRelaseYear(int year) {
-		return (List<Book>) em.createQuery("FROM BOOK b WHERE b.Releasedate LIKE :year").setParameter("year", year).getResultList();
-	}
-
-	@Override
-	public List<Book> getBooksByAuthorID(int idAuthor) {
-		return (List<Book>) em.createQuery("FROM BOOK b WHERE b.idAuthor=:idAuthor").setParameter("idAuthor", idAuthor).getResultList();
-	}
-
-	@Override
-	public List<Book> getBooksByAuthorName(String lastname, String firstname) {
-		List<Book> result = (List<Book>) em.createQuery("FROM BOOK b, IN(b.author) a WHERE a.Lastname=:lastname and a.Firstname=:firstname")
-				.setParameter("lastname", lastname)
-				.setParameter("firstname", firstname)
-				.getResultList();
-		return result;
+	public List<Book> getBooksByAuthorID(String author) {
+		return (List<Book>) em.createQuery("FROM BOOK b WHERE b.Author=:author").setParameter("author", author).getResultList();
 	}
 
 	@Override

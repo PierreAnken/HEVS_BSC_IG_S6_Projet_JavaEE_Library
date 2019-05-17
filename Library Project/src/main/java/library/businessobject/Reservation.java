@@ -14,6 +14,7 @@ import org.eclipse.persistence.jpa.jpql.parser.DateTime;
 public class Reservation {
 	
 	private DateTime startDate, endDate;
+	private boolean bookReturned;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType. IDENTITY)
@@ -47,6 +48,14 @@ public class Reservation {
 
 	public void setEndDate(DateTime endDate) {
 		this.endDate = endDate;
+	}
+
+	public boolean isBookReturned() {
+		return bookReturned;
+	}
+
+	public void setBookReturned(boolean bookReturned) {
+		this.bookReturned = bookReturned;
 	}
 	
 }

@@ -2,6 +2,7 @@ package library.businessobject;
 
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
 
@@ -11,7 +12,7 @@ public class Reader extends User {
 	private int cardId;
 	private double accountBalance;
 	
-	@OneToMany(mappedBy="reader")
+	@OneToMany(mappedBy="reader", cascade={CascadeType.REMOVE})
 	private Set<Reservation> reservations;
 	
 	public int getCardId() {

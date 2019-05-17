@@ -2,6 +2,7 @@ package library.businessobject;
 
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -19,7 +20,7 @@ public class Book {
 	@ManyToOne
 	private Library library;
 	
-	@OneToMany(mappedBy="book")
+	@OneToMany(mappedBy="book", cascade={CascadeType.REMOVE})
 	private Set<Reservation> reservations;
 	
 	@Id

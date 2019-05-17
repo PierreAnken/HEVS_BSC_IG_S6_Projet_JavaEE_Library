@@ -20,7 +20,7 @@ public class Reservation {
 	private boolean bookReturned;
 
 	@Id
-	@GeneratedValue(strategy = GenerationType. IDENTITY)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
 	@ManyToOne

@@ -7,13 +7,17 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 import org.eclipse.persistence.jpa.jpql.parser.DateTime;
 
 @Entity
 public class Reservation {
 	
+	@Temporal(TemporalType.DATE)
 	private DateTime startDate, endDate;
+	private boolean bookReturned;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType. IDENTITY)
@@ -47,6 +51,14 @@ public class Reservation {
 
 	public void setEndDate(DateTime endDate) {
 		this.endDate = endDate;
+	}
+
+	public boolean isBookReturned() {
+		return bookReturned;
+	}
+
+	public void setBookReturned(boolean bookReturned) {
+		this.bookReturned = bookReturned;
 	}
 	
 }

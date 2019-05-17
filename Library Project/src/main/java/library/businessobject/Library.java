@@ -20,9 +20,6 @@ public class Library {
 	private Long id;
 	
 	@OneToMany(mappedBy="library")
-	private Set<Location> locations;
-	
-	@OneToMany(mappedBy="library")
 	private Set<Book> books;
 	
 	@ManyToMany

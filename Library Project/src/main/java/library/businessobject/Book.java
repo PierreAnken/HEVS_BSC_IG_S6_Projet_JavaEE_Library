@@ -6,8 +6,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 
 @Entity
 public class Book {
@@ -15,22 +15,12 @@ public class Book {
 	private String title, description, author;
 	private int currentOwner;
 	private Language Language;
-
-	@ManyToOne
-	private Location location;
 	
 	@ManyToOne
 	private Library library;
 	
-	@ManyToMany
-	private Set<Reservation> Reservations;
-	
-	public Set<Reservation> getReservations() {
-		return Reservations;
-	}
-	public void setReservations(Set<Reservation> Reservations) {
-		this.Reservations = Reservations;
-	}
+	@OneToMany(mappedBy="book")
+	private Set<Reservation> reservations;
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType. IDENTITY)
@@ -81,13 +71,12 @@ public class Book {
 	public Book() {
 	}
 
-	public Book(String title, String description, String author, int currentOwner, Language language, Location location, Library library) {
+	public Book(String title, String description, String author, int currentOwner, Language language, Library library) {
 		this.title = title;
 		this.description = description;
 		this.author = author;
 		this.currentOwner = currentOwner;
 		this.Language = language;
-		this.location = location;
 		this.library = library;
 	}
 

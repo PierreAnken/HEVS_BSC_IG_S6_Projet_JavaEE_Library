@@ -156,16 +156,16 @@ public class BookBean implements BookInterface {
 		Library lib3 = new Library("Bern", libAddr3);
 		
 		// Creating the books
-		Book b1 = new Book("Testbook", "Description bla", "Heinrich Heine", 0, true, ger, loc1, lib1);
-		Book b2 = new Book("Testbook", "Description bla", "Heinrich Heine", 0, true, eng, loc2, lib1);
-		Book b3 = new Book("Testbook", "Description bla", "Heinrich Heine", 0, true, fra, loc3, lib1);
-		Book b4 = new Book("Testbook", "Description bla", "Heinrich Heine", 0, true, fra, loc4, lib2);
-		Book b5 = new Book("Testbook", "Description bla", "Heinrich Heine", 0, true, ita, loc5, lib2);
-		Book b6 = new Book("Testbook", "Description bla", "Heinrich Heine", 0, true, ger, loc6, lib2);
-		Book b7 = new Book("Testbook", "Description bla", "Heinrich Heine", 0, true, ger, loc7, lib3);
-		Book b8 = new Book("Testbook", "Description bla", "Heinrich Heine", 0, true, fra, loc8, lib3);
-		Book b9 = new Book("Testbook", "Description bla", "Heinrich Heine", 0, true, eng, loc9, lib3);
-		Book b10 = new Book("Testbook", "Description bla", "Heinrich Heine", 0, true, ger, loc10, lib3);
+		Book b1 = new Book("Testbook", "Description bla", "Heinrich Heine", 0, ger, loc1, lib1);
+		Book b2 = new Book("Testbook", "Description bla", "Heinrich Heine", 0, eng, loc2, lib1);
+		Book b3 = new Book("Testbook", "Description bla", "Heinrich Heine", 0, fra, loc3, lib1);
+		Book b4 = new Book("Testbook", "Description bla", "Heinrich Heine", 0, fra, loc4, lib2);
+		Book b5 = new Book("Testbook", "Description bla", "Heinrich Heine", 0, ita, loc5, lib2);
+		Book b6 = new Book("Testbook", "Description bla", "Heinrich Heine", 0, ger, loc6, lib2);
+		Book b7 = new Book("Testbook", "Description bla", "Heinrich Heine", 0, ger, loc7, lib3);
+		Book b8 = new Book("Testbook", "Description bla", "Heinrich Heine", 0, fra, loc8, lib3);
+		Book b9 = new Book("Testbook", "Description bla", "Heinrich Heine", 0, eng, loc9, lib3);
+		Book b10 = new Book("Testbook", "Description bla", "Heinrich Heine", 0, ger, loc10, lib3);
 	    
 	    // Creating the Librarians
 	    Librarian l1 = new Librarian("hans.walther@gotank.lib", "1234", "Hans", "Walther", 134, lAddr1);

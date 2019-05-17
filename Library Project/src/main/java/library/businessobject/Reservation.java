@@ -6,7 +6,6 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 
 import org.eclipse.persistence.jpa.jpql.parser.DateTime;
@@ -23,16 +22,17 @@ public class Reservation {
 	@ManyToOne
 	private Reader reader;
 	
-	@ManyToMany
-	private Set<Book> Books;
-	
-	public Set<Book> getBooks() {
-		return Books;
+	@ManyToOne
+	private Book book;
+
+	public Book getBook() {
+		return book;
 	}
-	public void setBooks(Set<Book> Books) {
-		this.Books = Books;
+
+	public void setBook(Book book) {
+		this.book = book;
 	}
-	
+
 	public DateTime getStartDate() {
 		return startDate;
 	}

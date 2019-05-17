@@ -3590,7 +3590,7 @@
 							"left": 512,
 							"top": 432,
 							"width": 145,
-							"height": 81,
+							"height": 88,
 							"nameCompartment": {
 								"$ref": "AAAAAAFqfN7etTEvsM0="
 							},
@@ -3742,7 +3742,7 @@
 										"$ref": "AAAAAAFqfOAD5DZC+HU="
 									},
 									"edgePosition": 2,
-									"text": "1..*"
+									"text": "1"
 								},
 								{
 									"_type": "EdgeLabelView",
@@ -3900,7 +3900,7 @@
 									"visible": false,
 									"font": "Arial;13;0",
 									"left": 598,
-									"top": 533,
+									"top": 536,
 									"height": 13,
 									"alpha": 1.5707963267948966,
 									"distance": 15,
@@ -3921,7 +3921,7 @@
 									"visible": null,
 									"font": "Arial;13;0",
 									"left": 613,
-									"top": 533,
+									"top": 536,
 									"height": 13,
 									"alpha": 1.5707963267948966,
 									"distance": 30,
@@ -3942,7 +3942,7 @@
 									"visible": false,
 									"font": "Arial;13;0",
 									"left": 569,
-									"top": 534,
+									"top": 537,
 									"height": 13,
 									"alpha": -1.5707963267948966,
 									"distance": 15,
@@ -3963,7 +3963,7 @@
 									"visible": false,
 									"font": "Arial;13;0",
 									"left": 599,
-									"top": 532,
+									"top": 539,
 									"height": 13,
 									"alpha": 0.5235987755982988,
 									"distance": 30,
@@ -3984,7 +3984,7 @@
 									"visible": false,
 									"font": "Arial;13;0",
 									"left": 612,
-									"top": 535,
+									"top": 542,
 									"height": 13,
 									"alpha": 0.7853981633974483,
 									"distance": 40,
@@ -4004,7 +4004,7 @@
 									},
 									"font": "Arial;13;0",
 									"left": 561,
-									"top": 528,
+									"top": 535,
 									"width": 20,
 									"height": 13,
 									"alpha": -0.5235987755982988,
@@ -4113,7 +4113,7 @@
 								"$ref": "AAAAAAFqfN7etTEun/g="
 							},
 							"lineStyle": 1,
-							"points": "584:513;584:567",
+							"points": "584:520;584:567",
 							"showVisibility": true,
 							"nameLabel": {
 								"$ref": "AAAAAAFqfOAKWDbg8z0="
@@ -4204,7 +4204,7 @@
 								"reference": {
 									"$ref": "AAAAAAFqfJbTdL1rtBc="
 								},
-								"multiplicity": "1..*"
+								"multiplicity": "1"
 							},
 							"end2": {
 								"_type": "UMLAssociationEnd",

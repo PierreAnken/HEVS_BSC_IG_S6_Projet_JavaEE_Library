@@ -10,7 +10,6 @@
 		<class>library.businessobject.Book</class>
 		<class>library.businessobject.Librarian</class>
 		<class>library.businessobject.Library</class>
-		<class>library.businessobject.Location</class>
 		<class>library.businessobject.Reader</class>
 		<class>library.businessobject.Reservation</class>
 		<properties>

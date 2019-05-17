@@ -14,7 +14,7 @@ public class Book {
 	
 	private String title, description, author;
 	private int currentOwner;
-	private State state; // good, used, trash
+	private boolean isAvailable;
 	private Language Language;
 
 	@ManyToOne
@@ -61,14 +61,6 @@ public class Book {
 		this.author = author;
 	}
 	
-	public State getState() {
-		return state;
-	}
-	
-	public void setState(State state) {
-		this.state = state;
-	}
-	
 	public Language getLanguage() {
 		return Language;
 	}
@@ -84,20 +76,28 @@ public class Book {
 	public void setCurrentOwner(int currentOwner) {
 		this.currentOwner = currentOwner;
 	}
+	
+	public boolean isAvailable() {
+		return isAvailable;
+	}
+	public void setAvailable(boolean isAvailable) {
+		this.isAvailable = isAvailable;
+	}
 
 	// constructors
 	public Book() {
 	}
 
-	public Book(String title, String description, String author, int currentOwner, State state, Language language, Location location, Library library) {
+	public Book(String title, String description, String author, int currentOwner, boolean isAvailable, Language language, Location location, Library library) {
 		this.title = title;
 		this.description = description;
 		this.author = author;
 		this.currentOwner = currentOwner;
-		this.state = state;
+		this.isAvailable = isAvailable;
 		this.Language = language;
 		this.location = location;
 		this.library = library;
 	}
+
 	
 }

@@ -186,7 +186,7 @@
 											"top": 323,
 											"width": 72.6171875,
 											"height": 13,
-											"text": "+State",
+											"text": "+IsAvailable",
 											"horizontalAlignment": 0
 										},
 										{
@@ -4253,8 +4253,8 @@
 							"_parent": {
 								"$ref": "AAAAAAFqfJbTdL1rtBc="
 							},
-							"name": "State",
-							"type": ""
+							"name": "IsAvailable",
+							"documentation": "A"
 						},
 						{
 							"_type": "UMLAttribute",

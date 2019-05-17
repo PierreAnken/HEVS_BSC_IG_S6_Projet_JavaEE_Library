@@ -13,7 +13,6 @@ import library.businessobject.Librarian;
 import library.businessobject.Library;
 import library.businessobject.Location;
 import library.businessobject.Reader;
-import library.businessobject.State;
 
 @Stateful
 @ManagedBean
@@ -132,12 +131,7 @@ public class BookBean implements BookInterface {
 		// Creating the addresses - Librarians
 		Address lAddr1 = new Address("1234", "Dummystreet", "Testcity");
 		Address lAddr2 = new Address("1234", "Dummystreet", "Testcity");
-		
-		// Creating the states
-		State sGood = State.Good;
-		State sUsed = State.Used;
-		State sTrash = State.Trash;
-		
+
 		// Creating the languages
 		Language eng = Language.English;
 		Language fra = Language.French;
@@ -162,16 +156,16 @@ public class BookBean implements BookInterface {
 		Library lib3 = new Library("Bern", libAddr3);
 		
 		// Creating the books
-		Book b1 = new Book("Testbook", "Description bla", "Heinrich Heine", 0, sGood, ger, loc1, lib1);
-		Book b2 = new Book("Testbook", "Description bla", "Heinrich Heine", 0, sUsed, eng, loc2, lib1);
-		Book b3 = new Book("Testbook", "Description bla", "Heinrich Heine", 0, sTrash, fra, loc3, lib1);
-		Book b4 = new Book("Testbook", "Description bla", "Heinrich Heine", 0, sUsed, fra, loc4, lib2);
-		Book b5 = new Book("Testbook", "Description bla", "Heinrich Heine", 0, sUsed, ita, loc5, lib2);
-		Book b6 = new Book("Testbook", "Description bla", "Heinrich Heine", 0, sUsed, ger, loc6, lib2);
-		Book b7 = new Book("Testbook", "Description bla", "Heinrich Heine", 0, sTrash, ger, loc7, lib3);
-		Book b8 = new Book("Testbook", "Description bla", "Heinrich Heine", 0, sGood, fra, loc8, lib3);
-		Book b9 = new Book("Testbook", "Description bla", "Heinrich Heine", 0, sGood, eng, loc9, lib3);
-		Book b10 = new Book("Testbook", "Description bla", "Heinrich Heine", 0, sGood, ger, loc10, lib3);
+		Book b1 = new Book("Testbook", "Description bla", "Heinrich Heine", 0, true, ger, loc1, lib1);
+		Book b2 = new Book("Testbook", "Description bla", "Heinrich Heine", 0, true, eng, loc2, lib1);
+		Book b3 = new Book("Testbook", "Description bla", "Heinrich Heine", 0, true, fra, loc3, lib1);
+		Book b4 = new Book("Testbook", "Description bla", "Heinrich Heine", 0, true, fra, loc4, lib2);
+		Book b5 = new Book("Testbook", "Description bla", "Heinrich Heine", 0, true, ita, loc5, lib2);
+		Book b6 = new Book("Testbook", "Description bla", "Heinrich Heine", 0, true, ger, loc6, lib2);
+		Book b7 = new Book("Testbook", "Description bla", "Heinrich Heine", 0, true, ger, loc7, lib3);
+		Book b8 = new Book("Testbook", "Description bla", "Heinrich Heine", 0, true, fra, loc8, lib3);
+		Book b9 = new Book("Testbook", "Description bla", "Heinrich Heine", 0, true, eng, loc9, lib3);
+		Book b10 = new Book("Testbook", "Description bla", "Heinrich Heine", 0, true, ger, loc10, lib3);
 	    
 	    // Creating the Librarians
 	    Librarian l1 = new Librarian("hans.walther@gotank.lib", "1234", "Hans", "Walther", 134, lAddr1);

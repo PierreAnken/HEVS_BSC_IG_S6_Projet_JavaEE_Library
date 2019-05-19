@@ -9,8 +9,6 @@ import javax.persistence.ManyToMany;
 public class Librarian extends User {
 	
 	private int employeeId;
-	private String email;
-	private String password, firstname, lastname;
 
 	@ManyToMany
 	private Set<Library> libraries;
@@ -29,42 +27,6 @@ public class Librarian extends User {
 
 	public void setEmployeeId(int employeeId) {
 		this.employeeId = employeeId;
-	}
-	
-	public String getEmail() {
-		return email;
-	}
-	
-	public void setEmail(String email) {
-		this.email = email;
-	}
-
-	public String getPassword() {
-		return password;
-	}
-
-	public void setPassword(String password) {
-		this.password = password;
-	}
-
-	public String getFirstname() {
-		return firstname;
-	}
-
-	public void setFirstname(String firstname) {
-		this.firstname = firstname;
-	}
-
-	public String getLastname() {
-		return lastname;
-	}
-
-	public void setLastname(String lastname) {
-		this.lastname = lastname;
-	}
-
-	public void setLibraries(Set<Library> libraries) {
-		this.libraries = libraries;
 	}
 
 	// Constructors

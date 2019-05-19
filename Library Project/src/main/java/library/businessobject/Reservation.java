@@ -1,5 +1,6 @@
 package library.businessobject;
 
+import java.util.Date;
 import java.util.Set;
 
 import javax.persistence.Entity;
@@ -10,13 +11,11 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
-import org.eclipse.persistence.jpa.jpql.parser.DateTime;
-
 @Entity
 public class Reservation {
 	
 	@Temporal(TemporalType.DATE)
-	private DateTime startDate, endDate;
+	private Date startDate, endDate;
 	private boolean bookReturned;
 
 	@Id
@@ -37,19 +36,19 @@ public class Reservation {
 		this.book = book;
 	}
 
-	public DateTime getStartDate() {
+	public Date getStartDate() {
 		return startDate;
 	}
 
-	public void setStartDate(DateTime startDate) {
+	public void setStartDate(Date startDate) {
 		this.startDate = startDate;
 	}
 
-	public DateTime getEndDate() {
+	public Date getEndDate() {
 		return endDate;
 	}
 
-	public void setEndDate(DateTime endDate) {
+	public void setEndDate(Date endDate) {
 		this.endDate = endDate;
 	}
 

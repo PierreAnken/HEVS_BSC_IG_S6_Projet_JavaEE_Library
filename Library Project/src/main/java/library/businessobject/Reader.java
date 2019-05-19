@@ -15,9 +15,6 @@ public class Reader extends User {
 	@OneToMany(mappedBy="reader", cascade={CascadeType.REMOVE})
 	private Set<Reservation> reservations;
 	
-	public int getCardId() {
-		return cardId;
-	}
 
 	public Set<Reservation> getReservations() {
 		return reservations;
@@ -31,6 +28,10 @@ public class Reader extends User {
 		this.cardId = cardId;
 	}
 
+	public int getCardId() {
+		return cardId;
+	}
+	
 	// Constructors
 	public Reader() {
 	}

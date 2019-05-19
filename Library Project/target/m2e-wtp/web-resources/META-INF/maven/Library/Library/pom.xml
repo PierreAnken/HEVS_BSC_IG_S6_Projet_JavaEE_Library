@@ -28,6 +28,11 @@
       <scope>provided</scope>
     </dependency>
     <dependency>
+    <groupId>org.omnifaces</groupId>
+    <artifactId>omnifaces</artifactId>
+    <version>1.14.1</version>
+	</dependency>
+    <dependency>
       <groupId>jboss</groupId>
       <artifactId>jboss-jmx</artifactId>
       <version>4.2.2.GA</version>

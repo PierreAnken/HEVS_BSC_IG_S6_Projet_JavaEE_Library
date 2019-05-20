@@ -13,7 +13,7 @@ import library.businessobject.Reader;
 @Stateful
 public class BookBean implements BookInterface {
 
-	@PersistenceContext(name = "GotankLibrary")
+	@PersistenceContext(name = "BookPU")
 	private EntityManager em;
 
 	@Override

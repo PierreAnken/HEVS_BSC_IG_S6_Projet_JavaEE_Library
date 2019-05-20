@@ -5,7 +5,7 @@
     xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-facesconfig_2_2.xsd"
     version="2.2">
 	<managed-bean>
-		<managed-bean-name>PresentationController</managed-bean-name>
+		<managed-bean-name>presentationController</managed-bean-name>
 		<managed-bean-class>library.managedbeans.PresentationController</managed-bean-class>
 		<managed-bean-scope>application</managed-bean-scope>
 	</managed-bean>

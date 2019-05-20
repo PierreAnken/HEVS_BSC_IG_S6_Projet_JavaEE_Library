@@ -45,21 +45,21 @@ public class PresentationController
 		InitialContext ctx = new InitialContext();
 		bookInterface = (BookInterface) ctx.lookup("java:global/Library-0.0.1-SNAPSHOT/BookBean!library.bookservice.BookInterface");
 
-		setBookList(new ArrayList<Book>());
-		setBookList(bookInterface.getAllBooks());
-
-		setAuthors(new ArrayList<String>());
-		setAuthors(bookInterface.getAllAuthors());
-
-		setLibrarians(new ArrayList<Librarian>());
-		setLibrarians(bookInterface.getAllLibrarians());
-
-		setReaders(new ArrayList<Reader>());
-		setReaders(bookInterface.getAllReaders());
-		
-		setActiveUser(readers.get(2));
-
-		loadImages();
+//		setBookList(new ArrayList<Book>());
+//		setBookList(bookInterface.getAllBooks());
+//
+//		setAuthors(new ArrayList<String>());
+//		setAuthors(bookInterface.getAllAuthors());
+//
+//		setLibrarians(new ArrayList<Librarian>());
+//		setLibrarians(bookInterface.getAllLibrarians());
+//
+//		setReaders(new ArrayList<Reader>());
+//		setReaders(bookInterface.getAllReaders());
+//		
+//		setActiveUser(readers.get(2));
+//
+//		loadImages();
 	}
 
 	public void populateDatabase(){

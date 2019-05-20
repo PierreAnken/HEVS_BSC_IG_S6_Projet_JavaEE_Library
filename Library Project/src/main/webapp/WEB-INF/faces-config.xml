@@ -5,31 +5,8 @@
     xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-facesconfig_2_2.xsd"
     version="2.2">
 	<managed-bean>
-		<managed-bean-name>presentationController</managed-bean-name>
+		<managed-bean-name>PresentationController</managed-bean-name>
 		<managed-bean-class>library.managedbeans.PresentationController</managed-bean-class>
 		<managed-bean-scope>application</managed-bean-scope>
 	</managed-bean>
-	<navigation-rule>
-		<display-name>welcomeBank.xhtml</display-name>
-		<from-view-id>/welcomeBank.xhtml</from-view-id>
-		<navigation-case>
-			<from-outcome>transferForm</from-outcome>
-			<to-view-id>/transferForm.xhtml</to-view-id>
-		</navigation-case>
-	</navigation-rule>
-	<navigation-rule>
-		<display-name>transferForm.xhtml</display-name>
-		<from-view-id>/transferForm.xhtml</from-view-id>
-		<navigation-case>
-			<from-outcome>#{transferBean.performTransfer}</from-outcome>
-			<to-view-id>/showTransferResult.xhtml</to-view-id>
-		</navigation-case>
-	</navigation-rule>
-	<application>  
-  <!-- This supports resources referenced from within css files e.g. url(../fonts/glyphicons) -->
-    <resource-handler>org.omnifaces.resourcehandler.UnmappedResourceHandler</resource-handler>
-	</application>
-	
-	
-
 </faces-config>

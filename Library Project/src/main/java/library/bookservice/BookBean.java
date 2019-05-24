@@ -114,8 +114,12 @@ public class BookBean implements BookInterface {
 	@Override
 	public void populateLibraryDB() {
 
-		// Creating the addresses - Libraries
 		Address libAddr1 = new Address("8000", "Paradeplatz", "Zürich");
+		Library lib1 = new Library("Zürich", libAddr1);
+		em.persist(lib1);
+
+		// Creating the addresses - Libraries
+//		Address libAddr1 = new Address("8000", "Paradeplatz", "Zürich");
 //		Address libAddr2 = new Address("1200", "Gare Cornavin", "Genève");
 //		Address libAddr3 = new Address("3000", "Bärenplatz", "Bern");
 
@@ -128,7 +132,7 @@ public class BookBean implements BookInterface {
 //		Address lAddr2 = new Address("1234", "Dummystreet", "Testcity");
 //
 		// Creating the libraries
-		Library lib1 = new Library("Zürich", libAddr1);
+//		Library lib1 = new Library("Zürich", libAddr1);
 //		Library lib2 = new Library("Genève", libAddr2);
 //		Library lib3 = new Library("Bern", libAddr3);
 
@@ -172,7 +176,7 @@ public class BookBean implements BookInterface {
 //		em.persist(r1);
 //		em.persist(r2);
 
-		em.persist(lib1);
+//		em.persist(lib1);
 //		em.persist(lib2);
 //		em.persist(lib3);
 	}

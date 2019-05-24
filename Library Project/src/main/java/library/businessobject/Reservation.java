@@ -22,10 +22,10 @@ public class Reservation {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
-	//@ManyToOne
+	@ManyToOne
 	private Reader reader;
 	
-	//@ManyToOne
+	@ManyToOne
 	private Book book;
 
 	public Book getBook() {

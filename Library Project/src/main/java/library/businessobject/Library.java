@@ -19,7 +19,7 @@ public class Library {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
-	/*@OneToMany(mappedBy="library")
+	@OneToMany(mappedBy="library")
 	private Set<Book> books;
 	
 	@ManyToMany
@@ -31,7 +31,7 @@ public class Library {
 	
 	public void setLibrarians(Set<Librarian> librarians) {
 		this.librarians = librarians;
-	}*/
+	}
 	
 	@Embedded
 	private Address address;

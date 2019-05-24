@@ -12,7 +12,7 @@ public class Reader extends User {
 	private int cardId;
 	private double accountBalance;
 	
-	@OneToMany(mappedBy="reader", cascade={CascadeType.REMOVE})
+	//@OneToMany(mappedBy="reader", cascade={CascadeType.REMOVE})
 	private Set<Reservation> reservations;
 	
 	public int getCardId() {

@@ -17,10 +17,10 @@ public class Book {
 	private int currentOwner;
 	private Language Language;
 	
-	@ManyToOne
+	//@ManyToOne
 	private Library library;
 	
-	@OneToMany(mappedBy="book", cascade={CascadeType.REMOVE})
+	//@OneToMany(mappedBy="book", cascade={CascadeType.REMOVE})
 	private Set<Reservation> reservations;
 	
 	@Id

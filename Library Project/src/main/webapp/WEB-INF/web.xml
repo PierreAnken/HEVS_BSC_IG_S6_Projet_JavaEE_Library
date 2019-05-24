@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
+
 <web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/xml/ns/javaee" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" version="2.5">
   <display-name>Library</display-name>
   <description></description>
@@ -30,9 +31,30 @@
   <servlet-mapping>
     <servlet-name>Faces Servlet</servlet-name>
     <url-pattern>/faces/*</url-pattern>
+    <url-pattern>/javax.faces.resource/*</url-pattern>
   </servlet-mapping>
+  <mime-mapping>
+      <extension>ttf</extension>
+      <mime-type>css/fonts</mime-type>
+    </mime-mapping>
+    <mime-mapping>
+      <extension>otf</extension>
+      <mime-type>font/opentype</mime-type>
+    </mime-mapping>
+    <mime-mapping>
+      <extension>woff2</extension>
+      <mime-type>font/woff2</mime-type>
+    </mime-mapping>  
+    <mime-mapping>
+      <extension>woff</extension>
+      <mime-type>font/woff</mime-type>
+    </mime-mapping>  
+    <mime-mapping>
+      <extension>eot</extension>
+      <mime-type>application/vnd.ms-fontobject</mime-type>
+    </mime-mapping>
   <welcome-file-list>
-    <welcome-file>welcomeBank.xhtml</welcome-file>
+    <welcome-file>index.xhtml</welcome-file>
   </welcome-file-list>
   <env-entry>
     <env-entry-name>jsf/ClientSideSecretKey</env-entry-name>

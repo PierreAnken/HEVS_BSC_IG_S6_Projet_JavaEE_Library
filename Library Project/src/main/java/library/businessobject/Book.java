@@ -16,12 +16,12 @@ public class Book {
 	private String title, description, author;
 	private int currentOwner;
 	private Language Language;
-	
-	//@ManyToOne
-	private Library library;
-	
-	//@OneToMany(mappedBy="book", cascade={CascadeType.REMOVE})
-	private Set<Reservation> reservations;
+
+
+    @ManyToOne private Library library;
+  
+    @OneToMany(mappedBy="book", cascade={CascadeType.REMOVE}) private
+    Set<Reservation> reservations;
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -72,13 +72,12 @@ public class Book {
 	public Book() {
 	}
 
-	public Book(String title, String description, String author, int currentOwner, Language language, Library library) {
+	public Book(String title, String description, String author, int currentOwner, Language language) {
 		this.title = title;
 		this.description = description;
 		this.author = author;
 		this.currentOwner = currentOwner;
 		this.Language = language;
-		this.library = library;
 	}
 
 	

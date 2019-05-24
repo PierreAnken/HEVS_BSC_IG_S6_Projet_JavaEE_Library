@@ -30,7 +30,6 @@ public class Librarian extends User {
 		this.employeeId = employeeId;
 	}
 
-
 	// Constructors
 	public Librarian() {
 	}

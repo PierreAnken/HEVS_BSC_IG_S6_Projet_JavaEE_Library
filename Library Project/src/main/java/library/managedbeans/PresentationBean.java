@@ -1,122 +1,49 @@
-package library.bookservice;
+package library.managedbeans;
 
+import java.util.ArrayList;
 import java.util.List;
-import javax.ejb.Stateful;
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
-import library.businessobject.Address;
-import library.businessobject.Book;
+import javax.annotation.PostConstruct;
+import javax.naming.InitialContext;
 import library.businessobject.Librarian;
 import library.businessobject.Library;
 import library.businessobject.Reader;
+import library.businessobject.User;
+import library.bookservice.LibraryInterface;
+import library.businessobject.Address;
+import library.businessobject.Book;
 
-@Stateful
-public class BookBean implements BookInterface {
+public class PresentationBean {
 
-	@PersistenceContext(name = "BookPU")
-	private EntityManager em;
+	private List<Library> libraries;
+	private List<String> bigImages;
+	private List<Book> books;
+	private Book selectedBook;
+	private List<Librarian> librarians;
+	private List<Reader> readers;
+	private User activeUser;
+	private LibraryInterface libraryInt;
+	
 
-	@Override
-	public Book getBookById(int idBook) {
-		return (Book) em.createQuery("FROM Book b where b.id =:id").setParameter("id", idBook).getSingleResult();
+	@PostConstruct
+	public void initialize() throws Exception{
+
+		System.out.println("PA_DEBUG");
+		
+		// Create reference to book EJB using JNDI
+		InitialContext ctx = new InitialContext();
+		libraryInt = (LibraryInterface)ctx.lookup("java:global/Library-0.0.1/BookBean!library.bookservice.LibraryInterface");
+
+		Address libAddr1 = new Address("8000", "Paradeplatz", "Zurich");
+		Library lib1 = new Library("Zurich", libAddr1);
+		libraryInt.addLibrary(lib1);
 	}
-
-	@Override
-	public void lendBook(Book b, int customerID) {
-		b.setCurrentOwner(customerID);
-		em.persist(b);
-	}
-
-	@Override
-	public void bringBackBook(Book b, int customerID) {
-		b.setCurrentOwner(customerID);
-		em.persist(b);
-	}
-
-	@Override
-	public void addBook(Book b) {
-		em.persist(b);
-	}
-
-	@Override
-	public void updateBook(Book b) {
-		em.persist(b);
-	}
-
-	@Override
-	public void deleteBook(Book b) {
-		em.remove(b);
-	}
-
-	@Override
-	public List<Book> getAllBooks() {
-		return (List<Book>) em.createQuery("FROM Book b").getResultList();
-	}
-
-	@Override
-	public List<String> getAllBookStrings() {
-		return (List<String>) em.createQuery("FROM Book b").getResultList();
-	}
-
-	@Override
-	public List<Librarian> getAllLibrarians() {
-		return (List<Librarian>) em.createQuery("FROM Librarian l").getResultList();
-	}
-
-	@Override
-	public List<Reader> getAllReaders() {
-		return (List<Reader>) em.createQuery("FROM Reader r").getResultList();
-	}
-
-	@Override
-	public List<String> getAllAuthors() {
-		return (List<String>) em.createQuery("author FROM Book b").getResultList();
-	}
-
-	@Override
-	public List<Book> getBooksByTextString(String text) {
-		return (List<Book>) em.createQuery("FROM Book b WHERE b.TITLE=:title").setParameter("title", text)
-				.getResultList();
-	}
-
-	@Override
-	public List<Book> getBooksByAuthorID(String author) {
-		return (List<Book>) em.createQuery("FROM Book b WHERE b.Author=:author").setParameter("author", author)
-				.getResultList();
-	}
-
-	@Override
-	public void addAddress(Address ad) {
-		em.persist(ad);
-	}
-
-	@Override
-	public void updateAddress(Address ad) {
-		em.persist(ad);
-	}
-
-	@Override
-	public void deleteAddress(Address ad) {
-		em.remove(ad);
-	}
-
-	@Override
-	public List<Address> getAllAddresses() {
-		return (List<Address>) em.createQuery("FROM Address a").getResultList();
-	}
-
-	@Override
-	public void saveOrUpdate(Book b) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
+	
+	
 	public void populateLibraryDB() {
 
-		Address libAddr1 = new Address("8000", "Paradeplatz", "Zürich");
-		Library lib1 = new Library("Zürich", libAddr1);
-		em.persist(lib1);
+		Address libAddr1 = new Address("8000", "Paradeplatz", "Zurich");
+		Library lib1 = new Library("Zurich", libAddr1);
+		libraryInt.addLibrary(lib1);
 
 		// Creating the addresses - Libraries
 //		Address libAddr1 = new Address("8000", "Paradeplatz", "Zürich");
@@ -179,6 +106,75 @@ public class BookBean implements BookInterface {
 //		em.persist(lib1);
 //		em.persist(lib2);
 //		em.persist(lib3);
+	}
+
+	
+	public void loadImages() {
+		bigImages = new ArrayList<String>();
+		bigImages.add("brecht.jpg");
+		bigImages.add("goethe.jpg");
+		bigImages.add("heine.jpg");
+		bigImages.add("hesse.jpg");
+		bigImages.add("kaestner.jpg");
+		bigImages.add("kafka.jpg");
+		bigImages.add("schiller.jpg");
+		bigImages.add("shakespeare.jpg");
+	}
+
+	public List<Library> getLibraries() {
+		return libraries;
+	}
+
+	public void setLibraries(List<Library> libraries) {
+		this.libraries = libraries;
+	}
+
+	public List<String> getBigImages() {
+		return bigImages;
+	}
+
+	public void setBigImages(List<String> bigImages) {
+		this.bigImages = bigImages;
+	}
+
+	public List<Book> getBookList() {
+		return books;
+	}
+
+	public void setBookList(List<Book> bookList) {
+		this.books = bookList;
+	}
+
+	public Book getSelectedBook() {
+		return selectedBook;
+	}
+
+	public void setSelectedBook(Book selectedBook) {
+		this.selectedBook = selectedBook;
+	}
+
+	public List<Librarian> getLibrarians() {
+		return librarians;
+	}
+
+	public void setLibrarians(List<Librarian> librarians) {
+		this.librarians = librarians;
+	}
+
+	public List<Reader> getReaders() {
+		return readers;
+	}
+
+	public void setReaders(List<Reader> readers) {
+		this.readers = readers;
+	}
+
+	public User getActiveUser() {
+		return activeUser;
+	}
+
+	public void setActiveUser(User activeUser) {
+		this.activeUser = activeUser;
 	}
 
 }

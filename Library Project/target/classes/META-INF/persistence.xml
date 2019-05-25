@@ -12,6 +12,7 @@
 		<class>library.businessobject.Library</class>
 		<class>library.businessobject.Reader</class>
 		<class>library.businessobject.Reservation</class>
+		<exclude-unlisted-classes>false</exclude-unlisted-classes>
 		<properties>
 			<property name="hibernate.hbm2ddl.auto" value="update" />
 			<property name="hibernate.show_sql" value="true" /> 

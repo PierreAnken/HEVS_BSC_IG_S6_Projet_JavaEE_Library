@@ -10,8 +10,7 @@ public class Librarian extends User {
 	
 	private int employeeId;
 
-	/*
-	 * @ManyToMany private Set<Library> libraries;
+	@ManyToMany private Set<Library> libraries;
 	 
 	
 	public Set<Library> getLibraries() {
@@ -20,7 +19,7 @@ public class Librarian extends User {
 
 	public void setLibrarys(Set<Library> libraries) {
 		this.libraries = libraries;
-	}*/
+	}
 	
 	public int getEmployeeId() {
 		return employeeId;

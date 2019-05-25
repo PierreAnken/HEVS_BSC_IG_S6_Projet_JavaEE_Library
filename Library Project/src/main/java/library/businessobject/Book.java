@@ -20,7 +20,7 @@ public class Book {
 
     @ManyToOne private Library library;
   
-    @OneToMany(mappedBy="book", cascade={CascadeType.REMOVE}) private
+    @OneToMany(mappedBy="book", cascade={CascadeType.REMOVE})
     Set<Reservation> reservations;
 	
 	@Id

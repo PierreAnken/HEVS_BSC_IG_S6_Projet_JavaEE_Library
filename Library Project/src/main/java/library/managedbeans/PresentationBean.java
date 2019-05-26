@@ -11,6 +11,7 @@ import library.businessobject.User;
 import library.libraryservice.LibraryService;
 import library.businessobject.Address;
 import library.businessobject.Book;
+import library.businessobject.Language;
 
 public class PresentationBean {
 
@@ -35,17 +36,12 @@ public class PresentationBean {
 		libraryService = (LibraryService)ctx
 				.lookup("java:global/Library-0.0.1/LibraryBean!library.libraryservice.LibraryService");
 
-		Address libAddr1 = new Address("8000", "Paradeplatz", "Zurich");
-		Library lib1 = new Library("Zurich", libAddr1);
-		libraryService.addLibrary(lib1);
 	}
 	
 	
 	public void populateLibraryDB() {
 
-		Address libAddr1 = new Address("8000", "Paradeplatz", "Zurich");
-		Library lib1 = new Library("Zurich", libAddr1);
-		libraryService.addLibrary(lib1);
+		System.out.println("PA_DEBUG:Start of DB init");
 
 		// Creating the addresses - Libraries
 //		Address libAddr1 = new Address("8000", "Paradeplatz", "Zürich");
@@ -65,8 +61,16 @@ public class PresentationBean {
 //		Library lib2 = new Library("Genève", libAddr2);
 //		Library lib3 = new Library("Bern", libAddr3);
 
-//		// Creating the books
-//		Book b1 = new Book("Testbook", "Description bla", "Heinrich Heine", 0, Language.German);
+		System.out.println("PA_DEBUG:Init books");
+		
+		books = libraryService.getAllBooks();	
+		for(Book book : books)
+			libraryService.deleteBook(book);
+
+		System.out.println("PA_DEBUG:Old books deleted");
+		
+		// Creating the books
+		books.add(new Book("Testbook", "Description bla", "Heinrich Heine", 0, Language.German));
 //		Book b2 = new Book("Testbook", "Description bla", "Heinrich Heine", 0, Language.English);
 //		Book b3 = new Book("Testbook", "Description bla", "Heinrich Heine", 0, Language.French);
 //		Book b4 = new Book("Testbook", "Description bla", "Heinrich Heine", 0, Language.French);
@@ -76,6 +80,11 @@ public class PresentationBean {
 //		Book b8 = new Book("Testbook", "Description bla", "Heinrich Heine", 0, Language.French);
 //		Book b9 = new Book("Testbook", "Description bla", "Heinrich Heine", 0, Language.English);
 //		Book b10 = new Book("Testbook", "Description bla", "Heinrich Heine", 0, Language.German);
+		
+		for(Book book : books)
+			libraryService.addBook(book);
+		
+		System.out.println("PA_DEBUG:Book init finished");
 //
 //		// Creating the Librarians
 //		Librarian l1 = new Librarian("hans.walther@gotank.lib", "1234", "Hans", "Walther", 134, lAddr1);

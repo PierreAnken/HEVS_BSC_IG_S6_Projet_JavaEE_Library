@@ -1,4 +1,4 @@
-package library.bookservice;
+package library.libraryservice;
 
 import java.util.List;
 import javax.ejb.Stateful;
@@ -13,7 +13,7 @@ import library.businessobject.Library;
 import library.businessobject.Reader;
 
 @Stateful
-public class LibraryBean implements library.bookservice.LibraryInterface {
+public class LibraryBean implements library.libraryservice.LibraryService {
 
 	@PersistenceContext(name = "LibraryPU", type=PersistenceContextType.EXTENDED)
 	private EntityManager em;

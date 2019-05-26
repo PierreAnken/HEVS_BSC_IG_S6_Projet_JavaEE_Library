@@ -8,7 +8,7 @@ import library.businessobject.Librarian;
 import library.businessobject.Library;
 import library.businessobject.Reader;
 import library.businessobject.User;
-import library.bookservice.LibraryInterface;
+import library.libraryservice.LibraryService;
 import library.businessobject.Address;
 import library.businessobject.Book;
 
@@ -21,21 +21,23 @@ public class PresentationBean {
 	private List<Librarian> librarians;
 	private List<Reader> readers;
 	private User activeUser;
-	private LibraryInterface libraryInt;
+	
+	private LibraryService libraryService;
 	
 
 	@PostConstruct
 	public void initialize() throws Exception{
 
-		System.out.println("PA_DEBUG");
+		System.out.println("PA_DEBUG:initializePresentationBean");
 		
 		// Create reference to book EJB using JNDI
 		InitialContext ctx = new InitialContext();
-		libraryInt = (LibraryInterface)ctx.lookup("java:global/Library-0.0.1/BookBean!library.bookservice.LibraryInterface");
+		libraryService = (LibraryService)ctx
+				.lookup("java:global/Library-0.0.1/LibraryBean!library.libraryservice.LibraryService");
 
 		Address libAddr1 = new Address("8000", "Paradeplatz", "Zurich");
 		Library lib1 = new Library("Zurich", libAddr1);
-		libraryInt.addLibrary(lib1);
+		libraryService.addLibrary(lib1);
 	}
 	
 	
@@ -43,7 +45,7 @@ public class PresentationBean {
 
 		Address libAddr1 = new Address("8000", "Paradeplatz", "Zurich");
 		Library lib1 = new Library("Zurich", libAddr1);
-		libraryInt.addLibrary(lib1);
+		libraryService.addLibrary(lib1);
 
 		// Creating the addresses - Libraries
 //		Address libAddr1 = new Address("8000", "Paradeplatz", "Zürich");

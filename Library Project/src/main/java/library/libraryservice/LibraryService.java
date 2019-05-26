@@ -1,4 +1,4 @@
-package library.bookservice;
+package library.libraryservice;
 
 import java.util.List;
 import javax.ejb.Local;
@@ -9,7 +9,7 @@ import library.businessobject.Library;
 import library.businessobject.Reader;
 
 @Local
-public interface LibraryInterface{
+public interface LibraryService{
 	
 	void saveOrUpdate(Book b);
 	void lendBook(Book b, int customerID);

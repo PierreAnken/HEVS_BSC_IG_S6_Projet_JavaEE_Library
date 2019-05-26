@@ -2,35 +2,35 @@ package library.libraryservice;
 
 import java.util.List;
 import javax.ejb.Local;
-import library.businessobject.Address;
 import library.businessobject.Book;
 import library.businessobject.Librarian;
 import library.businessobject.Library;
 import library.businessobject.Reader;
+import library.businessobject.Reservation;
 
 @Local
 public interface LibraryService{
 	
-	void saveOrUpdate(Book b);
-	void lendBook(Book b, int customerID);
-	void bringBackBook(Book b, int customerID);
-	void addBook(Book b);
-	void updateBook(Book b);
+	//add update
+	Book addUpdateBook(Book b);
+	Library addUpdateLibrary(Library l);
+	Librarian addUpdateLibrarian(Librarian l);
+	Reader addUpdateReader(Reader r);
+	Reservation addUpdateReservation(Reservation r);
+	
+	//delete
 	void deleteBook(Book b);
+	void deleteLibrary(Library l);
+	void deleteLibrarian(Librarian l);
+	void deleteReader(Reader r);
+	void deleteReservation(Reservation r);
 	
-	Book getBookById(int id);
-	
-	public List<Librarian> getAllLibrarians();
-	public List<Reader> getAllReaders();
+	//getall
+	List<Book> getBooks();
+	List<Library> getLibraries();
+	List<Librarian> getLibrarians();
+	List<Reader> getReaders();
+	List<Reservation> getReservations();
 
-
-	public List<Book> getAllBooks();
-	List<String> getAllBookStrings();
-	public List<Book> getBooksByTextString(String text);
-	public List<Book> getBooksByAuthorID(String author);
-	
-	public List<Address> getAllAddresses();
-	
-	void addLibrary(Library l);
 	void populateLibraryDB();
 }

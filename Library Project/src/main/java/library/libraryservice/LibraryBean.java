@@ -11,117 +11,137 @@ import library.businessobject.Book;
 import library.businessobject.Librarian;
 import library.businessobject.Library;
 import library.businessobject.Reader;
+import library.businessobject.Reservation;
 
 @Stateful
-public class LibraryBean implements library.libraryservice.LibraryService {
+public class LibraryBean implements LibraryService {
 
 	@PersistenceContext(name = "LibraryPU", type=PersistenceContextType.EXTENDED)
 	private EntityManager em;
-
 	
-	public void addBook(Book b) {
+	// add or update
+	public Book addUpdateBook(Book b) {
+		b = em.merge(b);
 		em.persist(b);
-	}
-	
-
-	public List<String> getAllBookStrings() {
-		return (List<String>) em.createQuery("FROM Book b").getResultList();
+		return b;
 	}
 	
-	public Book getBookById(int idBook) {
-		return (Book) em.createQuery("FROM Book b where b.id =:id").setParameter("id", idBook).getSingleResult();
-	}
-
-	public void addLibrary(Library library) {
-		em.persist(library);
+	public Library addUpdateLibrary(Library l) {
+		l = em.merge(l);
+		em.persist(l);
+		return l;
 	}
 	
-	public void lendBook(Book b, int customerID) {
-		//b.setCurrentOwner(customerID);
-		em.persist(b);
+	public Librarian addUpdateLibrarian(Librarian l) {
+		l = em.merge(l);
+		em.persist(l);
+		return l;
+	}
+	
+	public Reader addUpdateReader(Reader r) {
+		r = em.merge(r);
+		em.persist(r);
+		return r;
+	}
+	
+	public Reservation addUpdateReservation(Reservation r) {
+		r = em.merge(r);
+		em.persist(r);
+		return r;
 	}
 
-	public void bringBackBook(Book b, int customerID) {
-		//b.setCurrentOwner(customerID);
-		em.persist(b);
-	}
-
-
-
-	public void updateBook(Book b) {
-		em.persist(b);
-	}
-
+	
+	//delete
+	@Override
 	public void deleteBook(Book b) {
 		em.remove(b);
 	}
 
-	public List<Book> getAllBooks() {
+	@Override
+	public void deleteLibrary(Library l) {
+		em.remove(l);
+	}
+
+	@Override
+	public void deleteLibrarian(Librarian l) {
+		em.remove(l);
+	}
+
+	@Override
+	public void deleteReader(Reader r) {
+		em.remove(r);
+	}
+
+	@Override
+	public void deleteReservation(Reservation r) {
+		em.remove(r);
+	}
+	
+	
+	//get all 
+	@Override
+	public List<Book> getBooks() {
 		return (List<Book>) em.createQuery("FROM Book b").getResultList();
 	}
 
+	@Override
+	public List<Library> getLibraries() {
+		return (List<Library>) em.createQuery("FROM Library l").getResultList();
+	}
 
-	public List<Librarian> getAllLibrarians() {
+	@Override
+	public List<Librarian> getLibrarians() {
 		return (List<Librarian>) em.createQuery("FROM Librarian l").getResultList();
 	}
 
-	public List<Reader> getAllReaders() {
+	@Override
+	public List<Reader> getReaders() {
 		return (List<Reader>) em.createQuery("FROM Reader r").getResultList();
 	}
 
-	public List<Book> getBooksByTextString(String text) {
-		return (List<Book>) em.createQuery("FROM Book b WHERE b.TITLE=:title").setParameter("title", text)
-				.getResultList();
+	@Override
+	public List<Reservation> getReservations() {
+		return (List<Reservation>) em.createQuery("FROM Reservation r").getResultList();
 	}
-
-	public List<Book> getBooksByAuthorID(String author) {
-		return (List<Book>) em.createQuery("FROM Book b WHERE b.Author=:author").setParameter("author", author)
-				.getResultList();
-	}
-
-	public void addAddress(Address ad) {
-		em.persist(ad);
-	}
-
-	public void updateAddress(Address ad) {
-		em.persist(ad);
-	}
-
-	public void deleteAddress(Address ad) {
-		em.remove(ad);
-	}
-
-	public List<Address> getAllAddresses() {
-		return (List<Address>) em.createQuery("FROM Address a").getResultList();
-	}
-
-	public void saveOrUpdate(Book b) {
-		// TODO Auto-generated method stub
-
-	}
-
-
+	
 	@Override
 	public void populateLibraryDB() {
 
 		System.out.println("PA_DEBUG: Start DB populate");
-		/*
-		 * books = libraryService.getAllBooks(); for(Book book : books)
-		 * libraryService.deleteBook(book);
-		 * 
-		 * // Creating the books books.add(new Book("Testbook", "Description bla",
-		 * "Heinrich Heine", "FR"));
-		 * 
-		 * for(Book book : books) libraryService.addBook(book);
-		 */
 		
 		
+		List<Library> libraries = getLibraries(); 
+		for(int i=0; i<libraries.size();i++)
+			deleteLibrary(libraries.get(i));
 		
-		Address libAddr1 = new Address("8000", "Paradeplatz", "Zurich");
-		Library lib1 = new Library("Sierre1", libAddr1);
-		addLibrary(lib1);
+		Address sierre = new Address("3960", "Rue Notre Dame des Marais 5", "Sierre");
+		Library lib1 = addUpdateLibrary(new Library("Bibliothèque-Médiathèque Sierre", sierre));
+
 		
 		System.out.println("PA_DEBUG: Libraries done");
+		
+		List<Book> books = getBooks(); 
+		for(int i=0; i<books.size();i++)
+			deleteBook(books.get(i));
+			 
+		System.out.println("PA_DEBUG: Existing book deleted");
+		
+		// Creating the books 
+		books.add(new Book("Testbook", "Description bla","Heinrich Heine", "FR",lib1));
+		books.add(new Book("Testbook2", "Description bla","Heinrich Heine", "FR",lib1));
+		books.add(new Book("Testbook3", "Description bla","Heinrich Heine", "FR",lib1));
+		books.add(new Book("Testbook4", "Description bla","Heinrich Heine", "FR",lib1));
+		books.add(new Book("Testbook5", "Description bla","Heinrich Heine", "FR",lib1));
+		books.add(new Book("Testbook6", "Description bla","Heinrich Heine", "FR",lib1));
+		books.add(new Book("Testbook7", "Description bla","Heinrich Heine", "FR",lib1));
+		
+		System.out.println("PA_DEBUG: Books in DB: "+getBooks().size());	 
+		for(Book book : books) { 
+			addUpdateBook(book);
+		}
+
+		System.out.println("PA_DEBUG: New books added");
+
 		
 // Creating the addresses - Libraries
 //		Address libAddr1 = new Address("8000", "Paradeplatz", "ZÃ¼rich");
@@ -174,5 +194,6 @@ public class LibraryBean implements library.libraryservice.LibraryService {
 //		em.persist(lib2);
 //		em.persist(lib3);
 	}
+
 
 }

@@ -63,11 +63,12 @@ public class Book {
 	public Book() {
 	}
 
-	public Book(String title, String description, String author, String language) {
+	public Book(String title, String description, String author, String language, Library library) {
 		this.title = title;
 		this.description = description;
 		this.author = author;
 		this.language = language;
+		this.library = library;
 	}
 
 

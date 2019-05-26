@@ -22,7 +22,7 @@ public class Library {
 	@OneToMany(mappedBy="library")
 	private Set<Book> books;
 	
-	@ManyToMany
+	@ManyToMany(mappedBy="libraries")
 	private Set<Librarian> librarians;
 	
 	public Set<Librarian> getLibrarians() {

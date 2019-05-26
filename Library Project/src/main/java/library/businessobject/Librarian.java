@@ -3,15 +3,17 @@ package library.businessobject;
 import java.util.Set;
 
 import javax.persistence.Entity;
+import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 
 @Entity
 public class Librarian extends User {
 	
+	@Id
 	private int employeeId;
 
-	@ManyToMany private Set<Library> libraries;
-	 
+	@ManyToMany 
+	private Set<Library> libraries;
 	
 	public Set<Library> getLibraries() {
 		return libraries;

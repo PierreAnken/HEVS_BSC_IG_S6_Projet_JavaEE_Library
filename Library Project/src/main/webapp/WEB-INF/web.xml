@@ -31,7 +31,6 @@
   <servlet-mapping>
     <servlet-name>Faces Servlet</servlet-name>
     <url-pattern>/faces/*</url-pattern>
-    <url-pattern>/javax.faces.resource/*</url-pattern>
   </servlet-mapping>
   <mime-mapping>
       <extension>ttf</extension>

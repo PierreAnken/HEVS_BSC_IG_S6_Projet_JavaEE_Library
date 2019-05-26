@@ -5,9 +5,11 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
+import javax.persistence.Table;
 
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @Entity
+@Table(name="User")
 public abstract class User {
 	
 	@Id

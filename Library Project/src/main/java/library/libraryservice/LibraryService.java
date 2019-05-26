@@ -32,4 +32,5 @@ public interface LibraryService{
 	public List<Address> getAllAddresses();
 	
 	void addLibrary(Library l);
+	void populateLibraryDB();
 }

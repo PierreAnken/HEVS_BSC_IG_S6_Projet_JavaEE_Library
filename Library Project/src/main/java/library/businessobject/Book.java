@@ -9,14 +9,13 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.Table;
 
 @Entity
+@Table(name="Book")
 public class Book {
 	
-	private String title, description, author;
-	private int currentOwner;
-	private Language Language;
-
+	private String title, description, author, language;
 
     @ManyToOne private Library library;
   
@@ -24,7 +23,7 @@ public class Book {
     Set<Reservation> reservations;
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE)
 	private Long id;
 	
 	public String getTitle() {
@@ -51,34 +50,25 @@ public class Book {
 		this.author = author;
 	}
 	
-	public Language getLanguage() {
-		return Language;
-	}
-	
-	public void setLanguage(Language language) {
-		Language = language;
-	}
-	
-	public int getCurrentOwner() {
-		return currentOwner;
-	}
-	
-	public void setCurrentOwner(int currentOwner) {
-		this.currentOwner = currentOwner;
+	public String getLanguage() {
+		return language;
 	}
 
+	public void setLanguage(String language) {
+		this.language = language;
+	}
+	
 
 	// constructors
 	public Book() {
 	}
 
-	public Book(String title, String description, String author, int currentOwner, Language language) {
+	public Book(String title, String description, String author, String language) {
 		this.title = title;
 		this.description = description;
 		this.author = author;
-		this.currentOwner = currentOwner;
-		this.Language = language;
+		this.language = language;
 	}
 
-	
+
 }

@@ -5,3 +5,9 @@ Library Project/src/main/java/.DS_Store
 .DS_Store
 Library Project/src/main/.DS_Store
 /.metadata/
+Library Project/src/main/java/library/businessobject/User.java
+Library Project/target/classes/library/businessobject/Address.class
+Library Project/target/classes/library/businessobject/Language.class
+Library Project/target/classes/library/businessobject/Reservation.class
+Library Project/target/classes/library/businessobject/User.class
+Library Project/target/classes/library/exception/BookException.class

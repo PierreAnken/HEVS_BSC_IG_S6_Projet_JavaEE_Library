@@ -1,5 +1,6 @@
 package library.businessobject;
 
+import java.util.HashSet;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -20,7 +21,7 @@ public class Book {
     @ManyToOne private Library library;
   
     @OneToMany(mappedBy="book", cascade={CascadeType.REMOVE})
-    Set<Reservation> reservations;
+    Set<Reservation> reservations = new HashSet<Reservation>();
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE)

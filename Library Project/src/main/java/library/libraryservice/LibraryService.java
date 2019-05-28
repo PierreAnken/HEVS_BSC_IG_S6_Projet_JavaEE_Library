@@ -1,14 +1,15 @@
 package library.libraryservice;
 
 import java.util.List;
-import javax.ejb.Local;
+import javax.ejb.Remote;
+
 import library.businessobject.Book;
 import library.businessobject.Librarian;
 import library.businessobject.Library;
 import library.businessobject.Reader;
 import library.businessobject.Reservation;
 
-@Local
+@Remote
 public interface LibraryService{
 	
 	//add update

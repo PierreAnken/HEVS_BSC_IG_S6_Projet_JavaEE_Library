@@ -11,3 +11,4 @@ Library Project/target/classes/library/businessobject/Language.class
 Library Project/target/classes/library/businessobject/Reservation.class
 Library Project/target/classes/library/businessobject/User.class
 Library Project/target/classes/library/exception/BookException.class
+*.class

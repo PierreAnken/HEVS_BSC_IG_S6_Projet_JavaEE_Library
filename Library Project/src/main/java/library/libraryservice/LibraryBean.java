@@ -3,6 +3,7 @@ package library.libraryservice;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.annotation.PostConstruct;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -104,10 +105,14 @@ public class LibraryBean implements LibraryService {
 		return (List<Reservation>) em.createQuery("FROM Reservation r").getResultList();
 	}
 	
-	@Override
+	
 	public void populateLibraryDB() {
 
 		System.out.println("PA_DEBUG: Start DB init");
+		
+		//if db is empty we populate it
+		if(getBooks().size() > 0)
+			return;
 		
 		//Delete libraries
 		List<Library> libraries = getLibraries(); 

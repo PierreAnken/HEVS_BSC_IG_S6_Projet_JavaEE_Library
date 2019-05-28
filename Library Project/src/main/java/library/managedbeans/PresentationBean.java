@@ -15,7 +15,6 @@ import library.businessobject.Book;
 public class PresentationBean {
 
 	private List<Library> libraries;
-	private List<String> bigImages;
 	private List<Book> books;
 	private Book selectedBook;
 	private List<Librarian> librarians;
@@ -28,31 +27,13 @@ public class PresentationBean {
 	@PostConstruct
 	public void initialize() throws Exception{
 
-		System.out.println("PA_DEBUG:initializePresentationBean");
-		
 		// Create reference to book EJB using JNDI
 		InitialContext ctx = new InitialContext();
 		libraryService = (LibraryService)ctx
 				.lookup("java:global/Library-0.0.1/LibraryBean!library.libraryservice.LibraryService");
 
-	}
-	
-	public String populateLibraryDB() {
+		//init library if needed
 		libraryService.populateLibraryDB();
-		return "index?faces-redirect=true";
-	}
-	
-	
-	public void loadImages() {
-		bigImages = new ArrayList<String>();
-		bigImages.add("brecht.jpg");
-		bigImages.add("goethe.jpg");
-		bigImages.add("heine.jpg");
-		bigImages.add("hesse.jpg");
-		bigImages.add("kaestner.jpg");
-		bigImages.add("kafka.jpg");
-		bigImages.add("schiller.jpg");
-		bigImages.add("shakespeare.jpg");
 	}
 
 	public List<Library> getLibraries() {
@@ -63,13 +44,6 @@ public class PresentationBean {
 		this.libraries = libraries;
 	}
 
-	public List<String> getBigImages() {
-		return bigImages;
-	}
-
-	public void setBigImages(List<String> bigImages) {
-		this.bigImages = bigImages;
-	}
 
 	public List<Book> getBookList() {
 		return books;
@@ -101,14 +75,6 @@ public class PresentationBean {
 
 	public void setReaders(List<Reader> readers) {
 		this.readers = readers;
-	}
-
-	public User getActiveUser() {
-		return activeUser;
-	}
-
-	public void setActiveUser(User activeUser) {
-		this.activeUser = activeUser;
 	}
 
 }

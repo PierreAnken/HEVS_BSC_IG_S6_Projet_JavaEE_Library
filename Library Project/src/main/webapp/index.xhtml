@@ -8,11 +8,8 @@
 
 <ui:composition template="/WEB-INF/templates/template.xhtml">
     	<ui:define name="content">
-			<h:form>
-				<h:commandButton value="Populate"
-					action="#{PresentationBean.populateLibraryDB}" class="btn btn-danger">
-				</h:commandButton>
-			</h:form>
+
+			<h:graphicImage value="#{resource['img:library_closed.jpg']}" class = "img-responsive"/>
     	</ui:define>
 	</ui:composition>
 </html>

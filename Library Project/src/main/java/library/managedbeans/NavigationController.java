@@ -1,5 +1,7 @@
 package library.managedbeans;
 
+//Source: https://www.tutorialspoint.com/jsf/jsf_page_navigation.htm
+
 import java.io.Serializable;
 
 import javax.faces.bean.ManagedBean;
@@ -10,22 +12,22 @@ import javax.faces.bean.RequestScoped;
 @RequestScoped
 
 public class NavigationController implements Serializable {
-   //this managed property will read value from request parameter pageId
+
    @ManagedProperty(value = "#{param.pageId}")
    private String pageId;
-
    
    public String showPage() {
-      if(pageId == null) {
+      if(pageId == null)
          return "index";
-      }
       
-      if(pageId.equals("1")) {
-         return "page1";
-      }else if(pageId.equals("2")) {
-         return "page2";
-      }else {
-         return "index";
-      }
+      return pageId+"?faces-redirect=true";
    }
+   
+	public String getPageId() {
+		return pageId;
+	}
+	
+	public void setPageId(String pageId) {
+		this.pageId = pageId;
+	}
 }

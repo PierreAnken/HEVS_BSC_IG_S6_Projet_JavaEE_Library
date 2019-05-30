@@ -10,18 +10,7 @@
     	<ui:define name="content">
 	    	<div>
 		    	<div class="col align-self-center">
-		    		<p>
-		    			<h:form>
-			    			<h:commandLink action = "#{navigationController.showPage}">
-								<h:graphicImage 
-									value="#{resource['img:library_closed.jpg']}" 
-									class = "img-responsive centered pointer" 
-									onmouseover="this.src='#{resource['img:library_open.jpg']}'"
-									onmouseout="this.src='#{resource['img:library_closed.jpg']}'"/>
-							  <f:param name = "pageId" value = "indoor" />
-	  						</h:commandLink>
-  						</h:form>
-					</p>
+					<h2>Indoor</h2>
 				</div>
 			</div>
     	</ui:define>

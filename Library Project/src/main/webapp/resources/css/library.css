@@ -1,7 +1,17 @@
-body {
-  min-height: 2000px;
-}
+
 
 .navbar-static-top {
   margin-bottom: 19px;
+}
+
+
+
+img.centered {
+	display: block;
+	margin-left: auto;
+	margin-right: auto 
+}
+
+.pointer{
+	cursor:pointer;
 }

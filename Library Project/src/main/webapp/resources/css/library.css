@@ -15,3 +15,10 @@ img.centered {
 .pointer{
 	cursor:pointer;
 }
+.container{
+	padding:10%
+}
+
+ul {
+  list-style-type: square;
+}

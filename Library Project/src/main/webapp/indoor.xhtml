@@ -8,10 +8,55 @@
 
 <ui:composition template="/WEB-INF/templates/template.xhtml">
     	<ui:define name="content">
-	    	<div>
+	    	<div class="">
 		    	<div class="col align-self-center">
-					<h2>Indoor</h2>
-				</div>
+					<h:form>
+						<div>
+						<h:graphicImage 
+							value="#{resource['img:reception.jpg']}"
+							class = "img-responsive centered"/>
+						
+							I would like to ...
+							<ul>
+								<li>
+									<h:commandLink action = "#{navigationController.showPage}" value="get a reader card">
+								  		<f:param name = "pageId" value = "readerCard" />
+		  							</h:commandLink>
+	  							</li>
+	  							<li>
+									<h:commandLink action = "#{navigationController.showPage}" value="return a book">
+								  		<f:param name = "pageId" value = "returnBook" />
+		  							</h:commandLink>
+	  							</li>
+	  							<li>
+									<h:commandLink action = "#{navigationController.showPage}" value="load money on my account">
+								  		<f:param name = "pageId" value = "loadMoney" />
+		  							</h:commandLink>
+	  							</li>
+	  							<li>
+									<h:commandLink action = "#{navigationController.showPage}" value="borrow those books.">
+								  		<f:param name = "pageId" value = "borrowBooks" />
+		  							</h:commandLink>
+	  							</li>
+							</ul>
+						</div>
+						<div>
+							<h:commandLink action = "#{navigationController.showPage}" value="search a book">
+								<f:param name ="pageId" value = "shelfs" />
+			  				</h:commandLink>
+						</div>
+						<div>
+							<h:commandLink action = "#{navigationController.showPage}" value="Leave the library">
+								<f:param name ="pageId" value = "index" />
+			  				</h:commandLink>
+						</div>
+						<div>
+							<h:commandLink action = "#{navigationController.showPage}" value="Edit book list">
+								<f:param name ="pageId" value = "adminBook" />
+			  				</h:commandLink>
+						</div>
+						</h:form>
+					</div>
 			</div>
     	</ui:define>
 	</ui:composition>

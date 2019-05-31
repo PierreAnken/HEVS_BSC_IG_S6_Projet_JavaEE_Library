@@ -32,15 +32,17 @@ public class PresentationBean {
 		//init library if needed
 		libraryService.populateLibraryDB();
 		
-//		// fill book list
-//		this.bookList = libraryService.getBookList();
-//		System.out.println("Test");
 	}
 
 	public List<Library> getLibraries() {
 		return libraryService.getLibraries();
 	}
 
+
+	public Book getBook (int bookId) {
+		return libraryService.getBook(bookId);
+	}
+	
 	public List<Book> getBookList() {
 		return libraryService.getBooks();
 	}

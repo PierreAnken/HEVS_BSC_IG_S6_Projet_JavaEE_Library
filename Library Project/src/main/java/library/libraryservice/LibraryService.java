@@ -33,5 +33,6 @@ public interface LibraryService{
 	List<Reader> getReaders();
 	List<Reservation> getReservations();
 
+	Book getBook(int bookId);
 	void populateLibraryDB();
 }

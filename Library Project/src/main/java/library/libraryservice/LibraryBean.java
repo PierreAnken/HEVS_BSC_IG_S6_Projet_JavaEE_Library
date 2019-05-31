@@ -123,7 +123,7 @@ public class LibraryBean implements LibraryService {
 		
 		//Add
 		Address sierre = new Address("3960", "Rue Notre Dame des Marais 5", "Sierre");
-		Library lib1 = new Library("Bibliothèque-Médiathèque Sierre", sierre);
+		Library lib1 = new Library("BibliothÃ¨que-MÃ©diathÃ¨que Sierre", sierre);
 		
 		System.out.println("PA_DEBUG: Libraries added");
 		

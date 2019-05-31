@@ -1,0 +1,59 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core">
+
+<ui:composition template="/WEB-INF/templates/template.xhtml">
+    	<ui:define name="content">
+	    	<div class="">
+		    	<div class="col align-self-center">
+					<h:form>
+						<div>
+							
+							<ul>
+								<li>
+									<h:commandLink action = "#{navigationController.showPage}" value="get a reader card">
+								  		<f:param name = "pageId" value = "readerCard" />
+		  							</h:commandLink>
+	  							</li>
+	  							<li>
+									<h:commandLink action = "#{navigationController.showPage}" value="return a book">
+								  		<f:param name = "pageId" value = "returnBook" />
+		  							</h:commandLink>
+	  							</li>
+	  							<li>
+									<h:commandLink action = "#{navigationController.showPage}" value="load money on my account">
+								  		<f:param name = "pageId" value = "loadMoney" />
+		  							</h:commandLink>
+	  							</li>
+	  							<li>
+									<h:commandLink action = "#{navigationController.showPage}" value="borrow those books.">
+								  		<f:param name = "pageId" value = "borrowBooks" />
+		  							</h:commandLink>
+	  							</li>
+							</ul>
+						</div>
+						<div>
+							<h:commandLink action = "#{navigationController.showPage}" value="search a book">
+								<f:param name ="pageId" value = "shelfs" />
+			  				</h:commandLink>
+						</div>
+						<div>
+							<h:commandLink action = "#{navigationController.showPage}" value="Leave the library">
+								<f:param name ="pageId" value = "index" />
+			  				</h:commandLink>
+						</div>
+						<div>
+							<h:commandLink action = "#{navigationController.showPage}" value="Edit book list">
+								<f:param name ="pageId" value = "adminBook" />
+			  				</h:commandLink>
+						</div>
+						</h:form>
+					</div>
+			</div>
+    	</ui:define>
+	</ui:composition>
+</html>

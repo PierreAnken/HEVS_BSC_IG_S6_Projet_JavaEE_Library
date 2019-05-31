@@ -35,4 +35,5 @@ public interface LibraryService{
 
 	Book getBook(int bookId);
 	void populateLibraryDB();
+	Reader getReader(long id);
 }

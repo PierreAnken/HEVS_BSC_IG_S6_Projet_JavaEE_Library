@@ -8,6 +8,8 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.RequestScoped;
 
+import library.businessobject.Reader;
+
 @ManagedBean(name = "navigationController", eager = true)
 @RequestScoped
 
@@ -30,4 +32,6 @@ public class NavigationController implements Serializable {
 	public void setPageId(String pageId) {
 		this.pageId = pageId;
 	}
+
+
 }

@@ -30,7 +30,7 @@ ul {
 
 .dialog_left{
 	background-color: #ffeecc;
-	padding:5px;
+	padding:10px;
 	border:2px solid #805500;
 	border-radius: 10px;
 	margin:0;
@@ -39,7 +39,7 @@ ul {
 
 .dialog_right{
 	background-color: #d9edf9;
-	padding:5px;
+	padding:10px;
 	border:2px solid #2a5772;
 	border-radius: 10px;
 	margin:0;

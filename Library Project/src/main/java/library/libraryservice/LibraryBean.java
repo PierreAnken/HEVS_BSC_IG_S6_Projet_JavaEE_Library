@@ -109,6 +109,12 @@ public class LibraryBean implements LibraryService {
 		return (List<Reservation>) em.createQuery("FROM Reservation r").getResultList();
 	}
 	
+	@Override
+	public Reader getReader(long readerId) {
+		return (Reader) em.createQuery("FROM Reader r WHERE b.id = :readerId").setParameter("readerId", readerId).getSingleResult();
+	}
+
+	
 	
 	public void populateLibraryDB() {
 
@@ -170,6 +176,5 @@ public class LibraryBean implements LibraryService {
 		
 		System.out.println("PA_DEBUG: End of database init");
 	}
-
 
 }

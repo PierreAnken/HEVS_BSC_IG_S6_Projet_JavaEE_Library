@@ -1,5 +1,6 @@
 package library.businessobject;
 
+import java.io.Serializable;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -8,7 +9,7 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
 @Entity
-public class Reader extends User {
+public class Reader extends User implements Serializable{
 
 	
 	private int cardId;

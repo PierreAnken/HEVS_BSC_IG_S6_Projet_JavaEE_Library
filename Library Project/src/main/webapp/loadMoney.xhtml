@@ -9,22 +9,24 @@
 
 <ui:composition template="/WEB-INF/templates/template.xhtml">
     	<ui:define name="content">
-		    <div class="col align-self-center">
+		    <div id="loadAccount" class="col align-self-center">
 	    		<h:graphicImage 
 					value="#{resource['img:librarian.jpg']}" 
 					class = "img-responsive centered pointer" />				
 				<div class="col-sm-6 nopadding">
    					<div class="dialog_left">
-   						Hello, do you have your reader's card with you?
+   						Sure , do you have your reader's card with you?
    					</div>
    				</div>
    				<div class="w-100"/>
    				<div class="col-sm-6 col-sm-offset-6 nopadding">
-   					<h:form>
+   					<h:form action="navigationController.showPage()">
+   						<f:param name ="pageId" value ="loadAmount" />
    						<div class="dialog_right">
    							Yes here it is : 
-	   						<h:selectOneMenu>						
-	   							<f:selectItems value="#{PresentationBean.getReaders()}" var="reader" itemLabel="#{reader.cardId} (#{user.cardId})" itemValue="#{reader.cardId}" />
+	   						<h:selectOneMenu onchange="submit();" value="#{PresentationBean.getBagService().currentReader}" converter="readerConverter">
+	   							<f:selectItem itemLabel="Looking into my pocket  ..." />					
+	   							<f:selectItems value="#{PresentationBean.getReaders()}" var="reader" itemLabel="#{reader.cardId} (#{reader.firstname}-#{reader.lastname})" itemValue="#{reader.cardId}" />
 							</h:selectOneMenu>
 						</div>
 						<div class="dialog_right">

@@ -27,6 +27,10 @@ public class Book {
 	@GeneratedValue(strategy = GenerationType.SEQUENCE)
 	private Long id;
 	
+	public Long getId() {
+		return id;
+	}
+
 	public String getTitle() {
 		return title;
 	}

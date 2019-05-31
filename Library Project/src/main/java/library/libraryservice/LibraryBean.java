@@ -85,6 +85,11 @@ public class LibraryBean implements LibraryService {
 	}
 
 	@Override
+	public Book getBook(int bookId) {
+		return (Book) em.createQuery("FROM Book b WHERE b.id = :bookId").setParameter("bookId", bookId).getSingleResult();
+	}
+
+	@Override
 	public List<Library> getLibraries() {
 		return (List<Library>) em.createQuery("FROM Library l").getResultList();
 	}

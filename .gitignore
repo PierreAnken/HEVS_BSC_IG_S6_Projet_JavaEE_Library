@@ -12,3 +12,9 @@ Library Project/target/classes/library/businessobject/Reservation.class
 Library Project/target/classes/library/businessobject/User.class
 Library Project/target/classes/library/exception/BookException.class
 *.class
+Library Project/target/classes/library/businessobject/Address.class
+Library Project/target/classes/library/businessobject/Book.class
+Library Project/target/classes/library/businessobject/Library.class
+*.class
+Library Project/target/m2e-wtp/web-resources/META-INF/MANIFEST.MF
+Library Project/target/m2e-wtp/web-resources/META-INF/MANIFEST.MF

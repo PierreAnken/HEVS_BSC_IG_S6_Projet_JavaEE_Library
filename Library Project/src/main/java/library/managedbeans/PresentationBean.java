@@ -1,5 +1,6 @@
 package library.managedbeans;
 
+import java.io.Serializable;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.naming.InitialContext;
@@ -11,6 +12,8 @@ import library.libraryservice.LibraryService;
 import library.businessobject.Book;
 
 public class PresentationBean {
+	
+//	private static final long serialVersionUID = 1L;
 	
 	private LibraryService libraryService;
 	private BagService bagService;
@@ -28,12 +31,18 @@ public class PresentationBean {
 		
 		//init library if needed
 		libraryService.populateLibraryDB();
+		
 	}
 
 	public List<Library> getLibraries() {
 		return libraryService.getLibraries();
 	}
 
+
+	public Book getBook (int bookId) {
+		return libraryService.getBook(bookId);
+	}
+	
 	public List<Book> getBookList() {
 		return libraryService.getBooks();
 	}

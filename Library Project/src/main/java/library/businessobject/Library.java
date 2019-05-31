@@ -1,5 +1,6 @@
 package library.businessobject;
 
+import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -16,7 +17,9 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name="Library")
-public class Library {
+public class Library implements Serializable {
+
+	private static final long serialVersionUID = 1L;
 
 	private String name;
 

@@ -11,11 +11,6 @@ import library.libraryservice.LibraryService;
 import library.businessobject.Book;
 
 public class PresentationBean {
-
-	private List<Library> libraries;
-	private List<Book> books;
-	private List<Librarian> librarians;
-	private List<Reader> readers;
 	
 	private LibraryService libraryService;
 	private BagService bagService;
@@ -36,35 +31,29 @@ public class PresentationBean {
 	}
 
 	public List<Library> getLibraries() {
-		return libraries;
-	}
-
-	public void setLibraries(List<Library> libraries) {
-		this.libraries = libraries;
+		return libraryService.getLibraries();
 	}
 
 	public List<Book> getBookList() {
-		return books;
+		return libraryService.getBooks();
 	}
 
-	public void setBookList(List<Book> bookList) {
-		this.books = bookList;
-	}
 
 	public List<Librarian> getLibrarians() {
-		return librarians;
+		return libraryService.getLibrarians();
 	}
 
-	public void setLibrarians(List<Librarian> librarians) {
-		this.librarians = librarians;
-	}
 
 	public List<Reader> getReaders() {
-		return readers;
+		return libraryService.getReaders();
 	}
-
-	public void setReaders(List<Reader> readers) {
-		this.readers = readers;
+	
+	public void addBookToBag(Book b) {
+		bagService.addBook(b);
+	}
+	
+	public void removeBookFromBag(Book b) {
+		bagService.removeBook(b);
 	}
 
 }

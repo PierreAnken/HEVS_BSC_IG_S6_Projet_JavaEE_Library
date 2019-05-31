@@ -13,6 +13,7 @@ import library.businessobject.Book;
 public class BagBean implements BagService {
 
 	private List<Book> booksInBag;	
+	private 
 	
 	@Override
 	public void removeBook(Book b) {

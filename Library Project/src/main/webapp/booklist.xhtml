@@ -23,17 +23,17 @@
 			</div>
 		</div>
 
-		<ui:repeat var="pb" value="#{presentationController.books}" varStatus="status">
+		<ui:repeat var="book" value="#{PresentationBean.bookList}" varStatus="status">
 
 		<div class="row bg-primary">
 			<div class="col-sm-3">
-				<b>#{pb.orderNo}</b>
+				<b>#{book.title}</b>
 			</div>
 			<div class="col-sm-6">
-				<b>#{pb.productName}</b>
+				<b>#{book.description}</b>
 			</div>
 			<div class="col-sm-2">
-				<b>#{pb.price}</b>
+				<b>#{book.author}#{book.language}</b>
 			</div>
 			<div class="col-sm-1">
 				<b><a href="#">Add</a></b>

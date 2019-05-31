@@ -1,5 +1,6 @@
 package library.managedbeans;
 
+import java.io.Serializable;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.naming.InitialContext;
@@ -12,8 +13,11 @@ import library.businessobject.Book;
 
 public class PresentationBean {
 	
+//	private static final long serialVersionUID = 1L;
+	
 	private LibraryService libraryService;
 	private BagService bagService;
+	private List<Book> bookList;
 
 	@PostConstruct
 	public void initialize() throws Exception{
@@ -24,10 +28,14 @@ public class PresentationBean {
 				.lookup("java:global/Library-0.0.1/LibraryBean!library.libraryservice.LibraryService");
 
 		bagService =  (BagService)ctx
-				.lookup("java:global/Library-0.0.1/BagBean!library.bagservice.BagService");
+				.lookup("java:global/Library-0.0.1/BagBean!library.libraryservice.BagService");
 		
 		//init library if needed
 		libraryService.populateLibraryDB();
+		
+		// fill book list
+		this.bookList = libraryService.getBooks();
+		System.out.println("Test");
 	}
 
 	public List<Library> getLibraries() {

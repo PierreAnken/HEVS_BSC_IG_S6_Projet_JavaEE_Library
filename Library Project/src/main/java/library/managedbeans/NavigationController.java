@@ -10,24 +10,34 @@ import javax.faces.bean.RequestScoped;
 
 @ManagedBean(name = "navigationController", eager = true)
 @RequestScoped
-
 public class NavigationController implements Serializable {
 
-   @ManagedProperty(value = "#{param.pageId}")
-   private String pageId;
-   
-   public String showPage() {
-      if(pageId == null)
-         return "index";
-      
-      return pageId+"?faces-redirect=true";
-   }
-   
+	@ManagedProperty(value = "#{param.pageId}")
+	private String pageId;
+
+	@ManagedProperty(value = "#{param.objectId}")
+	private String objectId;
+
+	public String showPage() {
+		if(pageId == null)
+			return "index";
+
+		return pageId+"?faces-redirect=true&objectId="+objectId;
+	}
+
 	public String getPageId() {
 		return pageId;
 	}
-	
+
 	public void setPageId(String pageId) {
 		this.pageId = pageId;
 	}
+	public String getObjectId() {
+		return objectId;
+	}
+
+	public void setObjectId(String objectId) {
+		this.objectId = objectId;
+	}
+
 }

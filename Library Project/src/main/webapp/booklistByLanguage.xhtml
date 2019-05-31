@@ -25,40 +25,30 @@
 			</div>
 		</div>
 
-		<ui:repeat var="book" value="#{PresentationBean.getBookList()}"
+		<ui:repeat var="book"
+			value="#{PresentationBean.getBooksByLanguage(navigationController.getObjectId())}"
 			varStatus="status">
 
 			<div class="row box">
 
 				<div class="col-sm-3">
 					<h:form>
-						<h:commandLink action="#{navigationController.showPage}">
-							<h:graphicImage
-								value="#{resource['img:lang_'.concat(book.language).concat('.png')]}" />
-							<f:param name="pageId" value="booklistByLanguage" />
-							<f:param name="objectId" value="#{book.language}" />
-						</h:commandLink>
-					<b>&nbsp;
-						<h:commandLink action="#{navigationController.showPage}" value="#{book.title}">
-							<f:param name="pageId" value="bookdetail" />
-							<f:param name="objectId" value="#{book.id}" />
-						</h:commandLink>
-					</b>
+						<h:graphicImage
+							value="#{resource['img:lang_'.concat(book.language).concat('.png')]}" />
+						&nbsp; <h:commandLink
+								action="#{navigationController.showPage}" value="#{book.title}">
+								<f:param name="pageId" value="bookdetail" />
+								<f:param name="objectId" value="#{book.id}" />
+							</h:commandLink>
 					</h:form>
 				</div>
 				<div class="col-sm-6">
 					<c:set var="string1" value="#{book.description}" />
 					<c:set var="descr_string" value="${fn:substring(string1, 0, 5)}" />
-					<b>#{descr_string} ...</b>
+					#{descr_string} ...
 				</div>
 				<div class="col-sm-2">
-					<h:form>
-						<h:commandLink action="#{navigationController.showPage}"
-							value="#{book.author}">
-							<f:param name="pageId" value="booklistByAuthor" />
-							<f:param name="objectId" value="#{book.author}" />
-						</h:commandLink>
-					</h:form>
+				  	#{book.author}
 				</div>
 				<div class="col-sm-1">
 					<h:form>
@@ -76,6 +66,9 @@
 				</div>
 			</div>
 		</ui:repeat>
+		<br />
+		<h:commandButton value="Show all results" class="btn-primary"
+			type="button" onclick="location.href='booklist.xhtml';" />
 	</ui:define>
 </ui:composition>
 </html>

@@ -1,0 +1,52 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core">
+
+<ui:composition template="/WEB-INF/templates/template.xhtml">
+	<ui:define name="content">
+		<div class="row">
+			<div class="col-sm-3">
+				<b>Title</b>
+			</div>
+			<div class="col-sm-6">
+				<b>Description</b>
+			</div>
+			<div class="col-sm-2">
+				<b>Author</b>
+			</div>
+			<div class="col-sm-1">
+				<b>Action</b>
+			</div>
+		</div>
+
+		<ui:repeat var="pb" value="#{presentationController.books}" varStatus="status">
+
+		<div class="row bg-primary">
+			<div class="col-sm-3">
+				<b>#{pb.orderNo}</b>
+			</div>
+			<div class="col-sm-6">
+				<b>#{pb.productName}</b>
+			</div>
+			<div class="col-sm-2">
+				<b>#{pb.price}</b>
+			</div>
+			<div class="col-sm-1">
+				<b><a href="#">Add</a></b>
+			</div>
+		</div>
+			<tr>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+			</tr>
+
+		</ui:repeat>
+	</ui:define>
+</ui:composition>
+</html>

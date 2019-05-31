@@ -1,5 +1,6 @@
 package library.businessobject;
 
+import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -12,7 +13,7 @@ import javax.persistence.TemporalType;
 
 @Entity
 @Table(name="Reservation")
-public class Reservation {
+public class Reservation implements Serializable{
 	
 	@Temporal(TemporalType.DATE)
 	private Date startDate, endDate;

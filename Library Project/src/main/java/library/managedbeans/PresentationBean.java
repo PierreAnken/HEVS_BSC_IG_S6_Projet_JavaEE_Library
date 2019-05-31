@@ -16,7 +16,7 @@ public class PresentationBean {
 	
 	private LibraryService libraryService;
 	private BagService bagService;
-
+	
 	@PostConstruct
 	public void initialize() throws Exception{
 
@@ -32,7 +32,11 @@ public class PresentationBean {
 		libraryService.populateLibraryDB();
 		
 	}
-
+	
+	public BagService getBagService() {
+		return bagService;
+	}
+	
 	public List<Library> getLibraries() {
 		return libraryService.getLibraries();
 	}
@@ -64,12 +68,24 @@ public class PresentationBean {
 		return libraryService.getReaders();
 	}
 	
+	public Reader getReader(long Id) {
+		return libraryService.getReader(Id);
+	}
+	
 	public void addBookToBag(Book b) {
 		bagService.addBook(b);
 	}
 	
 	public void removeBookFromBag(Book b) {
 		bagService.removeBook(b);
+	}
+	
+	public Reader getCurrentReader() {
+		return bagService.getCurrentReader();
+	}
+	
+	public void setCurrentReader(Reader r) {
+		bagService.setCurrentReader(r);
 	}
 
 }

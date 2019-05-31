@@ -8,12 +8,14 @@ import javax.annotation.PreDestroy;
 import javax.ejb.Stateful;
 
 import library.businessobject.Book;
+import library.businessobject.Reader;
 
 @Stateful
 public class BagBean implements BagService {
 
-	private List<Book> booksInBag;	
-	
+	private List<Book> booksInBag;
+	private Reader currentReader;
+
 	@Override
 	public void removeBook(Book b) {
 		booksInBag.add(b);
@@ -26,22 +28,31 @@ public class BagBean implements BagService {
 
 	@Override
 	public void removeBook(int bId) {
-		for(Book b : booksInBag) {
-			if(b.getId() == bId) {
+		for (Book b : booksInBag) {
+			if (b.getId() == bId) {
 				removeBook(b);
 				break;
 			}
 		}
 	}
-	
+
+	public Reader getCurrentReader() {
+		return currentReader;
+	}
+
+	public void setCurrentReader(Reader r) {
+		this.currentReader = r;
+	}
+
 	@PostConstruct
 	public void initialize() {
 		booksInBag = new ArrayList<Book>();
 	}
-	
+
 	@PreDestroy
 	public void clear() {
 		booksInBag = null;
+		currentReader = null;
 	}
 
 }

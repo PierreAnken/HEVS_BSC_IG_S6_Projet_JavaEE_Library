@@ -37,4 +37,5 @@ public interface LibraryService{
 	void populateLibraryDB();
 	List<Book> getBooksByAuthor(String author);
 	List<Book> getBooksByLanguage(String lang);
+	Reader getReader(long id);
 }

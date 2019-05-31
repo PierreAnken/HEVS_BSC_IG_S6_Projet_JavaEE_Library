@@ -8,6 +8,8 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.RequestScoped;
 
+import library.businessobject.Reader;
+
 @ManagedBean(name = "navigationController", eager = true)
 @RequestScoped
 public class NavigationController implements Serializable {
@@ -19,10 +21,10 @@ public class NavigationController implements Serializable {
 	private String objectId;
 
 	public String showPage() {
-		if(pageId == null)
+		if (pageId == null)
 			return "index";
 
-		return pageId+"?faces-redirect=true&objectId="+objectId;
+		return pageId + "?faces-redirect=true&objectId=" + objectId;
 	}
 
 	public String getPageId() {
@@ -32,6 +34,7 @@ public class NavigationController implements Serializable {
 	public void setPageId(String pageId) {
 		this.pageId = pageId;
 	}
+
 	public String getObjectId() {
 		return objectId;
 	}

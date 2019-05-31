@@ -4,8 +4,6 @@
   margin-bottom: 19px;
 }
 
-
-
 img.centered {
 	display: block;
 	margin-left: auto;
@@ -21,4 +19,26 @@ img.centered {
 
 ul {
   list-style-type: square;
+}
+
+.dialog_left{
+	background-color: #ffeecc;
+	padding:5px;
+	border:2px solid #805500;
+	border-radius: 10px;
+	margin:0;
+	margin-top:10px;
+}
+
+.dialog_right{
+	background-color: #d9edf9;
+	padding:5px;
+	border:2px solid #2a5772;
+	border-radius: 10px;
+	margin:0;
+	margin-top:15px;
+}
+
+.nopadding{
+	padding: 0 !important;
 }

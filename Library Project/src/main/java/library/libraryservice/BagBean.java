@@ -8,12 +8,14 @@ import javax.annotation.PreDestroy;
 import javax.ejb.Stateful;
 
 import library.businessobject.Book;
+import library.businessobject.Reader;
 
 @Stateful
 public class BagBean implements BagService {
 
 	private List<Book> booksInBag;	
-	private 
+	private Reader currentReader;
+	
 	
 	@Override
 	public void removeBook(Book b) {
@@ -34,6 +36,15 @@ public class BagBean implements BagService {
 			}
 		}
 	}
+
+	public Reader getCurrentReader() {
+		return currentReader;
+	}
+
+	public void setCurrentReader(Reader r) {
+		this.currentReader = r;
+	}
+
 	
 	@PostConstruct
 	public void initialize() {
@@ -43,6 +54,7 @@ public class BagBean implements BagService {
 	@PreDestroy
 	public void clear() {
 		booksInBag = null;
+		currentReader = null;
 	}
 
 }

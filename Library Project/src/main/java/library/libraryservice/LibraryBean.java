@@ -118,13 +118,9 @@ public class LibraryBean implements LibraryService {
 		for(int i=0; i<libraries.size();i++)
 			em.remove(libraries.get(i));
 		
-		System.out.println("PA_DEBUG: Libraries & related books deleted");
-		
 		//Add
 		Address sierre = new Address("3960", "Rue Notre Dame des Marais 5", "Sierre");
 		Library lib1 = new Library("Bibliothèque-Médiathèque Sierre", sierre);
-		
-		System.out.println("PA_DEBUG: Libraries added");
 		
 		// Creating the books 
 		List<Book> books = new ArrayList<Book>();
@@ -141,22 +137,33 @@ public class LibraryBean implements LibraryService {
 		for(Book book : books) { 
 			em.persist(book);
 		}
-
-		System.out.println("PA_DEBUG: Books added");
-
 		
 		// Creating the Librarians
 		Address sierre2 = new Address("3960", "Route de Sion 65", "Sierre");
 		Address sierre3 = new Address("3960", "Rue du Grain d'or 14B", "Sierre");
-		Librarian l1 = new Librarian("hans.walther@gotank.lib", "1234", "Hans", "Walther",  sierre2);
-		Librarian l2 = new Librarian("wilhelm.gebhardt@gotank.lib", "1234", "Wilhelm", "Gebhardt", sierre3);
+		Librarian l1 = new Librarian("hans.walther@gotank.lib", "Hans", "Walther",  sierre2);
+		Librarian l2 = new Librarian("wilhelm.gebhardt@gotank.lib", "Wilhelm", "Gebhardt", sierre3);
 		
 		lib1.addLibrarian(l1);
 		lib1.addLibrarian(l2);
 		
 		em.persist(lib1);
 		
-		System.out.println("PA_DEBUG: Librarians added");
+		Address brig1 = new Address("3900", "Ronesand Strasse 21", "Brig");
+		Address flanthey1 = new Address("3978", "Rue du moulin 13", "Flanthey");
+		
+		//delete old readers
+		List<Reader> readers = getReaders(); 
+		for(int i=0; i<readers.size();i++)
+			em.remove(readers.get(i));
+		
+		Reader r1 = new Reader("george.p@gmail.com", "George", "Pochon", 1568963, flanthey1);
+		Reader r2 = new Reader("rodolf.ruth@live.com", "Rodolf", "Ruth", 6895127, brig1);
+		
+		em.persist(r1);
+		em.persist(r2);
+		
+		System.out.println("PA_DEBUG: End of database init");
 	}
 
 

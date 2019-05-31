@@ -14,7 +14,7 @@ public class PresentationBean {
 	
 	private LibraryService libraryService;
 	private BagService bagService;
-
+	
 	@PostConstruct
 	public void initialize() throws Exception{
 
@@ -24,7 +24,7 @@ public class PresentationBean {
 				.lookup("java:global/Library-0.0.1/LibraryBean!library.libraryservice.LibraryService");
 
 		bagService =  (BagService)ctx
-				.lookup("java:global/Library-0.0.1/BagBean!library.bagservice.BagService");
+				.lookup("java:global/Library-0.0.1/BagBean!library.libraryservice.BagService");
 		
 		//init library if needed
 		libraryService.populateLibraryDB();
@@ -54,6 +54,10 @@ public class PresentationBean {
 	
 	public void removeBookFromBag(Book b) {
 		bagService.removeBook(b);
+	}
+	
+	public Reader getCurrentReader() {
+		return bagService.getCurrentReader();
 	}
 
 }

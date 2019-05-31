@@ -10,12 +10,12 @@ import javax.persistence.OneToMany;
 @Entity
 public class Reader extends User {
 
+	
 	private int cardId;
 	private double accountBalance;
 	
 	@OneToMany(mappedBy="reader", cascade={CascadeType.REMOVE})
 	private Set<Reservation> reservations;
-	
 
 	public Set<Reservation> getReservations() {
 		return reservations;
@@ -37,8 +37,8 @@ public class Reader extends User {
 	public Reader() {
 	}
 
-	public Reader(String email, String password, String firstname, String lastname, int cardId, Address address) {
-		super(email, password, firstname, lastname, address);
+	public Reader(String email, String firstname, String lastname, int cardId, Address address) {
+		super(email,  firstname, lastname, address);
 		this.cardId = cardId;
 	}
 

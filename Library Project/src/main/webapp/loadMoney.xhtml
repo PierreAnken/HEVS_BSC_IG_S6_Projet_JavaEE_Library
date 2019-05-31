@@ -4,55 +4,38 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
     xmlns:ui="http://java.sun.com/jsf/facelets"
     xmlns:h="http://java.sun.com/jsf/html"
-    xmlns:f="http://java.sun.com/jsf/core">
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:c="http://java.sun.com/jsp/jstl/core">
 
 <ui:composition template="/WEB-INF/templates/template.xhtml">
     	<ui:define name="content">
-	    	<div class="">
-		    	<div class="col align-self-center">
-					<h:form>
-						<div>
-							
-							<ul>
-								<li>
-									<h:commandLink action = "#{navigationController.showPage}" value="get a reader card">
-								  		<f:param name = "pageId" value = "readerCard" />
-		  							</h:commandLink>
-	  							</li>
-	  							<li>
-									<h:commandLink action = "#{navigationController.showPage}" value="return a book">
-								  		<f:param name = "pageId" value = "returnBook" />
-		  							</h:commandLink>
-	  							</li>
-	  							<li>
-									<h:commandLink action = "#{navigationController.showPage}" value="load money on my account">
-								  		<f:param name = "pageId" value = "loadMoney" />
-		  							</h:commandLink>
-	  							</li>
-	  							<li>
-									<h:commandLink action = "#{navigationController.showPage}" value="borrow those books.">
-								  		<f:param name = "pageId" value = "borrowBooks" />
-		  							</h:commandLink>
-	  							</li>
-							</ul>
+		    <div class="col align-self-center">
+	    		<h:graphicImage 
+					value="#{resource['img:librarian.jpg']}" 
+					class = "img-responsive centered pointer" />				
+				<div class="col-sm-6 nopadding">
+   					<div class="dialog_left">
+   						Hello, do you have your reader's card with you?
+   					</div>
+   				</div>
+   				<div class="w-100"/>
+   				<div class="col-sm-6 col-sm-offset-6 nopadding">
+   					<h:form>
+   						<div class="dialog_right">
+   							Yes here it is : 
+	   						<h:selectOneMenu>						
+	   							<f:selectItems value="#{PresentationBean.getReaders()}" var="reader" itemLabel="#{reader.cardId} (#{user.cardId})" itemValue="#{reader.cardId}" />
+							</h:selectOneMenu>
 						</div>
-						<div>
-							<h:commandLink action = "#{navigationController.showPage}" value="search a book">
-								<f:param name ="pageId" value = "shelfs" />
-			  				</h:commandLink>
+						<div class="dialog_right">
+							I don't have one yet. Could you 
+							<h:commandLink action = "#{navigationController.showPage}" value=" create an account ">
+							 	<f:param name = "pageId" value = "registerReader" />
+	  						</h:commandLink>
+	  						for me?
 						</div>
-						<div>
-							<h:commandLink action = "#{navigationController.showPage}" value="Leave the library">
-								<f:param name ="pageId" value = "index" />
-			  				</h:commandLink>
-						</div>
-						<div>
-							<h:commandLink action = "#{navigationController.showPage}" value="Edit book list">
-								<f:param name ="pageId" value = "adminBook" />
-			  				</h:commandLink>
-						</div>
-						</h:form>
-					</div>
+   					</h:form>
+   				</div>
 			</div>
     	</ui:define>
 	</ui:composition>

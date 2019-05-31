@@ -12,7 +12,7 @@ public abstract class User {
 	
 	@Id
 	private String email;
-	private String password, firstname, lastname;
+	private String firstname, lastname;
 	
 	@Embedded
 	private Address address;
@@ -33,14 +33,6 @@ public abstract class User {
 		this.firstname = firstname;
 	}
 
-	public String getPassword() {
-		return password;
-	}
-
-	public void setPassword(String password) {
-		this.password = password;
-	}
-
 	public String getLastname() {
 		return lastname;
 	}
@@ -53,16 +45,14 @@ public abstract class User {
 	public User() {
 	}
 
-	public User(String email, String password, String firstname, String lastname) {
+	public User(String email, String firstname, String lastname) {
 		this.email = email;
-		this.password = password;
 		this.firstname = firstname;
 		this.lastname = lastname;
 	}
 
-	public User(String email, String password, String firstname, String lastname, Address address) {
+	public User(String email, String firstname, String lastname, Address address) {
 		this.email = email;
-		this.password = password;
 		this.firstname = firstname;
 		this.lastname = lastname;
 		this.address = address;

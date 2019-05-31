@@ -1,5 +1,6 @@
 package library.businessobject;
 
+import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -14,8 +15,10 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name="Book")
-public class Book {
+public class Book implements Serializable {
 	
+	private static final long serialVersionUID = 1L;
+
 	private String title, description, author, language;
 
     @ManyToOne private Library library;

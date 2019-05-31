@@ -23,7 +23,7 @@
 			</div>
 		</div>
 
-		<ui:repeat var="book" value="#{PresentationBean.bookList}" varStatus="status">
+		<ui:repeat var="book" value="#{PresentationBean.getBookList()}" varStatus="status">
 
 		<div class="row bg-primary">
 			<div class="col-sm-3">
@@ -39,13 +39,6 @@
 				<b><a href="#">Add</a></b>
 			</div>
 		</div>
-			<tr>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-			</tr>
-
 		</ui:repeat>
 	</ui:define>
 </ui:composition>

@@ -17,7 +17,6 @@ public class PresentationBean {
 	
 	private LibraryService libraryService;
 	private BagService bagService;
-	private List<Book> bookList;
 
 	@PostConstruct
 	public void initialize() throws Exception{
@@ -33,9 +32,9 @@ public class PresentationBean {
 		//init library if needed
 		libraryService.populateLibraryDB();
 		
-		// fill book list
-		this.bookList = libraryService.getBooks();
-		System.out.println("Test");
+//		// fill book list
+//		this.bookList = libraryService.getBookList();
+//		System.out.println("Test");
 	}
 
 	public List<Library> getLibraries() {

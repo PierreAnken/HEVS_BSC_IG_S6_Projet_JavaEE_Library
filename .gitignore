@@ -18,4 +18,8 @@ Library Project/target/classes/library/businessobject/Library.class
 *.class
 Library Project/target/m2e-wtp/web-resources/META-INF/MANIFEST.MF
 Library Project/target/m2e-wtp/web-resources/META-INF/MANIFEST.MF
+Library Project/src/main/.DS_Store
+Library Project/.settings/org.eclipse.core.resources.prefs
+Library Project/src/main/.DS_Store
+Library Project/target/m2e-wtp/web-resources/META-INF/maven/Library/Library/pom.properties
 *.class

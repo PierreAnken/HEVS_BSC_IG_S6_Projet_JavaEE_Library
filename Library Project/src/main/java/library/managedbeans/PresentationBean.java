@@ -1,6 +1,5 @@
 package library.managedbeans;
 
-import java.io.Serializable;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.naming.InitialContext;
@@ -43,8 +42,16 @@ public class PresentationBean {
 	}
 
 
-	public Book getBook (int bookId) {
+	public Book getBook(String bookId) {
 		return libraryService.getBook(bookId);
+	}
+	
+	public List<Book> getBooksByAuthor(String author) {
+		return libraryService.getBooksByAuthor(author);
+	}
+	
+	public List<Book> getBooksByLanguage(String lang) {
+		return libraryService.getBooksByLanguage(lang);
 	}
 	
 	public List<Book> getBookList() {

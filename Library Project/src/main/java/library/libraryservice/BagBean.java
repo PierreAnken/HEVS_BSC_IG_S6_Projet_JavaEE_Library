@@ -13,7 +13,7 @@ import library.businessobject.Reader;
 @Stateful
 public class BagBean implements BagService {
 
-	private List<Book> booksInBag;	
+	private List<Book> booksInBag;
 	private Reader currentReader;
 	private String cardId;
 	
@@ -29,8 +29,8 @@ public class BagBean implements BagService {
 
 	@Override
 	public void removeBook(int bId) {
-		for(Book b : booksInBag) {
-			if(b.getId() == bId) {
+		for (Book b : booksInBag) {
+			if (b.getId() == bId) {
 				removeBook(b);
 				break;
 			}
@@ -46,12 +46,13 @@ public class BagBean implements BagService {
 	public void setCurrentReader(Reader currentReader) {
 		this.currentReader = currentReader;
 	}
-	
+
+4
 	@PostConstruct
 	public void initialize() {
 		booksInBag = new ArrayList<Book>();
 	}
-	
+
 	@PreDestroy
 	public void clear() {
 		booksInBag = null;

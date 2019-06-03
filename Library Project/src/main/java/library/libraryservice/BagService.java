@@ -15,5 +15,6 @@ public interface BagService{
 	void addBook(Book b);
 	
 	Reader getCurrentReader();
-	void setCurrentReader(Reader r);
+	void setCurrentReader(Reader currentReader);
+	String getCardId();
 }

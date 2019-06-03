@@ -12,13 +12,15 @@ import library.businessobject.Reader;
 
 @ManagedBean(name = "navigationController", eager = true)
 @RequestScoped
-
 public class NavigationController implements Serializable {
 
-   @ManagedProperty(value = "#{param.pageId}")
-   private String pageId;
+
+    private static final long serialVersionUID = -652163167414303398L;
+	@ManagedProperty(value = "#{param.pageId}")
+	private String pageId;
    
    public String showPage() {
+	  System.out.println("PA_DEBUG: "+pageId);
       if(pageId == null)
          return "index";
       
@@ -32,6 +34,7 @@ public class NavigationController implements Serializable {
 	public void setPageId(String pageId) {
 		this.pageId = pageId;
 	}
-
-
+	
+	
+	
 }

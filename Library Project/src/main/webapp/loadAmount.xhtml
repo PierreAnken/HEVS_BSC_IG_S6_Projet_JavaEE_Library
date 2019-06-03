@@ -4,14 +4,21 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
     xmlns:ui="http://java.sun.com/jsf/facelets"
     xmlns:h="http://java.sun.com/jsf/html"
-    xmlns:f="http://java.sun.com/jsf/core">
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:c="http://java.sun.com/jsp/jstl/core">
 
 <ui:composition template="/WEB-INF/templates/template.xhtml">
     	<ui:define name="content">
+    	<c:set var="reader" value="#{PresentationBean.getCurrentReader()}" />
 	    	<div>
-		    	<div class="col align-self-center">
-		    		Amount to load?
-				</div>
+		    	<div class="col-sm-6 nopadding">
+   					<div class="dialog_left">
+   						Well, #{reader.firstname} Which amount would you like to load? 
+   					</div>
+   					<div class="dialog_right">
+  							
+					</div>
+   				</div>
 			</div>
     	</ui:define>
 	</ui:composition>

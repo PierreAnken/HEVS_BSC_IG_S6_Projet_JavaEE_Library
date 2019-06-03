@@ -111,10 +111,13 @@ public class LibraryBean implements LibraryService {
 	
 	@Override
 	public Reader getReader(long readerId) {
-		return (Reader) em.createQuery("FROM Reader r WHERE b.id = :readerId").setParameter("readerId", readerId).getSingleResult();
+		return (Reader) em.createQuery("FROM Reader r WHERE r.id = :readerId").setParameter("readerId", readerId).getSingleResult();
 	}
 
-	
+	@Override
+	public Reader getReaderFromCardId(String cardId) {
+		return (Reader) em.createQuery("FROM Reader r WHERE r.cardId = :cardId").setParameter("cardId", cardId).getSingleResult();
+	}
 	
 	public void populateLibraryDB() {
 
@@ -176,5 +179,7 @@ public class LibraryBean implements LibraryService {
 		
 		System.out.println("PA_DEBUG: End of database init");
 	}
+
+	
 
 }

@@ -47,7 +47,6 @@ public class BagBean implements BagService {
 		this.currentReader = currentReader;
 	}
 
-4
 	@PostConstruct
 	public void initialize() {
 		booksInBag = new ArrayList<Book>();

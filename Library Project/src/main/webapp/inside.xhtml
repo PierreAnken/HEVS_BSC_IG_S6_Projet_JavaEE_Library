@@ -8,21 +8,17 @@
 
 <ui:composition template="/WEB-INF/templates/template.xhtml">
     	<ui:define name="content">
-	    	<div class="">
-		    	<div class="col align-self-center">
+	    	<div>
+		    	<div class="align-self-center imgInside">
 					<h:form>
-						<div>
-							<h:graphicImage 
-							value="#{resource['img:reception.jpg']}"
-							class = "img-responsive centered"/>
-	
-							<div class="col-sm-6 nopadding">
+						<div class="row">
+							<div class="col-6 nopadding">
 	   							<div class="dialog_left">
 			   						Welcome to city library, how can we help you?
 			   					</div>
 			   				</div>
 		   					<div class="w-100"/>
-							<div class="col-sm-6 col-sm-offset-6 nopadding">
+							<div class="col-6 offset-6 nopadding">
 	   							<div class="dialog_right">
 	   								I would like to
 	   								<h:commandLink action = "#{navigationController.showPage}" value=" get a reader card.">

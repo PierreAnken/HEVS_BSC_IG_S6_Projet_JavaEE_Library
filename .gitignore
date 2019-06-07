@@ -23,3 +23,5 @@ Library Project/.settings/org.eclipse.core.resources.prefs
 Library Project/src/main/.DS_Store
 Library Project/target/m2e-wtp/web-resources/META-INF/maven/Library/Library/pom.properties
 *.class
+*.MF
+*.class

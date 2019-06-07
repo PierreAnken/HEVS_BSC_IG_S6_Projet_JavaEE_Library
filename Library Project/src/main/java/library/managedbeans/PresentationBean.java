@@ -88,5 +88,22 @@ public class PresentationBean {
 	public void setCurrentReader(Reader r) {
 		bagService.setCurrentReader(r);
 	}
+	
+	
+	public String getCurrentCardId() {
+		return bagService.getCardId();
+	}
+	
+	public String chooseAmount() {
+		
+		if(!bagService.getCardId().equals("")) {
+			System.out.println("PA_DEBUG: "+bagService.getCardId());
+			Reader reader = libraryService.getReaderFromCardId(bagService.getCardId());
+			bagService.setCurrentReader(reader);
+			return "loadAmount?faces-redirect=true";
+		}
+		
+		return "loadMoney?faces-redirect=true";
+	}
 
 }

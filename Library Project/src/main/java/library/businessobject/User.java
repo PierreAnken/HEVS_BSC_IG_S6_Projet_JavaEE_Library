@@ -11,11 +11,11 @@ import javax.persistence.InheritanceType;
 public abstract class User {
 	
 	@Id
-	private String email;
-	private String firstname, lastname;
+	protected String email;
+	protected String firstname, lastname;
 	
 	@Embedded
-	private Address address;
+	protected Address address;
 	
 	public String getEmail() {
 		return email;

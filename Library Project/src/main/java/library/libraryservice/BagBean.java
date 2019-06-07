@@ -15,7 +15,8 @@ public class BagBean implements BagService {
 
 	private List<Book> booksInBag;
 	private Reader currentReader;
-
+	private String cardId;
+	
 	@Override
 	public void removeBook(Book b) {
 		booksInBag.add(b);
@@ -36,14 +37,17 @@ public class BagBean implements BagService {
 		}
 	}
 
+	@Override
 	public Reader getCurrentReader() {
 		return currentReader;
 	}
 
-	public void setCurrentReader(Reader r) {
-		this.currentReader = r;
+	@Override
+	public void setCurrentReader(Reader currentReader) {
+		this.currentReader = currentReader;
 	}
 
+4
 	@PostConstruct
 	public void initialize() {
 		booksInBag = new ArrayList<Book>();
@@ -52,7 +56,18 @@ public class BagBean implements BagService {
 	@PreDestroy
 	public void clear() {
 		booksInBag = null;
-		currentReader = null;
+		setCurrentReader(null);
+		cardId = "";
 	}
+
+	public String getCardId() {
+		return cardId;
+	}
+
+	public void setCardId(String cardId) {
+		this.cardId = cardId;
+	}
+
+
 
 }

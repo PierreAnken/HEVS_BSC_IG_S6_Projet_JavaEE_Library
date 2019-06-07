@@ -14,9 +14,11 @@ import library.businessobject.Reader;
 @RequestScoped
 public class NavigationController implements Serializable {
 
+
+    private static final long serialVersionUID = -652163167414303398L;
 	@ManagedProperty(value = "#{param.pageId}")
 	private String pageId;
-
+   
 	@ManagedProperty(value = "#{param.objectId}")
 	private String objectId;
 
@@ -34,7 +36,7 @@ public class NavigationController implements Serializable {
 	public void setPageId(String pageId) {
 		this.pageId = pageId;
 	}
-
+	
 	public String getObjectId() {
 		return objectId;
 	}
@@ -42,5 +44,4 @@ public class NavigationController implements Serializable {
 	public void setObjectId(String objectId) {
 		this.objectId = objectId;
 	}
-
 }

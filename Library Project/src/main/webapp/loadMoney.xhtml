@@ -20,13 +20,12 @@
    				</div>
    				<div class="w-100"/>
    				<div class="col-sm-6 col-sm-offset-6 nopadding">
-   					<h:form action="navigationController.showPage()">
-   						<f:param name ="pageId" value ="loadAmount" />
+   					<h:form >
    						<div class="dialog_right">
-   							Yes here it is : 
-	   						<h:selectOneMenu onchange="submit();" value="#{PresentationBean.getBagService().currentReader}" converter="readerConverter">
+   							Just a moment. : 
+	   						<h:selectOneMenu value="#{PresentationBean.getCurrentCardId()}" onchange="#{PresentationBean.chooseAmount()}">
 	   							<f:selectItem itemLabel="Looking into my pocket  ..." />					
-	   							<f:selectItems value="#{PresentationBean.getReaders()}" var="reader" itemLabel="#{reader.cardId} (#{reader.firstname}-#{reader.lastname})" itemValue="#{reader.cardId}" />
+	   							<f:selectItems value="#{PresentationBean.getReaders()}" var="reader" itemLabel="#{reader.getCardId()} (#{reader.getFirstname()}-#{reader.getLastname()})" itemValue="#{reader.cardId}" />
 							</h:selectOneMenu>
 						</div>
 						<div class="dialog_right">

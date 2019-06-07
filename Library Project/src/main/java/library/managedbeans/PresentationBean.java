@@ -33,10 +33,10 @@ public class PresentationBean {
 		
 	}
 	
-	public BagService getBagService() {
-		return bagService;
-	}
-	
+//	public BagService getBagService() {
+//		return bagService;
+//	}
+//	
 	public List<Library> getLibraries() {
 		return libraryService.getLibraries();
 	}
@@ -74,6 +74,7 @@ public class PresentationBean {
 	
 	public void addBookToBag(Book b) {
 		bagService.addBook(b);
+		System.out.println(bagService.toString());
 	}
 	
 	public void removeBookFromBag(Book b) {

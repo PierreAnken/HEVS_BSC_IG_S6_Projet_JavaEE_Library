@@ -29,9 +29,9 @@
 			value="#{PresentationBean.getBooksByAuthor(navigationController.getObjectId())}"
 			varStatus="status">
 
-			<div class="row box">
+			<div class="row box bline">
 
-				<div class="col-sm-3">
+				<div class="col-sm-3 ">
 					<h:form>
 						<h:graphicImage
 							value="#{resource['img:lang_'.concat(book.language).concat('.png')]}" />
@@ -43,15 +43,15 @@
 						</b>
 					</h:form>
 				</div>
-				<div class="col-sm-6">
+				<div class="col-sm-6 tpad10">
 					<c:set var="string1" value="#{book.description}" />
 					<c:set var="descr_string" value="${fn:substring(string1, 0, 5)}" />
 					<b>#{descr_string} ...</b>
 				</div>
-				<div class="col-sm-2">
+				<div class="col-sm-2 tpad10">
 					<b>#{book.author}</b>
 				</div>
-				<div class="col-sm-1">
+				<div class="col-sm-1 tpad10">
 					<h:form>
 						<h:commandLink action="#{navigationController.showPage}">
 							<i class="far fa-eye" />

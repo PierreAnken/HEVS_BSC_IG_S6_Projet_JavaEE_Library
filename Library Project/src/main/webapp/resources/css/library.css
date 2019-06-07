@@ -16,7 +16,18 @@
      background-repeat:no-repeat;
      background-position: center;
      padding:10%;	
+
+.tpad10 {
+	padding-top: 10px;
 }
+
+.bpad10 {
+	padding-bottom: 10px;
+}
+
+.bline {
+	height: 50px;
+	vertical-align: middle;
 
 img.centered {
 	display: block;

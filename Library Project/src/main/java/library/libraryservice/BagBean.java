@@ -57,4 +57,27 @@ public class BagBean implements BagService {
 		setCurrentReader(null);
 	}
 
+
+	public String getCardId() {
+		return cardId;
+	}
+
+	public void setCardId(String cardId) {
+		this.cardId = cardId;
+	}
+
+	@Override
+	public boolean isBookInBag(String bookId) {
+		boolean found = false;
+		if (booksInBag.size() == 0) {
+			return false;
+		}
+		for (Book b : booksInBag) {
+			if (b.getId() == Integer.parseInt(bookId)) {
+				found = true;
+				break;
+			}
+		}
+		return found;
+	}
 }

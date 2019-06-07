@@ -27,7 +27,14 @@
 
 		<ui:repeat var="book" value="#{PresentationBean.getBookList()}"
 			varStatus="status">
-
+			<c:choose>
+				<c:when test="#{PresentationBean.isBookInBag(book.id)}">
+					<p>Book is in Bag</p>
+				</c:when>
+				<c:otherwise>
+					<p>Book is not in Bag</p>
+				</c:otherwise>
+			</c:choose>
 			<div class="row box bline">
 
 				<div class="col-sm-3 tpad10">
@@ -39,7 +46,8 @@
 							<f:param name="objectId" value="#{book.language}" />
 						</h:commandLink>
 					&nbsp;
-						<h:commandLink action="#{navigationController.showPage}" value="#{book.title}">
+						<h:commandLink action="#{navigationController.showPage}"
+							value="#{book.title}">
 							<f:param name="pageId" value="bookdetail" />
 							<f:param name="objectId" value="#{book.id}" />
 						</h:commandLink>
@@ -61,7 +69,8 @@
 				</div>
 				<div class="col-sm-1 tpad10">
 					<h:form>
-						<h:commandLink action="#{PresentationBean.addBookToBag(book)}">
+						<h:commandLink
+							action="#{PresentationBean.addBookToBag(PresentationBean.getBook(book.id))}">
 							<i class="fas fa-shopping-bag" />
 							<f:param name="pageId" value="confirmAdd" />
 							<f:param name="objectId" value="#{book.id}" />

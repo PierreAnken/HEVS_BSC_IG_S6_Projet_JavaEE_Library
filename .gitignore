@@ -25,3 +25,5 @@ Library Project/target/m2e-wtp/web-resources/META-INF/maven/Library/Library/pom.
 *.class
 *.MF
 *.class
+*.class
+*.class

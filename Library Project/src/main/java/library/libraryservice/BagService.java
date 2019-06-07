@@ -16,4 +16,7 @@ public interface BagService{
 	
 	Reader getCurrentReader();
 	void setCurrentReader(Reader currentReader);
+
+	String getCardId();
+	boolean isBookInBag(String bookId);
 }

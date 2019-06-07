@@ -2,6 +2,8 @@ package library.managedbeans;
 
 import java.util.List;
 import javax.annotation.PostConstruct;
+import javax.enterprise.context.ConversationScoped;
+import javax.faces.event.AjaxBehaviorEvent;
 import javax.naming.InitialContext;
 import library.businessobject.Librarian;
 import library.businessobject.Library;
@@ -33,10 +35,6 @@ public class PresentationBean {
 		
 	}
 	
-//	public BagService getBagService() {
-//		return bagService;
-//	}
-//	
 	public List<Library> getLibraries() {
 		return libraryService.getLibraries();
 	}
@@ -89,21 +87,28 @@ public class PresentationBean {
 		bagService.setCurrentReader(r);
 	}
 	
-	
-	public String getCurrentCardId() {
-		return bagService.getCardId();
-	}
-	
 	public String chooseAmount() {
 		
-		if(!bagService.getCardId().equals("")) {
-			System.out.println("PA_DEBUG: "+bagService.getCardId());
-			Reader reader = libraryService.getReaderFromCardId(bagService.getCardId());
+		if(bagService.getCurrentReader() != null) {
+			System.out.println("PA_DEBUG: "+bagService.getCurrentReader().getCardId());
+			Reader reader = libraryService.getReaderFromCardId(bagService.getCurrentReader().getCardId());
 			bagService.setCurrentReader(reader);
 			return "loadAmount?faces-redirect=true";
 		}
 		
 		return "loadMoney?faces-redirect=true";
+	}
+	
+	public void onSelectedReader(final AjaxBehaviorEvent event){
+		
+		int selectedReader = Integer.parseInt((String) ((javax.faces.component.html.HtmlSelectOneMenu) event
+                .getSource()).getValue());
+		System.out.println("PA_DEBUG: Reader selected ajax: "+selectedReader);
+	    Reader currentReader = libraryService.getReaderFromCardId(selectedReader);
+	    System.out.println("PA_DEBUG:PresentationBean: Reader selected "+currentReader);
+	    System.out.println("PA_DEBUG:PresentationBean: Reader selected cardId "+currentReader.getCardId());
+	    System.out.println("PA_DEBUG:PresentationBean: Reader selected Firstname "+currentReader.getFirstname());
+	    bagService.setCurrentReader(currentReader);
 	}
 
 }

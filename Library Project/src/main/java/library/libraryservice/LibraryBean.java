@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.ejb.Stateless;
+import javax.enterprise.context.ConversationScoped;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import library.businessobject.Address;
@@ -121,12 +122,16 @@ public class LibraryBean implements LibraryService {
 	
 	@Override
 	public Reader getReader(long readerId) {
-		return (Reader) em.createQuery("FROM Reader r WHERE r.id = :readerId").setParameter("readerId", readerId).getSingleResult();
+		return (Reader) em.createQuery("FROM User u WHERE u.id = :readerId").setParameter("readerId", readerId).getSingleResult();
 	}
 
 	@Override
-	public Reader getReaderFromCardId(String cardId) {
-		return (Reader) em.createQuery("FROM Reader r WHERE r.cardId = :cardId").setParameter("cardId", cardId).getSingleResult();
+	public Reader getReaderFromCardId(int cardId) {
+		System.out.println("PA_DEBUG:getReadFromCardId  id: "+cardId);
+		Reader reader = (Reader) em.createQuery("FROM Reader r WHERE r.cardId = :cardId").setParameter("cardId", cardId).getSingleResult();
+		System.out.println("PA_DEBUG:getReadSQL id: "+cardId+" firstname "+reader.getFirstname());
+		System.out.println("PA_DEBUG:getReadSQL: Reader selected "+reader);
+		return reader;
 	}
 	
 	public void populateLibraryDB() {
@@ -144,7 +149,7 @@ public class LibraryBean implements LibraryService {
 		
 		//Add
 		Address sierre = new Address("3960", "Rue Notre Dame des Marais 5", "Sierre");
-		Library lib1 = new Library("Bibliothèque-Médiathèque Sierre", sierre);
+		Library lib1 = new Library("Bibliotheque Sierre", sierre);
 		
 		// Creating the books 
 		List<Book> books = new ArrayList<Book>();

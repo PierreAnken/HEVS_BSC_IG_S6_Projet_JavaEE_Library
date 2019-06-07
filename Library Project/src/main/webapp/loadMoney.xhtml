@@ -9,21 +9,22 @@
 
 <ui:composition template="/WEB-INF/templates/template.xhtml">
     	<ui:define name="content">
-		    <div id="loadAccount" class="col align-self-center">
-	    		<h:graphicImage 
-					value="#{resource['img:librarian.jpg']}" 
-					class = "img-responsive centered pointer" />				
-				<div class="col-sm-6 nopadding">
-   					<div class="dialog_left">
-   						Sure , do you have your reader's card with you?
-   					</div>
-   				</div>
-   				<div class="w-100"/>
-   				<div class="col-sm-6 col-sm-offset-6 nopadding">
-   					<h:form >
+		    <div id="loadAccount" class="align-self-center imgLibrarian background">	
+		    	<div class="row" id="dialog_frame">		
+					<div class="col-6 nopadding">
+	   					<div class="dialog_left">
+	   						Sure , do you have your reader's card with you?
+	   					</div>
+	   				</div>
+	   				<div class="w-100"/>
+	   				<div class="col-6 offset-6 nopadding">
+   					<h:form>
+   						<c:set var="currentReader" value="#{PresentationBean.getCurrentReader()}" scope="request" />
+   						
    						<div class="dialog_right">
    							Just a moment. : 
-	   						<h:selectOneMenu value="#{PresentationBean.getCurrentCardId()}" onchange="#{PresentationBean.chooseAmount()}">
+	   						<h:selectOneMenu>
+	   						<f:ajax event="change" update="dialog_frame" listener="#{PresentationBean.onSelectedReader}"/>
 	   							<f:selectItem itemLabel="Looking into my pocket  ..." />					
 	   							<f:selectItems value="#{PresentationBean.getReaders()}" var="reader" itemLabel="#{reader.getCardId()} (#{reader.getFirstname()}-#{reader.getLastname()})" itemValue="#{reader.cardId}" />
 							</h:selectOneMenu>
@@ -32,11 +33,13 @@
 							I don't have one yet. Could you 
 							<h:commandLink action = "#{navigationController.showPage}" value=" create an account ">
 							 	<f:param name = "pageId" value = "registerReader" />
+							 	<f:param name = "objectId" value = "" />
 	  						</h:commandLink>
 	  						for me?
 						</div>
    					</h:form>
    				</div>
+				</div>
 			</div>
     	</ui:define>
 	</ui:composition>

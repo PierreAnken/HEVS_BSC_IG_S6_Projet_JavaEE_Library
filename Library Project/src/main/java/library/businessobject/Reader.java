@@ -11,7 +11,6 @@ import javax.persistence.OneToMany;
 @Entity
 public class Reader extends User implements Serializable{
 
-	
 	private static final long serialVersionUID = -7085265629390248126L;
 	private int cardId;
 	private double accountBalance;

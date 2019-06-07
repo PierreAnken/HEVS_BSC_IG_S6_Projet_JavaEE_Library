@@ -15,7 +15,6 @@ public class BagBean implements BagService {
 
 	private List<Book> booksInBag;
 	private Reader currentReader;
-	private String cardId;
 	
 	@Override
 	public void removeBook(Book b) {
@@ -56,17 +55,6 @@ public class BagBean implements BagService {
 	public void clear() {
 		booksInBag = null;
 		setCurrentReader(null);
-		cardId = "";
 	}
-
-	public String getCardId() {
-		return cardId;
-	}
-
-	public void setCardId(String cardId) {
-		this.cardId = cardId;
-	}
-
-
 
 }

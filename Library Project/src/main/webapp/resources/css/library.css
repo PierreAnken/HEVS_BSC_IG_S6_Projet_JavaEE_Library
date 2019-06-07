@@ -12,10 +12,21 @@
 }
 
 .imgInside{
-     background-image:url(#{resource['img:reception.jpg']});
-     background-repeat:no-repeat;
+	background-image:url(#{resource['img:reception.jpg']});
+}
+
+.imgLibrarian{
+	background-image:url(#{resource['img:librarian.jpg']});
+}
+
+.container{
+	padding:2%;
+}
+
+div.background{
+	 background-repeat:no-repeat;
      background-position: center;
-     padding:10%;	
+     padding:10%;
 }
 
 .tpad10 {
@@ -40,15 +51,11 @@ img.centered {
 img{
 	max-width: 100%;
   	height: auto;
-  	max-height: 50vh;
+  	max-height: 80vh;
 }
 
 .pointer {
 	cursor: pointer;
-}
-
-.container {
-	padding: 5%
 }
 
 ul {

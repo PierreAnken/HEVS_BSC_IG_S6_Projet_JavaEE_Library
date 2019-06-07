@@ -67,6 +67,18 @@ public class BagBean implements BagService {
 		this.cardId = cardId;
 	}
 
-
-
+	@Override
+	public boolean isBookInBag(String bookId) {
+		boolean found = false;
+		if (booksInBag.size() == 0) {
+			return false;
+		}
+		for (Book b : booksInBag) {
+			if (b.getId() == Integer.parseInt(bookId)) {
+				found = true;
+				break;
+			}
+		}
+		return found;
+	}
 }

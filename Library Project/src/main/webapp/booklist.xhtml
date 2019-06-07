@@ -28,9 +28,9 @@
 		<ui:repeat var="book" value="#{PresentationBean.getBookList()}"
 			varStatus="status">
 
-			<div class="row box">
+			<div class="row box bline">
 
-				<div class="col-sm-3">
+				<div class="col-sm-3 tpad10">
 					<h:form>
 						<h:commandLink action="#{navigationController.showPage}">
 							<h:graphicImage
@@ -38,20 +38,19 @@
 							<f:param name="pageId" value="booklistByLanguage" />
 							<f:param name="objectId" value="#{book.language}" />
 						</h:commandLink>
-					<b>&nbsp;
+					&nbsp;
 						<h:commandLink action="#{navigationController.showPage}" value="#{book.title}">
 							<f:param name="pageId" value="bookdetail" />
 							<f:param name="objectId" value="#{book.id}" />
 						</h:commandLink>
-					</b>
 					</h:form>
 				</div>
-				<div class="col-sm-6">
+				<div class="col-sm-6 tpad10">
 					<c:set var="string1" value="#{book.description}" />
 					<c:set var="descr_string" value="${fn:substring(string1, 0, 5)}" />
-					<b>#{descr_string} ...</b>
+					#{descr_string} ...
 				</div>
-				<div class="col-sm-2">
+				<div class="col-sm-2 tpad10">
 					<h:form>
 						<h:commandLink action="#{navigationController.showPage}"
 							value="#{book.author}">
@@ -60,14 +59,9 @@
 						</h:commandLink>
 					</h:form>
 				</div>
-				<div class="col-sm-1">
+				<div class="col-sm-1 tpad10">
 					<h:form>
-						<h:commandLink action="#{navigationController.showPage}">
-							<i class="far fa-eye" />
-							<f:param name="pageId" value="bookdetail" />
-							<f:param name="objectId" value="#{book.id}" />
-						</h:commandLink>
-						<h:commandLink action="#{navigationController.showPage}">
+						<h:commandLink action="#{PresentationBean.addBookToBag(book)}">
 							<i class="fas fa-shopping-bag" />
 							<f:param name="pageId" value="confirmAdd" />
 							<f:param name="objectId" value="#{book.id}" />

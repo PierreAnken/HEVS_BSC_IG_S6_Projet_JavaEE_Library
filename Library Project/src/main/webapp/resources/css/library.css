@@ -10,6 +10,20 @@
 .box {
 	border: 1px solid #00;
 }
+
+.tpad10 {
+	padding-top: 10px;
+}
+
+.bpad10 {
+	padding-bottom: 10px;
+}
+
+.bline {
+	height: 50px;
+	vertical-align: middle;
+}
+
 img.centered {
 	display: block;
 	margin-left: auto;

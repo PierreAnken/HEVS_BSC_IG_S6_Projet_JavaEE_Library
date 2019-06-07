@@ -16,6 +16,7 @@
      background-repeat:no-repeat;
      background-position: center;
      padding:10%;	
+}
 
 .tpad10 {
 	padding-top: 10px;
@@ -28,6 +29,7 @@
 .bline {
 	height: 50px;
 	vertical-align: middle;
+}
 
 img.centered {
 	display: block;
@@ -54,8 +56,8 @@ ul {
 }
 
 .dialog_left{
-	background-color: #ffeecc;
-	padding:10px;
+	background-color: rgba(255, 238, 204, 0.9);
+	padding:10px; 
 	border:2px solid #805500;
 	border-radius: 10px;
 	margin:0;
@@ -63,7 +65,7 @@ ul {
 }
 
 .dialog_right{
-	background-color: #d9edf9;
+	background-color: rgba(217, 237, 249, 0.9);
 	padding:10px;
 	border:2px solid #2a5772;
 	border-radius: 10px;

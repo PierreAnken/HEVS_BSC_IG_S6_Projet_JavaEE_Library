@@ -6,6 +6,7 @@ import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
 import javax.ejb.Stateful;
+import javax.faces.bean.RequestScoped;
 
 import library.businessobject.Book;
 import library.businessobject.Reader;
@@ -55,15 +56,6 @@ public class BagBean implements BagService {
 	public void clear() {
 		booksInBag = null;
 		setCurrentReader(null);
-	}
-
-
-	public String getCardId() {
-		return cardId;
-	}
-
-	public void setCardId(String cardId) {
-		this.cardId = cardId;
 	}
 
 	@Override

@@ -11,7 +11,6 @@ import javax.faces.bean.RequestScoped;
 import library.businessobject.Reader;
 
 @ManagedBean(name = "navigationController", eager = true)
-@RequestScoped
 public class NavigationController implements Serializable {
 
 

@@ -1,8 +1,12 @@
 package library.managedbeans;
 
+import java.io.Serializable;
 import java.util.List;
+
 import javax.annotation.PostConstruct;
-import javax.enterprise.context.ConversationScoped;
+import javax.faces.bean.ManagedBean;
+import javax.faces.bean.RequestScoped;
+import javax.faces.bean.SessionScoped;
 import javax.faces.event.AjaxBehaviorEvent;
 import javax.naming.InitialContext;
 import library.businessobject.Librarian;
@@ -12,9 +16,9 @@ import library.libraryservice.BagService;
 import library.libraryservice.LibraryService;
 import library.businessobject.Book;
 
-public class PresentationBean {
+public class PresentationBean implements Serializable{
 
-	//	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;
 
 	private LibraryService libraryService;
 	private BagService bagService;
@@ -87,27 +91,15 @@ public class PresentationBean {
 	}
 
 	
-	public String chooseAmount() {
-		
-		if(bagService.getCurrentReader() != null) {
-			System.out.println("PA_DEBUG: "+bagService.getCurrentReader().getCardId());
-			Reader reader = libraryService.getReaderFromCardId(bagService.getCurrentReader().getCardId());
-		}
-	}
-
-	public String getCurrentCardId() {
-		return bagService.getCardId();
-	}
-	
 	public boolean isBookInBag(String bookId) {
 		return bagService.isBookInBag(bookId);
 	}
 
 	public String chooseAmount() {
 
-		if(!bagService.getCardId().equals("")) {
-			System.out.println("PA_DEBUG: "+bagService.getCardId());
-			Reader reader = libraryService.getReaderFromCardId(bagService.getCardId());
+		if(bagService.getCurrentReader() != null) {
+			System.out.println("PA_DEBUG: "+bagService.getCurrentReader().getCardId());
+			Reader reader = libraryService.getReaderFromCardId(bagService.getCurrentReader().getCardId());
 
 			bagService.setCurrentReader(reader);
 			return "loadAmount?faces-redirect=true";
@@ -123,8 +115,7 @@ public class PresentationBean {
 		System.out.println("PA_DEBUG: Reader selected ajax: "+selectedReader);
 	    Reader currentReader = libraryService.getReaderFromCardId(selectedReader);
 	    System.out.println("PA_DEBUG:PresentationBean: Reader selected "+currentReader);
-	    System.out.println("PA_DEBUG:PresentationBean: Reader selected cardId "+currentReader.getCardId());
-	    System.out.println("PA_DEBUG:PresentationBean: Reader selected Firstname "+currentReader.getFirstname());
+	    System.out.println("PA_DEBUG:PresentationBean: Reader selected cardId + Firstname "+currentReader.getCardId()+" "+currentReader.getFirstname());
 	    bagService.setCurrentReader(currentReader);
 	}
 

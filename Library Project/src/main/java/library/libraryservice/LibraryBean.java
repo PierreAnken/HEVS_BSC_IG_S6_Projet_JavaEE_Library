@@ -1,10 +1,10 @@
 package library.libraryservice;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.ejb.Stateless;
-import javax.enterprise.context.ConversationScoped;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import library.businessobject.Address;
@@ -15,7 +15,7 @@ import library.businessobject.Reader;
 import library.businessobject.Reservation;
 
 @Stateless
-public class LibraryBean implements LibraryService {
+public class LibraryBean implements LibraryService{
 
 	@PersistenceContext(name = "LibraryPU")
 	private EntityManager em;

@@ -1,6 +1,8 @@
 package library.businessobject;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -27,9 +29,9 @@ public class Librarian extends User {
 		super(email, firstname, lastname, address);
 	}
 	
-	public Map<String, Object> convertToMap(){
+	public static Map<String, Object> convertToMap(Librarian l){
 		ObjectMapper oMapper = new ObjectMapper();
-		Map<String, Object> librarianMap = oMapper.convertValue(this, Map.class);
+		Map<String, Object> librarianMap = oMapper.convertValue(l, Map.class);
 		return librarianMap;
 	}
 	
@@ -37,5 +39,21 @@ public class Librarian extends User {
 		ObjectMapper oMapper = new ObjectMapper();
 		Librarian librarian = oMapper.convertValue(librarianMap, Librarian.class);
 		return librarian;
+	}
+	
+	public static List<Map<String, Object>> convertToMapList(List<Librarian> librarians) {
+		ArrayList<Map<String, Object>> librariansMap = new ArrayList<Map<String,Object>>();
+		for(Librarian l :  librarians) {
+			librariansMap.add(Librarian.convertToMap(l));
+		}
+		return librariansMap;
+	}
+	
+	public static List<Librarian> convertFromMapList(List<Map<String, Object>> librariansMap) {
+		ArrayList<Librarian> librarians = new ArrayList<Librarian>();
+		for(Map<String, Object> l :  librariansMap) {
+			librarians.add(Librarian.convertFromMap(l));
+		}
+		return librarians;
 	}
 }

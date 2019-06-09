@@ -31,8 +31,8 @@ public interface LibraryService{
 	//getall
 	List<Book> getBooks();
 	List<Library> getLibraries();
-	List<Librarian> getLibrarians();
-	List<Reader> getReaders();
+	List<Map<String, Object>> getLibrarians();
+	List<Map<String, Object>> getReaders();
 	List<Reservation> getReservations();
 
 	Book getBook(String bookId);

@@ -2,20 +2,22 @@ package library.libraryservice;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.PostConstruct;
-import javax.annotation.PreDestroy;
 import javax.ejb.Stateful;
-import javax.faces.bean.RequestScoped;
+import javax.faces.bean.SessionScoped;
 
 import library.businessobject.Book;
 import library.businessobject.Reader;
 
 @Stateful
+@SessionScoped
 public class BagBean implements BagService {
 
 	private List<Book> booksInBag;
 	private Reader currentReader;
+	
 	
 	@Override
 	public void removeBook(Book b) {
@@ -38,24 +40,19 @@ public class BagBean implements BagService {
 	}
 
 	@Override
-	public Reader getCurrentReader() {
-		return currentReader;
+	public Map<String, Object> getCurrentReader() {
+		return Reader.convertToMap(currentReader);
 	}
 
 	@Override
-	public void setCurrentReader(Reader currentReader) {
-		this.currentReader = currentReader;
+	public void setCurrentReader(Map<String, Object> reader) {
+		currentReader = Reader.convertFromMap(reader);
 	}
 
 	@PostConstruct
 	public void initialize() {
 		booksInBag = new ArrayList<Book>();
-	}
-
-	@PreDestroy
-	public void clear() {
-		booksInBag = null;
-		setCurrentReader(null);
+		System.out.println("PA_DEBUG: Init BagBean");
 	}
 
 	@Override

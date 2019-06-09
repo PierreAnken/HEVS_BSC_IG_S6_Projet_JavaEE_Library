@@ -107,13 +107,16 @@ public class LibraryBean implements LibraryService{
 	}
 
 	@Override
-	public List<Librarian> getLibrarians() {
-		return (List<Librarian>) em.createQuery("FROM Librarian l").getResultList();
+	public List<Map<String, Object>> getLibrarians() {
+		
+		List<Librarian> librarians = (List<Librarian>) em.createQuery("FROM Librarian l").getResultList();
+		return Librarian.convertToMapList(librarians);
 	}
 
 	@Override
-	public List<Reader> getReaders() {
-		return (List<Reader>) em.createQuery("FROM Reader r").getResultList();
+	public List<Map<String, Object>> getReaders() {
+		List<Reader> readers = (List<Reader>) em.createQuery("FROM Reader r").getResultList();
+		return Reader.convertToMapList(readers);
 	}
 
 	@Override
@@ -124,13 +127,13 @@ public class LibraryBean implements LibraryService{
 	@Override
 	public Map<String, Object> getReader(long readerId) {
 		Reader reader = (Reader) em.createQuery("FROM User u WHERE u.id = :readerId").setParameter("readerId", readerId).getSingleResult();
-		return reader.convertToMap();
+		return Reader.convertToMap(reader);
 	}
 
 	@Override
 	public Map<String, Object> getReaderFromCardId(int cardId) {
 		Reader reader = (Reader) em.createQuery("FROM Reader r WHERE r.cardId = :cardId").setParameter("cardId", cardId).getSingleResult();
-		return reader.convertToMap();
+		return Reader.convertToMap(reader);
 	}
 	
 	@Override
@@ -145,11 +148,11 @@ public class LibraryBean implements LibraryService{
 	
 	public void populateLibraryDB() {
 
-		System.out.println("PA_DEBUG: Start DB init");
-		
 		//if db is empty we populate it
 		if(getBooks().size() > 0)
 			return;
+		
+		System.out.println("PA_DEBUG: Start DB init");
 		
 		//Delete libraries
 		List<Library> libraries = getLibraries(); 
@@ -191,7 +194,7 @@ public class LibraryBean implements LibraryService{
 		Address flanthey1 = new Address("3978", "Rue du moulin 13", "Flanthey");
 		
 		//delete old readers
-		List<Reader> readers = getReaders(); 
+		List<Reader> readers = Reader.convertFromMapList(getReaders()); 
 		for(int i=0; i<readers.size();i++)
 			em.remove(readers.get(i));
 		

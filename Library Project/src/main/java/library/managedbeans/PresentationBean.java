@@ -2,9 +2,9 @@ package library.managedbeans;
 
 import java.io.Serializable;
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.PostConstruct;
-import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.naming.InitialContext;
@@ -22,19 +22,17 @@ public class PresentationBean implements Serializable{
 	private static final long serialVersionUID = 1L;
 
 	private LibraryService libraryService;
-	
-	@EJB
 	private BagService bagService;
-
-	
 	
 	@PostConstruct
 	public void initialize() throws Exception{
 
 		// Create reference to book EJB using JNDI
 		InitialContext ctx = new InitialContext();
-		libraryService = (LibraryService)ctx
-				.lookup("java:global/Library-0.0.1/LibraryBean!library.libraryservice.LibraryService");
+		libraryService = (LibraryService)ctx.lookup("java:global/Library-0.0.1/LibraryBean!library.libraryservice.LibraryService");
+		bagService = (BagService)ctx.lookup("java:global/Library-0.0.1/BagBean!library.libraryservice.BagService");
+		
+		System.out.println("PA_DEBUG: Init PresentationBean");
 	}
 	
 	public BagService getBagService() {
@@ -67,12 +65,12 @@ public class PresentationBean implements Serializable{
 
 
 	public List<Librarian> getLibrarians() {
-		return libraryService.getLibrarians();
+		return Librarian.convertFromMapList(libraryService.getLibrarians());
 	}
 
 
 	public List<Reader> getReaders() {
-		return libraryService.getReaders();
+		return Reader.convertFromMapList(libraryService.getReaders());
 	}
 
 	public Reader getReader(long Id) {
@@ -89,11 +87,11 @@ public class PresentationBean implements Serializable{
 		bagService.removeBook(b);
 	}
 
-	public Reader getCurrentReader() {
+	public Map<String, Object> getCurrentReader() {
 		return bagService.getCurrentReader();
 	}
 
-	public void setCurrentReader(Reader r) {
+	public void setCurrentReader(Map<String, Object> r) {
 		bagService.setCurrentReader(r);
 	}
 

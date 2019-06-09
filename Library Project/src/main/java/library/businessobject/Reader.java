@@ -1,6 +1,8 @@
 package library.businessobject;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -53,9 +55,9 @@ public class Reader extends User implements Serializable{
 		this.accountBalance = accountBalance;
 	}
 	
-	public Map<String, Object> convertToMap(){
+	public static Map<String, Object> convertToMap(Reader r){
 		ObjectMapper oMapper = new ObjectMapper();
-		Map<String, Object> readerMap = oMapper.convertValue(this, Map.class);
+		Map<String, Object> readerMap = oMapper.convertValue(r, Map.class);
 		return readerMap;
 	}
 	
@@ -63,5 +65,21 @@ public class Reader extends User implements Serializable{
 		ObjectMapper oMapper = new ObjectMapper();
 		Reader reader = oMapper.convertValue(readerMap, Reader.class);
 		return reader;
+	}
+	
+	public static List<Map<String, Object>> convertToMapList(List<Reader> readers) {
+		ArrayList<Map<String, Object>> readersMap = new ArrayList<Map<String,Object>>();
+		for(Reader r :  readers) {
+			readersMap.add(Reader.convertToMap(r));
+		}
+		return readersMap;
+	}
+	
+	public static List<Reader> convertFromMapList(List<Map<String, Object>> readersMap) {
+		ArrayList<Reader> readers = new ArrayList<Reader>();
+		for(Map<String, Object> r :  readersMap) {
+			readers.add(Reader.convertFromMap(r));
+		}
+		return readers;
 	}
 }

@@ -2,44 +2,84 @@
     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
 <html xmlns="http://www.w3.org/1999/xhtml"
-    xmlns:ui="http://java.sun.com/jsf/facelets"
-    xmlns:h="http://java.sun.com/jsf/html"
-    xmlns:f="http://java.sun.com/jsf/core"
-    xmlns:c="http://java.sun.com/jsp/jstl/core">
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:c="http://java.sun.com/jsp/jstl/core">
 
 <ui:composition template="/WEB-INF/templates/template.xhtml">
-    	<ui:define name="content">
-		    <div id="loadAccount" class="align-self-center imgLibrarian background">	
-		    	<div class="row" id="dialog_frame">		
+	<ui:define name="content">
+		<div id="loadAccount"
+			class="align-self-center imgLibrarian background">
+			<c:set var="currentReader" value="#{loadMoney.getCurrentReader()}" />
+			<h:panelGroup class="container" id="dialog_frame" layout="block">
+				<h:panelGroup class="row" rendered="#{empty currentReader}" layout="block">
 					<div class="col-6 nopadding">
-	   					<div class="dialog_left">
-	   						Sure , do you have your reader's card with you?
-	   					</div>
-	   				</div>
-	   				<div class="w-100"/>
-	   				<div class="col-6 offset-6 nopadding">
-   					<h:form>   						
-   						<div class="dialog_right">
-   							Just a moment. : 
-	   						<h:selectOneMenu value="#{loadMoney.cardId}" id="selectReader">
-	   							<f:ajax listener="#{loadMoney.onSelectedCardId}" execute="selectReader" render = "okSelected"/>
-	   							<f:selectItem itemLabel="Looking into my pocket  ..." itemValue="#{null}" />					
-	   							<f:selectItems value="#{loadMoney.readers}" var="reader" itemValue="#{reader.cardId}" itemLabel="#{reader.cardId}" />
-							</h:selectOneMenu>
-							<h:outputText id = "okSelected" value = "#{loadMoney.sayHello()}"/>
+						<div class="dialog_left">Sure , do you have your reader's
+							card with you?</div>
+					</div>
+					<div class="w-100" />
+					<div class="col-6 offset-6 nopadding">
+						<h:form>
+							<div class="dialog_right">
+								Just a moment.
+								<h:selectOneMenu value="#{loadMoney.cardId}">
+									<f:ajax listener="#{loadMoney.onSelectedCardId()}"
+										render="dialog_frame" />
+									<f:selectItem itemLabel="Looking into my pocket  ..."
+										itemValue="#{null}" />
+									<f:selectItems value="#{loadMoney.readers}" var="reader"
+										itemValue="#{reader.cardId}"
+										itemLabel="Card #{reader.cardId} (#{reader.firstname} #{reader.lastname})" />
+								</h:selectOneMenu>
+							</div>
+							<div class="dialog_right">
+								I don't have one yet. Could you
+								<h:commandLink action="#{navigationController.showPage}"
+									value=" create an account ">
+									<f:param name="pageId" value="registerReader" />
+								</h:commandLink>
+								for me?
+							</div>
+						</h:form>
+					</div>
+				</h:panelGroup>
+				<h:panelGroup rendered="#{not empty currentReader}" layout="block" class="row" id="dialog_frame_2">
+				<c:set var="amount" value="#{loadMoney.getAmount()}" />
+					<div class="col-6 nopadding">
+						<div class="dialog_left">
+							<h:outputText value="Thank you #{currentReader.firstname}, your current account balance is #{currentReader.accountBalance}CHF."/>
+							<br/>
+							Which amount would you like to load?
 						</div>
-						<div class="dialog_right">
-							I don't have one yet. Could you 
-							<h:commandLink action = "#{navigationController.showPage}" value=" create an account ">
-							 	<f:param name = "pageId" value = "registerReader" />
-							 	<f:param name = "objectId" value = "" />
-	  						</h:commandLink>
-	  						for me?
+					</div>
+					<div class="w-100" />
+					<div class="col-6 offset-6 nopadding">
+						<h:form>
+							<div class="dialog_right">
+								Could you load 
+								<h:selectOneMenu value="#{loadMoney.amount}" rendered="#{amount eq 0}">
+									<f:ajax listener="#{loadMoney.onSelectedAmount()}" process="@this" render="dialog_frame_2"/>
+									<f:selectItem itemLabel="..." itemValue="#{null}" />
+									<f:selectItem itemLabel="10" itemValue="#{10}"/>
+									<f:selectItem itemLabel="20" itemValue="#{20}"/>
+									<f:selectItem itemLabel="50" itemValue="#{50}"/>
+									<f:selectItem itemLabel="100" itemValue="#{100}"/>
+								</h:selectOneMenu>
+								<h:outputText value="#{loadMoney.amount}"  rendered="#{amount ne 0}"/>
+								CHF?
+							</div>
+						</h:form>
+					</div>
+					<div class="w-100"/>
+					<h:panelGroup class="col-6 nopadding" rendered="#{amount ne 0}">
+						<div class="dialog_left">
+							<h:outputText value="#{amount}CHF loaded."/>
 						</div>
-   					</h:form>
-   				</div>
-				</div>
-			</div>
-    	</ui:define>
-	</ui:composition>
+					</h:panelGroup>
+				</h:panelGroup>
+			</h:panelGroup>
+		</div>
+	</ui:define>
+</ui:composition>
 </html>

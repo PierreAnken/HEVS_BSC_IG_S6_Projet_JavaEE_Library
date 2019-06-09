@@ -1,6 +1,8 @@
 package library.libraryservice;
 
 import java.util.List;
+import java.util.Map;
+
 import javax.ejb.Remote;
 
 import library.businessobject.Book;
@@ -29,14 +31,15 @@ public interface LibraryService{
 	//getall
 	List<Book> getBooks();
 	List<Library> getLibraries();
-	List<Librarian> getLibrarians();
-	List<Reader> getReaders();
+	List<Map<String, Object>> getLibrarians();
+	List<Map<String, Object>> getReaders();
 	List<Reservation> getReservations();
 
 	Book getBook(String bookId);
 	void populateLibraryDB();
 	List<Book> getBooksByAuthor(String author);
 	List<Book> getBooksByLanguage(String lang);
-	Reader getReader(long id);
-	Reader getReaderFromCardId(String cardId);
+	Map<String, Object> getReader(long id);
+	Map<String, Object> getReaderFromCardId(int cardId);
+	Map<String, Object> getReaderFromCardId(String cardId);
 }

@@ -9,7 +9,7 @@
 <ui:composition template="/WEB-INF/templates/template.xhtml">
     	<ui:define name="content">
 	    	<div>
-		    	<div class="align-self-center imgInside">
+		    	<div class="align-self-center imgInside background">
 					<h:form>
 						<div class="row">
 							<div class="col-6 nopadding">
@@ -33,10 +33,10 @@
 	   							</div>
 	   							<div class="dialog_right">
 	   								Could I
-	   								<h:commandLink action = "#{navigationController.showPage}" value=" load money ">
+	   								<h:commandLink action = "#{navigationController.showPage}" value=" load money">
 								  		<f:param name = "pageId" value = "loadMoney" />
 		  							</h:commandLink>
-		  							on my account?
+		  							&nbsp;on my account?
 	   							</div>
 	   							<div class="dialog_right">
 	   								I want to 

@@ -1,7 +1,7 @@
 package library.libraryservice;
 
+import java.util.List;
 import java.util.Map;
-
 import javax.ejb.Remote;
 
 import library.businessobject.Book;
@@ -17,4 +17,6 @@ public interface BagService{
 	void setCurrentReader(Map<String, Object> r);
 
 	boolean isBookInBag(String bookId);
+	int getBagSize();
+	List<Book> getBagBooks();
 }

@@ -21,12 +21,23 @@ public class BagBean implements BagService {
 	
 	@Override
 	public void removeBook(Book b) {
-		booksInBag.add(b);
+		System.out.println("OG_DEBUG: Bag Been book remover " + b.getId());
+		booksInBag.remove(b);
+	}
+
+	@Override
+	public int getBagSize() {
+		return booksInBag.size();
+	}
+	
+	@Override
+	public List<Book> getBagBooks() {
+		return booksInBag;
 	}
 
 	@Override
 	public void addBook(Book b) {
-		booksInBag.remove(b);
+		booksInBag.add(b);
 	}
 
 	@Override
@@ -59,6 +70,7 @@ public class BagBean implements BagService {
 	public boolean isBookInBag(String bookId) {
 		boolean found = false;
 		if (booksInBag.size() == 0) {
+//			System.out.println("OG_DEBUG: Book " + bookId + " in bag : false because size 0");
 			return false;
 		}
 		for (Book b : booksInBag) {
@@ -67,6 +79,7 @@ public class BagBean implements BagService {
 				break;
 			}
 		}
+//		System.out.println("OG_DEBUG: Book " + bookId + " in bag : " + found);
 		return found;
 	}
 }

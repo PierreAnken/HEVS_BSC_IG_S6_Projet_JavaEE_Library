@@ -41,7 +41,6 @@ public class PresentationBean {
 		return libraryService.getLibraries();
 	}
 
-
 	public Book getBook(String bookId) {
 		return libraryService.getBook(bookId);
 	}
@@ -55,9 +54,18 @@ public class PresentationBean {
 	}
 
 	public List<Book> getBookList() {
+//		System.out.println("OG_DEBUG: GetBookList" + libraryService.getBooks().size());
+//		System.out.println("OG_DEBUG: Bag Service Size > > > > > > " + bagService.getBagSize());
 		return libraryService.getBooks();
 	}
 
+	public int getBagSize() {
+		return bagService.getBagSize();
+	}
+
+	public List<Book> getBagBooks() {
+		return bagService.getBagBooks();
+	}
 
 	public List<Librarian> getLibrarians() {
 		return libraryService.getLibrarians();
@@ -72,13 +80,18 @@ public class PresentationBean {
 		return libraryService.getReader(Id);
 	}
 
-	public void addBookToBag(Book b) {
+	public String addBookToBag(Book b) {
 		bagService.addBook(b);
-		System.out.println(bagService.toString());
+//		System.out.println("OG_DEBUG: Add Book To Bag >>>>>>>>>>>>>>>>> " + b.getId());
+		return "";
+
 	}
 
-	public void removeBookFromBag(Book b) {
+	public String removeBookFromBag(Book b) {
 		bagService.removeBook(b);
+		System.out.println("OG_DEBUG: Removing Book From Bag >>>>>>>>>>>>>>>>> " + b.getId());
+		return "";
+
 	}
 
 	public Reader getCurrentReader() {
@@ -94,6 +107,8 @@ public class PresentationBean {
 	}
 	
 	public boolean isBookInBag(String bookId) {
+//		System.out.println("OG_DEBUG: isBookInBag ID " + bookId);
+//		System.out.println("OG_DEBUG: isBookInBag BOOLEAN " + bagService.isBookInBag(bookId));
 		return bagService.isBookInBag(bookId);
 	}
 

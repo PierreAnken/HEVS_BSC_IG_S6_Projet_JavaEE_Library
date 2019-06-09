@@ -10,13 +10,7 @@
 
 <ui:composition template="/WEB-INF/templates/template.xhtml">
 	<ui:define name="content">
-		<h:form>
-			<h:commandLink action="#{navigationController.showPage}"
-				value="#{PresentationBean.getBagSize()} items in your Bag!">
-				<f:param name="pageId" value="viewbag" />
-			</h:commandLink>
-		</h:form>
-		<div></div>
+		<div>#{PresentationBean.getBagSize()} items in your Bag!</div>
 		<div class="row">
 			<div class="col-sm-3">
 				<b>Title</b>
@@ -31,7 +25,7 @@
 				<b>Action</b>
 			</div>
 		</div>
-		<ui:repeat var="book" value="#{PresentationBean.getBookList()}"
+		<ui:repeat var="book" value="#{PresentationBean.getBagBooks()}"
 			varStatus="status">
 			<div class="row box bline">
 
@@ -66,15 +60,11 @@
 					</h:form>
 				</div>
 				<div class="col-sm-1 tpad10">
-					<h:panelGroup
-						rendered="#{PresentationBean.isBookInBag(book.id) eq 'false'}">
-						<h:form>
-							<h:commandLink action="#{PresentationBean.addBookToBag(book)}">
-								<i class="fas fa-shopping-bag" />
-								<f:param name="objectId" value="null" />
-							</h:commandLink>
-						</h:form>
-					</h:panelGroup>
+					<h:form>
+						<h:commandLink action="#{PresentationBean.removeBookFromBag(book)}">
+							<i class="fas fa-trash-alt" />
+						</h:commandLink>
+					</h:form>
 				</div>
 			</div>
 		</ui:repeat>

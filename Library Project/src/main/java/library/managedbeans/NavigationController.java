@@ -25,8 +25,10 @@ public class NavigationController implements Serializable {
 	public String showPage() {
 		if (pageId == null)
 			return "index";
-
-		return pageId + "?faces-redirect=true&objectId=" + objectId;
+		if (objectId != null) 
+			return pageId + "?faces-redirect=true&objectId=" + objectId;
+		else
+			return pageId + "?faces-redirect=true";
 	}
 
 	public String getPageId() {

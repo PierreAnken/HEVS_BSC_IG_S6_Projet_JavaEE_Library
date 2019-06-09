@@ -14,7 +14,7 @@ import library.libraryservice.LibraryService;
 
 @ManagedBean(name = "loadMoney")
 @ViewScoped
-public class LoadMoney implements Serializable{
+public class CreateAccount implements Serializable{
 
 	private static final long serialVersionUID = 7078809928413778000L;
 

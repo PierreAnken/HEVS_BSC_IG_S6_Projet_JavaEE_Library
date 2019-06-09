@@ -11,9 +11,9 @@
 	<ui:define name="content">
 		<div id="loadAccount"
 			class="align-self-center imgLibrarian background">
-			<c:set var="currentReader" value="#{loadMoney.getCurrentReader()}" />
+			<c:set var="currentReader" scope="view" value="#{loadMoney.readerBag.getCurrentReader()}" />
 			<h:panelGroup class="container" id="dialog_frame" layout="block">
-				<h:panelGroup class="row" rendered="#{empty currentReader}" layout="block">
+				<h:panelGroup class="row" layout="block">
 					<div class="col-6 nopadding">
 						<div class="dialog_left">Sure , do you have your reader's
 							card with you?</div>
@@ -21,26 +21,30 @@
 					<div class="w-100" />
 					<div class="col-6 offset-6 nopadding">
 						<h:form>
-							<div class="dialog_right">
-								Just a moment.
-								<h:selectOneMenu value="#{loadMoney.cardId}">
-									<f:ajax listener="#{loadMoney.onSelectedCardId()}"
-										render="dialog_frame" />
-									<f:selectItem itemLabel="Looking into my pocket  ..."
-										itemValue="#{null}" />
-									<f:selectItems value="#{loadMoney.readers}" var="reader"
-										itemValue="#{reader.cardId}"
-										itemLabel="Card #{reader.cardId} (#{reader.firstname} #{reader.lastname})" />
-								</h:selectOneMenu>
+						<div class="dialog_right">
+								<h:panelGroup rendered="#{empty currentReader}">
+									Just a moment.
+									<h:selectOneMenu value="#{loadMoney.cardId}" >
+										<f:ajax listener="#{loadMoney.onSelectedCardId}"
+											render="dialog_frame" />
+										<f:selectItem itemLabel="Looking into my pocket  ..."
+											itemValue="#{null}" />
+										<f:selectItems value="#{loadMoney.readers}" var="reader"
+											itemValue="#{reader.cardId}"
+											itemLabel="Card #{reader.cardId} (#{reader.firstname} #{reader.lastname})" />
+									</h:selectOneMenu>
+								
+								</h:panelGroup>
+								<h:outputText value="Here it is: #{currentReader.cardId}" rendered="#{not empty currentReader}"/>
 							</div>
-							<div class="dialog_right">
+							<h:panelGroup class="dialog_right" rendered="#{empty currentReader}" layout="block">
 								I don't have one yet. Could you
 								<h:commandLink action="#{navigationController.showPage}"
 									value=" create an account ">
 									<f:param name="pageId" value="registerReader" />
 								</h:commandLink>
 								for me?
-							</div>
+							</h:panelGroup>
 						</h:form>
 					</div>
 				</h:panelGroup>
@@ -48,7 +52,7 @@
 				<c:set var="amount" value="#{loadMoney.getAmount()}" />
 					<div class="col-6 nopadding">
 						<div class="dialog_left">
-							<h:outputText value="Thank you #{currentReader.firstname}."/> 
+							<h:outputText value="Hi #{currentReader.firstname}."/> 
 							<br/>
 							<h:outputText value="Your current account balance is #{currentReader.accountBalance}CHF."/>
 							<br/>
@@ -76,7 +80,8 @@
 					<div class="w-100"/>
 					<h:panelGroup class="col-6 nopadding" rendered="#{amount ne 0}">
 						<div class="dialog_left">
-							<h:outputText value="Done Your new account balance is #{currentReader.accountBalance+amount} CHF"/>
+							Done.<br/>
+							<h:outputText value=" Your new account balance is #{currentReader.accountBalance+amount} CHF"/>
 						</div>
 					</h:panelGroup>
 					<div class="w-100"/>

@@ -14,12 +14,19 @@ import library.businessobject.Reservation;
 @Remote
 public interface LibraryService{
 	
-	//add update
-	Book addUpdateBook(Book b);
-	Library addUpdateLibrary(Library l);
-	Librarian addUpdateLibrarian(Librarian l);
-	Reader addUpdateReader(Reader r);
-	Reservation addUpdateReservation(Reservation r);
+	//add 
+	Book addBook(Book b);
+	Library addLibrary(Library l);
+	Librarian addLibrarian(Librarian l);
+	Reader addReader(Reader r);
+	Reservation addReservation(Reservation r);
+	
+	//update
+	Book updateBook(Book b);
+	Library updateLibrary(Library l);
+	Librarian updateLibrarian(Librarian l);
+	Reader updateReader(Map<String, Object> r);
+	Reservation updateReservation(Reservation r);
 	
 	//delete
 	void deleteBook(Book b);

@@ -1,9 +1,10 @@
 package library.libraryservice;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
+import javax.annotation.PostConstruct;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -121,17 +122,25 @@ public class LibraryBean implements LibraryService{
 	}
 	
 	@Override
-	public Reader getReader(long readerId) {
-		return (Reader) em.createQuery("FROM User u WHERE u.id = :readerId").setParameter("readerId", readerId).getSingleResult();
+	public Map<String, Object> getReader(long readerId) {
+		Reader reader = (Reader) em.createQuery("FROM User u WHERE u.id = :readerId").setParameter("readerId", readerId).getSingleResult();
+		return reader.convertToMap();
 	}
 
 	@Override
-	public Reader getReaderFromCardId(int cardId) {
-		System.out.println("PA_DEBUG:getReadFromCardId  id: "+cardId);
+	public Map<String, Object> getReaderFromCardId(int cardId) {
 		Reader reader = (Reader) em.createQuery("FROM Reader r WHERE r.cardId = :cardId").setParameter("cardId", cardId).getSingleResult();
-		System.out.println("PA_DEBUG:getReadSQL id: "+cardId+" firstname "+reader.getFirstname());
-		System.out.println("PA_DEBUG:getReadSQL: Reader selected "+reader);
-		return reader;
+		return reader.convertToMap();
+	}
+	
+	@Override
+	public Map<String, Object> getReaderFromCardId(String cardId) {
+		return getReaderFromCardId(Integer.parseInt(cardId));
+	}
+	
+	@PostConstruct
+	public void initialize() throws Exception{
+		populateLibraryDB();
 	}
 	
 	public void populateLibraryDB() {

@@ -18,16 +18,15 @@
 	   				</div>
 	   				<div class="w-100"/>
 	   				<div class="col-6 offset-6 nopadding">
-   					<h:form>
-   						<c:set var="currentReader" value="#{PresentationBean.getCurrentReader()}" scope="request" />
-   						
+   					<h:form>   						
    						<div class="dialog_right">
    							Just a moment. : 
-	   						<h:selectOneMenu>
-	   						<f:ajax event="change" update="dialog_frame" listener="#{PresentationBean.onSelectedReader}"/>
-	   							<f:selectItem itemLabel="Looking into my pocket  ..." />					
-	   							<f:selectItems value="#{PresentationBean.getReaders()}" var="reader" itemLabel="#{reader.getCardId()} (#{reader.getFirstname()}-#{reader.getLastname()})" itemValue="#{reader.cardId}" />
+	   						<h:selectOneMenu value="#{loadMoney.cardId}" id="selectReader">
+	   							<f:ajax listener="#{loadMoney.onSelectedCardId}" execute="selectReader" render = "okSelected"/>
+	   							<f:selectItem itemLabel="Looking into my pocket  ..." itemValue="#{null}" />					
+	   							<f:selectItems value="#{loadMoney.readers}" var="reader" itemValue="#{reader.cardId}" itemLabel="#{reader.cardId}" />
 							</h:selectOneMenu>
+							<h:outputText id = "okSelected" value = "#{loadMoney.sayHello()}"/>
 						</div>
 						<div class="dialog_right">
 							I don't have one yet. Could you 

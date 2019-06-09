@@ -11,8 +11,8 @@ import javax.persistence.InheritanceType;
 public abstract class User {
 	
 	@Id
-	protected String email;
-	protected String firstname, lastname;
+	private String email;
+	private String firstname, lastname;
 	
 	@Embedded
 	protected Address address;

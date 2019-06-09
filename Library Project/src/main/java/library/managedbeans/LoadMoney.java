@@ -48,9 +48,10 @@ public class LoadMoney implements Serializable{
 	
 	public void onSelectedAmount() {
 		if(amount > 0) {
-			
+			Reader reader = getCurrentReader();
+			reader.setAccountBalance(reader.getAccountBalance()+amount);
+			libraryService.updateReader(Reader.convertToMap(reader));
 		}
-		System.out.println("Amount selected "+amount);
 	}
 	
 	public Reader getCurrentReader() {

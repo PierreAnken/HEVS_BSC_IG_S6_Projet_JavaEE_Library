@@ -21,32 +21,58 @@ public class LibraryBean implements LibraryService{
 	@PersistenceContext(name = "LibraryPU")
 	private EntityManager em;
 	
-	// add or update
-	public Book addUpdateBook(Book b) {
+	// add
+	public Book addBook(Book b) {
 		em.persist(b);
 		return b;
 	}
 	
-	public Library addUpdateLibrary(Library l) {
+	public Library addLibrary(Library l) {
 		em.persist(l);
 		return l;
 	}
 	
-	public Librarian addUpdateLibrarian(Librarian l) {
+	public Librarian addLibrarian(Librarian l) {
 		em.persist(l);
 		return l;
 	}
 	
-	public Reader addUpdateReader(Reader r) {
+	public Reader addReader(Reader r) {
 		em.persist(r);
 		return r;
 	}
 	
-	public Reservation addUpdateReservation(Reservation r) {
+	public Reservation addReservation(Reservation r) {
 		em.persist(r);
 		return r;
 	}
-
+	
+	//update
+	public Book updateBook(Book b) {
+		em.merge(b);
+		return b;
+	}
+	
+	public Library updateLibrary(Library l) {
+		em.merge(l);
+		return l;
+	}
+	
+	public Librarian updateLibrarian(Librarian l) {
+		em.merge(l);
+		return l;
+	}
+	
+	public Reader updateReader(Map<String, Object> r) {
+		Reader reader = Reader.convertFromMap(r);
+		em.merge(reader);
+		return reader;
+	}
+	
+	public Reservation updateReservation(Reservation r) {
+		em.merge(r);
+		return r;
+	}
 	
 	//delete
 	@Override

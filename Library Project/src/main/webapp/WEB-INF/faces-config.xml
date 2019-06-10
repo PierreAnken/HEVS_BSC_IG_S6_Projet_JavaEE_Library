@@ -10,17 +10,26 @@
 		<managed-bean-scope>session</managed-bean-scope>
 	</managed-bean>
 	<managed-bean>
+		<managed-bean-name>ReaderBag</managed-bean-name>
+		<managed-bean-class>library.managedbeans.ReaderBag</managed-bean-class>
+		<managed-bean-scope>session</managed-bean-scope>
+	</managed-bean>
+	<managed-bean>
 		<managed-bean-name>LoadMoney</managed-bean-name>
 		<managed-bean-class>library.managedbeans.LoadMoney</managed-bean-class>
 		<managed-bean-scope>view</managed-bean-scope>
 		<managed-property>
-	    	<property-name>ReaderBag</property-name>
+	    	<property-name>readerBag</property-name>
 	    	<value>#{ReaderBag}</value>
 	    </managed-property>
 	</managed-bean>
 	<managed-bean>
-		<managed-bean-name>ReaderBag</managed-bean-name>
-		<managed-bean-class>library.managedbeans.ReaderBag</managed-bean-class>
-		<managed-bean-scope>session</managed-bean-scope>
+		<managed-bean-name>CreateAccount</managed-bean-name>
+		<managed-bean-class>library.managedbeans.CreateAccount</managed-bean-class>
+		<managed-bean-scope>view</managed-bean-scope>
+		<managed-property>
+	    	<property-name>readerBag</property-name>
+	    	<value>#{ReaderBag}</value>
+	    </managed-property>
 	</managed-bean>
 </faces-config>

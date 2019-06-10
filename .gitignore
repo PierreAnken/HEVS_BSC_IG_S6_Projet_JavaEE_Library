@@ -1,29 +1,6 @@
-
-Library Project/.DS_Store
-Library Project/src/main/.DS_Store
-Library Project/src/main/java/.DS_Store
-.DS_Store
-Library Project/src/main/.DS_Store
-/.metadata/
-Library Project/src/main/java/library/businessobject/User.java
-Library Project/target/classes/library/businessobject/Address.class
-Library Project/target/classes/library/businessobject/Language.class
-Library Project/target/classes/library/businessobject/Reservation.class
-Library Project/target/classes/library/businessobject/User.class
-Library Project/target/classes/library/exception/BookException.class
-*.class
-Library Project/target/classes/library/businessobject/Address.class
-Library Project/target/classes/library/businessobject/Book.class
-Library Project/target/classes/library/businessobject/Library.class
-*.class
-Library Project/target/m2e-wtp/web-resources/META-INF/MANIFEST.MF
-Library Project/target/m2e-wtp/web-resources/META-INF/MANIFEST.MF
-Library Project/src/main/.DS_Store
-Library Project/.settings/org.eclipse.core.resources.prefs
-Library Project/src/main/.DS_Store
-Library Project/target/m2e-wtp/web-resources/META-INF/maven/Library/Library/pom.properties
 *.class
 *.MF
-Library Project/target/m2e-wtp/web-resources/META-INF/MANIFEST.MF
-Library Project/target/m2e-wtp/web-resources/META-INF/MANIFEST.MF
-Library Project/target/m2e-wtp/web-resources/META-INF/maven/Library/Library/pom.properties
+*.DS_Store
+*.properties
+*.metadata
+*.prefs

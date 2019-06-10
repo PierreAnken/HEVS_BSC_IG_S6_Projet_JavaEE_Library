@@ -9,8 +9,7 @@
 
 <ui:composition template="/WEB-INF/templates/template.xhtml">
 	<ui:define name="content">
-		<div id="loadAccount"
-			class="align-self-center imgLibrarian background">
+		<div id="loadAccount" class="align-self-center imgLibrarian background">
 			<c:set var="currentReader" scope="view" value="#{loadMoney.readerBag.getCurrentReader()}" />
 			<h:panelGroup class="container" id="dialog_frame" layout="block">
 				<h:panelGroup class="row" layout="block">
@@ -41,7 +40,7 @@
 								I don't have one yet. Could you
 								<h:commandLink action="#{navigationController.showPage}"
 									value=" create an account ">
-									<f:param name="pageId" value="registerReader" />
+									<f:param name="pageId" value="createAccount" />
 								</h:commandLink>
 								for me?
 							</h:panelGroup>

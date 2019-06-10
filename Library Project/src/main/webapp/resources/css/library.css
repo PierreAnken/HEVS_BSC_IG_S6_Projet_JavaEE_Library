@@ -19,15 +19,22 @@
 	background-image:url(#{resource['img:librarian.jpg']});
 }
 
+.imgPaper{
+	background-image:url(#{resource['img:paper.jpg']});
+	margin:3%;
+	border: 1px solid gray;
+}
+
 .container{
 	padding:2%;
 }
 
 div.background{
-	 background-repeat:no-repeat;
-     background-position: center;
-     padding:10%;
+     padding:7%;
+     background-repeat:no-repeat;
+	 background-position:center;
 }
+
 
 .tpad10 {
 	padding-top: 10px;
@@ -51,7 +58,6 @@ img.centered {
 img{
 	max-width: 100%;
   	height: auto;
-  	max-height: 80vh;
 }
 
 .pointer {
@@ -82,4 +88,12 @@ ul {
 
 .nopadding{
 	padding: 0 !important;
+}
+
+.nomargin{
+	margin: 0 !important;
+}
+
+.width100{
+	width:100%;
 }

@@ -16,7 +16,7 @@ public abstract class User {
 	
 	@Embedded
 	protected Address address;
-	
+
 	public String getEmail() {
 		return email;
 	}
@@ -40,9 +40,21 @@ public abstract class User {
 	public void setLastname(String lastname) {
 		this.lastname = lastname;
 	}
+	
+	public Address getAddress() {
+		return address;
+	}
+
+	public void setAddress(Address address) {
+		this.address = address;
+	}
 
 	// Constructors
 	public User() {
+	}
+	
+	public User(Address address) {
+		this.address = address;
 	}
 
 	public User(String email, String firstname, String lastname) {

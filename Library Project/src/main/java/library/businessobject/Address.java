@@ -7,7 +7,9 @@ import javax.persistence.Embeddable;
 @Embeddable
 public class Address implements Serializable {
 	
-	private static final long serialVersionUID = 1L;
+	
+	private static final long serialVersionUID = -2549929609831598551L;
+	
 	private String zipCode, street, city;
 
 	public String getzipCode() {

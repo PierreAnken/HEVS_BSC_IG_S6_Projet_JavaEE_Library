@@ -47,6 +47,20 @@ public class LibraryBean implements LibraryService{
 		return r;
 	}
 	
+	@Override
+	public Map<String, Object> addLibrarian(Map<String, Object> l) {
+		Librarian librarian = Librarian.convertFromMap(l);
+		em.persist(librarian);
+		return Librarian.convertToMap(librarian);
+	}
+
+	@Override
+	public Map<String, Object> addReader(Map<String, Object> r) {
+		Reader reader = Reader.convertFromMap(r);
+		em.persist(reader);
+		return Reader.convertToMap(reader);
+	}
+	
 	//update
 	public Book updateBook(Book b) {
 		em.merge(b);
@@ -131,6 +145,11 @@ public class LibraryBean implements LibraryService{
 	public List<Library> getLibraries() {
 		return (List<Library>) em.createQuery("FROM Library l").getResultList();
 	}
+	
+	@Override
+	public int getMaxCardId() {
+		return (int) em.createQuery("select max(r.cardId) FROM Reader r").getSingleResult();
+	}
 
 	@Override
 	public List<Map<String, Object>> getLibrarians() {
@@ -160,6 +179,12 @@ public class LibraryBean implements LibraryService{
 	public Map<String, Object> getReaderFromCardId(int cardId) {
 		Reader reader = (Reader) em.createQuery("FROM Reader r WHERE r.cardId = :cardId").setParameter("cardId", cardId).getSingleResult();
 		return Reader.convertToMap(reader);
+	}
+	
+	@Override
+	public List<Map<String, Object>> getReadersFromEmail(String email) {
+		List<Reader> readers = (List<Reader>) em.createQuery("FROM Reader r WHERE r.email = :email").setParameter("email", email).getResultList();
+		return Reader.convertToMapList(readers);
 	}
 	
 	@Override
@@ -232,6 +257,7 @@ public class LibraryBean implements LibraryService{
 		
 		System.out.println("PA_DEBUG: End of database init");
 	}
+
 
 	
 

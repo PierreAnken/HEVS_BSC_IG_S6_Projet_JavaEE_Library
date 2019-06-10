@@ -7,11 +7,20 @@
 	<managed-bean>
 		<managed-bean-name>PresentationBean</managed-bean-name>
 		<managed-bean-class>library.managedbeans.PresentationBean</managed-bean-class>
-		<managed-bean-scope>view</managed-bean-scope>
+		<managed-bean-scope>session</managed-bean-scope>
 	</managed-bean>
 	<managed-bean>
 		<managed-bean-name>LoadMoney</managed-bean-name>
 		<managed-bean-class>library.managedbeans.LoadMoney</managed-bean-class>
 		<managed-bean-scope>view</managed-bean-scope>
+		<managed-property>
+	    	<property-name>ReaderBag</property-name>
+	    	<value>#{ReaderBag}</value>
+	    </managed-property>
+	</managed-bean>
+	<managed-bean>
+		<managed-bean-name>ReaderBag</managed-bean-name>
+		<managed-bean-class>library.managedbeans.ReaderBag</managed-bean-class>
+		<managed-bean-scope>session</managed-bean-scope>
 	</managed-bean>
 </faces-config>

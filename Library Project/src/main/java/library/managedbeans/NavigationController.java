@@ -6,9 +6,6 @@ import java.io.Serializable;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
-import javax.faces.bean.RequestScoped;
-
-import library.businessobject.Reader;
 
 @ManagedBean(name = "navigationController", eager = true)
 public class NavigationController implements Serializable {

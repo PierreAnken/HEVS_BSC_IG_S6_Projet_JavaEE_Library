@@ -1,5 +1,22 @@
 body {
 	background-color: #2b2b2b;
+	height: 100%;
+}
+
+html{
+	height: 100%;
+}
+
+#frame{
+	height: 100%;
+}
+
+#mainContent{
+	position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 80%;
+    transform: translate(-50%,-50%);
 }
 
 .navbar-static-top {

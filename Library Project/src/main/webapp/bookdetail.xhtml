@@ -13,19 +13,19 @@
 			value="#{PresentationBean.getBook(navigationController.getObjectId())}"
 			varStatus="status">
 			<div class="row bpad10">
-				<div class="col-sm-9">
+				<div class="col-9">
 					<b>#{book.title}</b>
 				</div>
-				<div class="col-sm-2">
+				<div class="col-2">
 					<b>#{book.author}</b>
 				</div>
-				<div class="col-sm-1">
+				<div class="col-1">
 					<h:graphicImage
 						value="#{resource['img:lang_'.concat(book.language).concat('.png')]}" />
 				</div>
 			</div>
-			<div class="row box bline">
-				<div class="col-sm-12 tpad10">
+			<div class="row box">
+				<div class="col-12 tpad10 bpad10">
 					<b>#{book.description}</b>
 				</div>
 			</div>

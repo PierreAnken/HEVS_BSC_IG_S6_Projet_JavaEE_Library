@@ -41,14 +41,14 @@ public class Shelfs implements Serializable{
 		filterLanguage = "";
 		InitialContext ctx = new InitialContext();
 		libraryService = (LibraryService)ctx.lookup("java:global/Library-0.0.1/LibraryBean!library.libraryservice.LibraryService");
-
 		filteredBooks = libraryService.getBooks();
+		filterBooks();
 	}
 
 	public void filterBooks() {
 		System.out.println("OG_DEBUG: entering book filter method");
 		filteredBooks = new ArrayList<Book>();
-		List<Book> allBooks = libraryService.getBooks(); // to do create query get only books without active reservations
+		List<Book> allBooks = libraryService.getAvailableBooks(); // to do create query get only books without active reservations
 		for (Book book : allBooks) {
 			// check text filter
 			if (!filterText.isEmpty()) {
@@ -84,8 +84,17 @@ public class Shelfs implements Serializable{
 		filterBooks();
 	}
 	
+	public List<Book> getAvailableBooks() {
+		return libraryService.getAvailableBooks();
+	}
+	
 	public void addBookToBag(Book b) {
 		readerBag.addBookToBag(b);
+		filterBooks();
+	}
+
+	public void removeBookFromBag(Book b) {
+		readerBag.removeBook(b);
 		filterBooks();
 	}
 

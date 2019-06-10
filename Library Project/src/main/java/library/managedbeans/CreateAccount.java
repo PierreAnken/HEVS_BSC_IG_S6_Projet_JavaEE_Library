@@ -28,8 +28,8 @@ public class CreateAccount implements Serializable{
 	private boolean alreadyExist;
 	
 	
-	@ManagedProperty(value="#{ReaderBag}")
-    private ReaderBag readerBag;
+	@ManagedProperty(value="#{UserSession}")
+    private UserSession userSession;
 	
 	@PostConstruct
 	public void initialize() throws Exception{
@@ -95,16 +95,16 @@ public class CreateAccount implements Serializable{
 		newReader.setCardId(libraryService.getMaxCardId()+1);
 		newReader = Reader.convertFromMap(libraryService.addReader(Reader.convertToMap(newReader)));
 		readerCreated = true;
-		readerBag.setCurrentReader(Reader.convertToMap(newReader));
+		userSession.setCurrentReader(Reader.convertToMap(newReader));
 		System.out.println("PA_DEBUG: CreateAccount>createNewReader "+newReader.getCardId());
 	}
 	
-	public ReaderBag getReaderBag() {
-		return readerBag;
+	public UserSession getUserSession() {
+		return userSession;
 	}
 
-	public void setReaderBag(ReaderBag readerBag) {
-		this.readerBag = readerBag;
+	public void setUserSession(UserSession userSession) {
+		this.userSession = userSession;
 	}
 
 	public Reader getNewReader() {

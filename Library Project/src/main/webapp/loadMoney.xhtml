@@ -10,7 +10,7 @@
 <ui:composition template="/WEB-INF/templates/template.xhtml">
 	<ui:define name="content">
 		<div id="loadAccount" class="align-self-center imgLibrarian background">
-			<c:set var="currentReader" scope="view" value="#{loadMoney.readerBag.getCurrentReader()}" />
+			<c:set var="currentReader" value="#{loadMoney.readerBag.getCurrentReader()}" />
 			<h:panelGroup class="container" id="dialog_frame" layout="block">
 				<h:panelGroup class="row" layout="block">
 					<div class="col-6 nopadding">
@@ -27,7 +27,7 @@
 										<f:ajax listener="#{loadMoney.onSelectedCardId}"
 											render="dialog_frame" />
 										<f:selectItem itemLabel="Looking into my pocket  ..."
-											itemValue="#{null}" />
+											itemValue="#{null}"/>
 										<f:selectItems value="#{loadMoney.readers}" var="reader"
 											itemValue="#{reader.cardId}"
 											itemLabel="Card #{reader.cardId} (#{reader.firstname} #{reader.lastname})" />
@@ -85,13 +85,13 @@
 					</h:panelGroup>
 					<div class="w-100"/>
 					<div class="col-6 offset-6 nopadding">
-						<h:form rendered="#{amount ne 0}">
+						<h:panelGroup rendered="#{amount ne 0}">
 							<div class="dialog_right">
 								<h:commandLink action="#{navigationController.showPage}" value="Thanks you.">
 							  <f:param name = "pageId" value = "inside" />
 	  						</h:commandLink>
 							</div>
-						</h:form>
+						</h:panelGroup>
 					</div>
 				</h:panelGroup>
 			</h:panelGroup>

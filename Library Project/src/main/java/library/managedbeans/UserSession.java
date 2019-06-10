@@ -7,23 +7,42 @@ import java.util.Map;
 import javax.annotation.PostConstruct;
 import javax.ejb.Stateful;
 import javax.faces.bean.SessionScoped;
+import javax.naming.InitialContext;
 
 import library.businessobject.Book;
+import library.businessobject.Librarian;
 import library.businessobject.Reader;
+import library.libraryservice.LibraryService;
 
 @SessionScoped
 @Stateful
-public class ReaderBag{
+public class UserSession{
 
 	private List<Book> booksInBag;
 	private Reader currentReader;
+	private Librarian currentLibrarian;
+	private LibraryService libraryService;
 	
 	@PostConstruct
-	public void initialize() {
+	public void initialize() throws Exception {
+		InitialContext ctx = new InitialContext();
+		libraryService = (LibraryService)ctx.lookup("java:global/Library-0.0.1/LibraryBean!library.libraryservice.LibraryService");
+
 		booksInBag = new ArrayList<Book>();
 		System.out.println("PA_DEBUG: Init BagBean");
+
+		currentLibrarian = Librarian.convertFromMapList(libraryService.getLibrarians()).get(0);
+		System.out.println("OG_DEBUG: Current Librarian " + currentLibrarian.getFirstname());
 	}
-	
+
+	public Librarian getCurrentLibrarian() {
+		return currentLibrarian;
+	}
+
+	public void setCurrentLibrarian(Librarian currentLibrarian) {
+		this.currentLibrarian = currentLibrarian;
+	}
+
 	public void removeBook(Book b) {
 		System.out.println("OG_DEBUG: Bag Been book remover " + b.getId());
 		booksInBag.remove(b);

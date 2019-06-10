@@ -5,18 +5,8 @@
     xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-facesconfig_2_2.xsd"
     version="2.2">
 	<managed-bean>
-		<managed-bean-name>PresentationBean</managed-bean-name>
-		<managed-bean-class>library.managedbeans.PresentationBean</managed-bean-class>
-		<managed-bean-scope>session</managed-bean-scope>
-	</managed-bean>
-	<managed-bean>
-		<managed-bean-name>ReaderBag</managed-bean-name>
-		<managed-bean-class>library.managedbeans.ReaderBag</managed-bean-class>
-		<managed-bean-scope>session</managed-bean-scope>
-	</managed-bean>
-	<managed-bean>
-		<managed-bean-name>LibrarianSession</managed-bean-name>
-		<managed-bean-class>library.managedbeans.LibrarianSession</managed-bean-class>
+		<managed-bean-name>UserSession</managed-bean-name>
+		<managed-bean-class>library.managedbeans.UserSession</managed-bean-class>
 		<managed-bean-scope>session</managed-bean-scope>
 	</managed-bean>
 	<managed-bean>
@@ -24,8 +14,8 @@
 		<managed-bean-class>library.managedbeans.LoadMoney</managed-bean-class>
 		<managed-bean-scope>view</managed-bean-scope>
 		<managed-property>
-	    	<property-name>readerBag</property-name>
-	    	<value>#{ReaderBag}</value>
+	    	<property-name>userSession</property-name>
+	    	<value>#{UserSession}</value>
 	    </managed-property>
 	</managed-bean>
 	<managed-bean>
@@ -33,12 +23,8 @@
 		<managed-bean-class>library.managedbeans.Shelfs</managed-bean-class>
 		<managed-bean-scope>view</managed-bean-scope>
 		<managed-property>
-	    	<property-name>readerBag</property-name>
-	    	<value>#{ReaderBag}</value>
-	    </managed-property>
-		<managed-property>
-	    	<property-name>librarianSession</property-name>
-	    	<value>#{LibrarianSession}</value>
+	    	<property-name>userSession</property-name>
+	    	<value>#{UserSession}</value>
 	    </managed-property>
 	</managed-bean>
 	<managed-bean>
@@ -46,8 +32,8 @@
 		<managed-bean-class>library.managedbeans.CreateAccount</managed-bean-class>
 		<managed-bean-scope>view</managed-bean-scope>
 		<managed-property>
-	    	<property-name>readerBag</property-name>
-	    	<value>#{ReaderBag}</value>
+	    	<property-name>userSession</property-name>
+	    	<value>#{UserSession}</value>
 	    </managed-property>
 	</managed-bean>
 </faces-config>

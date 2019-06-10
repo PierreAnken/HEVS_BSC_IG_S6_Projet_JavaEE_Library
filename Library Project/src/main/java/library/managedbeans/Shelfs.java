@@ -3,15 +3,12 @@ package library.managedbeans;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
-
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
 import javax.naming.InitialContext;
-
 import library.businessobject.Book;
-import library.businessobject.Reader;
 import library.libraryservice.LibraryService;
 
 @ManagedBean(name = "shelfs")
@@ -26,14 +23,12 @@ public class Shelfs implements Serializable{
 	private String filterLanguage; // filter by language
 	private String filterAuthor; // filter by author
 	private int detailBookId; // id of the book to show details
+	private int editBookId; // id of the book to show details
 	private List<Book> filteredBooks;
 	// <-- End Declaring the variables
 
-	@ManagedProperty(value="#{ReaderBag}")
-	private ReaderBag readerBag;
-
-	@ManagedProperty(value="#{LibrarianSession}")
-	private LibrarianSession librarianSession;
+	@ManagedProperty(value="#{UserSession}")
+	private UserSession userSession;
 
 	@PostConstruct
 	public void initialize() throws Exception{
@@ -52,7 +47,7 @@ public class Shelfs implements Serializable{
 		System.out.println("OG_DEBUG: entering book filter method");
 		filteredBooks = new ArrayList<Book>();
 		List<Book> allBooks;
-		if (librarianSession.getCurrentLibrarian() != null) {
+		if (userSession.getCurrentLibrarian() != null) {
 			allBooks = libraryService.getBooks(); // to do create query get all books if it is a librarian
 		} else {
 			allBooks = libraryService.getAvailableBooks(); // to do create query get only books without active reservations			
@@ -77,7 +72,7 @@ public class Shelfs implements Serializable{
 				}
 			}
 			// check if already in bag
-			if (readerBag.isBookInBag(book.getId())) {
+			if (userSession.isBookInBag(book.getId())) {
 				continue;
 			}
 			filteredBooks.add(book);
@@ -97,17 +92,22 @@ public class Shelfs implements Serializable{
 	}
 	
 	public void addBookToBag(Book b) {
-		readerBag.addBookToBag(b);
+		userSession.addBookToBag(b);
 		filterBooks();
 	}
 
 	public void removeBookFromBag(Book b) {
-		readerBag.removeBook(b);
+		userSession.removeBook(b);
 		filterBooks();
 	}
 
 	public String getFilterAuthor() {
 		return filterAuthor;
+	}
+	
+	public void deleteBookFromShelf(Book b) {
+		libraryService.deleteBook(b);
+		filterBooks();
 	}
 
 	public void setFilterAuthor(String filterAuthor) {
@@ -142,6 +142,14 @@ public class Shelfs implements Serializable{
 		filterBooks();
 	}
 
+	public int getEditBookId() {
+		return editBookId;
+	}
+
+	public void setEditBookId(int editBookId) {
+		this.editBookId = editBookId;
+	}
+
 	public int getDetailBookId() {
 		return detailBookId;
 	}
@@ -158,20 +166,12 @@ public class Shelfs implements Serializable{
 		this.filteredBooks = filteredBooks;
 	}
 
-	public ReaderBag getReaderBag() {
-		return readerBag;
+	public UserSession getUserSession() {
+		return userSession;
 	}
 
-	public void setReaderBag(ReaderBag readerBag) {
-		this.readerBag = readerBag;
-	}
-
-	public LibrarianSession getLibrarianSession() {
-		return librarianSession;
-	}
-
-	public void setLibrarianSession(LibrarianSession librarianSession) {
-		this.librarianSession = librarianSession;
+	public void setUserSession(UserSession userSession) {
+		this.userSession = userSession;
 	}
 
 }

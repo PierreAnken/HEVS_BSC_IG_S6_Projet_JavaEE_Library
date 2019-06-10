@@ -24,8 +24,8 @@ public class LoadMoney implements Serializable{
 	private String cardId;
 	private int amount;
 
-	@ManagedProperty(value="#{ReaderBag}")
-    private ReaderBag readerBag;
+	@ManagedProperty(value="#{UserSession}")
+    private UserSession userSession;
 	
 	@PostConstruct
 	public void initialize() throws Exception{
@@ -42,7 +42,7 @@ public class LoadMoney implements Serializable{
 		if(cardId != null && !cardId.isEmpty()) {
 			Reader reader = Reader.convertFromMap(libraryService.getReaderFromCardId(cardId));
 			if(reader != null) {
-				readerBag.setCurrentReader(Reader.convertToMap(reader));
+				userSession.setCurrentReader(Reader.convertToMap(reader));
 			}
 		}
 		amount = 0;
@@ -50,7 +50,7 @@ public class LoadMoney implements Serializable{
 	
 	public void onSelectedAmount() {
 		if(amount > 0) {
-			Reader reader = Reader.convertFromMap(readerBag.getCurrentReader());
+			Reader reader = Reader.convertFromMap(userSession.getCurrentReader());
 			reader.setAccountBalance(reader.getAccountBalance()+amount);
 			libraryService.updateReader(Reader.convertToMap(reader));
 		}
@@ -79,13 +79,22 @@ public class LoadMoney implements Serializable{
 	public void setCardId(String cardId) {
 		this.cardId = cardId;
 	}
-	
-	public ReaderBag getReaderBag() {
-		return readerBag;
+
+	public LibraryService getLibraryService() {
+		return libraryService;
 	}
 
-	public void setReaderBag(ReaderBag readerBag) {
-		this.readerBag = readerBag;
+	public void setLibraryService(LibraryService libraryService) {
+		this.libraryService = libraryService;
 	}
+
+	public UserSession getUserSession() {
+		return userSession;
+	}
+
+	public void setUserSession(UserSession userSession) {
+		this.userSession = userSession;
+	}
+	
 
 }

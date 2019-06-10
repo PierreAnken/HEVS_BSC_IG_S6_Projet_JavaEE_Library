@@ -13,10 +13,12 @@
 		<h:panelGroup id="grid">
 			<h:form>
 				<div class="row boxLight">
+					<c:set var="currentLibrarian" scope="view" value="#{Shelfs.userSession.getCurrentLibrarian().firstname}" />
 					<div class="col-3">
+					<h:outputText value="#{currentLibrarian}" />
 						<b> <h:commandLink id="bagLink"
 								action="#{navigationController.showPage}"
-								value="#{Shelfs.readerBag.getBooksInBag().size()} items in your Bag!">
+								value="#{Shelfs.userSession.getBooksInBag().size()} items in your Bag!">
 								<f:param name="pageId" value="viewbag" />
 							</h:commandLink>
 						</b>
@@ -76,13 +78,14 @@
 									value="${fn:substring(string1, 0, 20)}" />
 								<h:form>
 									<h:panelGroup rendered="#{Shelfs.getDetailBookId() ne book.id}">
-										#{descr_string}... <h:commandLink action="#{Shelfs.setDetailBookId(book.id)}">
+										#{descr_string}... <h:commandLink
+											action="#{Shelfs.setDetailBookId(book.id)}">
 											<i class="fas fa-search-plus" />
 										</h:commandLink>
 									</h:panelGroup>
 									<h:panelGroup rendered="#{Shelfs.getDetailBookId() eq book.id}">
 										#{string1}<h:commandLink action="#{Shelfs.setDetailBookId(0)}">
-												<i class="fas fa-search-minus" />
+											<i class="fas fa-search-minus" />
 										</h:commandLink>
 									</h:panelGroup>
 								</h:form>
@@ -113,9 +116,14 @@
 						</div>
 						<div class="col-1 tpad10">
 							<h:form>
-								<h:commandLink action="#{Shelfs.addBookToBag(book)}">
+								<h:commandLink action="#{Shelfs.addBookToBag(book)}" rendered="#{empty currentLibrarian}">
 									<i class="fas fa-shopping-bag" />
-									<f:param name="objectId" value="null" />
+								</h:commandLink>
+								<h:commandLink action="#{Shelfs.setEditBookId(book.id)}" rendered="#{not empty currentLibrarian}">
+									<i class="fas fa-edit" />
+								</h:commandLink>
+								<h:commandLink action="#{Shelfs.deleteBookFromShelf(book)}" rendered="#{not empty currentLibrarian}">
+									<i class="fas fa-trash-alt" />
 								</h:commandLink>
 							</h:form>
 						</div>

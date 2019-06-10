@@ -15,6 +15,11 @@
 		<managed-bean-scope>session</managed-bean-scope>
 	</managed-bean>
 	<managed-bean>
+		<managed-bean-name>LibrarianSession</managed-bean-name>
+		<managed-bean-class>library.managedbeans.LibrarianSession</managed-bean-class>
+		<managed-bean-scope>session</managed-bean-scope>
+	</managed-bean>
+	<managed-bean>
 		<managed-bean-name>LoadMoney</managed-bean-name>
 		<managed-bean-class>library.managedbeans.LoadMoney</managed-bean-class>
 		<managed-bean-scope>view</managed-bean-scope>
@@ -30,6 +35,10 @@
 		<managed-property>
 	    	<property-name>readerBag</property-name>
 	    	<value>#{ReaderBag}</value>
+	    </managed-property>
+		<managed-property>
+	    	<property-name>librarianSession</property-name>
+	    	<value>#{LibrarianSession}</value>
 	    </managed-property>
 	</managed-bean>
 	<managed-bean>

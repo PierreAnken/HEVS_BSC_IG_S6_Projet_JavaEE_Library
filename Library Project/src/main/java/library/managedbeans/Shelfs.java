@@ -32,6 +32,9 @@ public class Shelfs implements Serializable{
 	@ManagedProperty(value="#{ReaderBag}")
 	private ReaderBag readerBag;
 
+	@ManagedProperty(value="#{LibrarianSession}")
+	private LibrarianSession librarianSession;
+
 	@PostConstruct
 	public void initialize() throws Exception{
 
@@ -48,7 +51,12 @@ public class Shelfs implements Serializable{
 	public void filterBooks() {
 		System.out.println("OG_DEBUG: entering book filter method");
 		filteredBooks = new ArrayList<Book>();
-		List<Book> allBooks = libraryService.getAvailableBooks(); // to do create query get only books without active reservations
+		List<Book> allBooks;
+		if (librarianSession.getCurrentLibrarian() != null) {
+			allBooks = libraryService.getBooks(); // to do create query get all books if it is a librarian
+		} else {
+			allBooks = libraryService.getAvailableBooks(); // to do create query get only books without active reservations			
+		}
 		for (Book book : allBooks) {
 			// check text filter
 			if (!filterText.isEmpty()) {
@@ -156,6 +164,14 @@ public class Shelfs implements Serializable{
 
 	public void setReaderBag(ReaderBag readerBag) {
 		this.readerBag = readerBag;
+	}
+
+	public LibrarianSession getLibrarianSession() {
+		return librarianSession;
+	}
+
+	public void setLibrarianSession(LibrarianSession librarianSession) {
+		this.librarianSession = librarianSession;
 	}
 
 }

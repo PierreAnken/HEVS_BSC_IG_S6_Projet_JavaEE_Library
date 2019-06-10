@@ -10,7 +10,7 @@
 <ui:composition template="/WEB-INF/templates/template.xhtml">
 	<ui:define name="content">
 		<div id="loadAccount" class="align-self-center imgLibrarian background">
-			<c:set var="currentReader" value="#{loadMoney.readerBag.getCurrentReader()}" />
+			<c:set var="currentReader" value="#{loadMoney.userSession.getCurrentReader()}" />
 			<h:panelGroup class="container" id="dialog_frame" layout="block">
 				<h:panelGroup class="row" layout="block">
 					<div class="col-6 nopadding">

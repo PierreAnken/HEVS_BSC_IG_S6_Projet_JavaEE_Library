@@ -10,71 +10,72 @@ import javax.faces.bean.ViewScoped;
 import javax.naming.InitialContext;
 import library.businessobject.Book;
 import library.libraryservice.LibraryService;
+import library.toolbox.Tb;
 
 @ManagedBean(name = "shelfs")
 @ViewScoped
 public class Shelfs implements Serializable{
 
-	// Start Declaring the variables -->
 	private static final long serialVersionUID = -8161450633737207398L;
 
 	private LibraryService libraryService;
-	private String filterText; // plain text search
-	private String filterLanguage; // filter by language
-	private String filterAuthor; // filter by author
-	private int detailBookId; // id of the book to show details
-	private int editBookId; // id of the book to show details
+	private String filterText; 
+	private String filterLanguage; 
+	private String filterAuthor; 
+	private int detailBookId;
+	private int editBookId;
 	private List<Book> filteredBooks;
-	// <-- End Declaring the variables
 
 	@ManagedProperty(value="#{UserSession}")
-	private UserSession userSession;
+    private UserSession userSession;
 
 	@PostConstruct
 	public void initialize() throws Exception{
 
-		System.out.println("OG_DEBUG: init Shelfs");
-		filterText = "";
-		filterAuthor = "";
-		filterLanguage = "";
+		System.out.println("OG_DEBUG: init Shelfs ");
 		InitialContext ctx = new InitialContext();
-		libraryService = (LibraryService)ctx.lookup("java:global/Library-0.0.1/LibraryBean!library.libraryservice.LibraryService");
-		filteredBooks = libraryService.getBooks();
+		setLibraryService((LibraryService)ctx.lookup("java:global/Library-0.0.1/LibraryBean!library.libraryservice.LibraryService"));
 		filterBooks();
+		
 	}
 
 	public void filterBooks() {
 		System.out.println("OG_DEBUG: entering book filter method");
-		filteredBooks = new ArrayList<Book>();
-		List<Book> allBooks;
+		
+		List<Book> allBooks = new ArrayList<Book>();
+		setFilteredBooks(new ArrayList<Book>());
+		
 		if (userSession.getCurrentLibrarian() != null) {
-			allBooks = libraryService.getBooks(); // to do create query get all books if it is a librarian
+			allBooks = libraryService.getBooks(); 
 		} else {
-			allBooks = libraryService.getAvailableBooks(); // to do create query get only books without active reservations			
+			allBooks = libraryService.getBooks();
 		}
+		
 		for (Book book : allBooks) {
 			// check text filter
-			if (!filterText.isEmpty()) {
-				if (!book.getDescription().contains(filterText) && !book.getTitle().contains(filterText) && !book.getAuthor().contains(filterText)) {
+			if (Tb.stringExists(filterText)) {
+				if (!book.getDescription().toLowerCase().contains(filterText.toLowerCase()) && !book.getTitle().toLowerCase().contains(filterText.toLowerCase()) && !book.getAuthor().toLowerCase().contains(filterText.toLowerCase())) {
 					continue;
 				}
 			}
 			// check filter language
-			if (!filterLanguage.isEmpty()) {
+			if (Tb.stringExists(filterLanguage)) {
 				if (!book.getLanguage().equals(filterLanguage)) {
 					continue;
 				}
 			}
 			// check filter author
-			if (!filterAuthor.isEmpty()) {
+			if (Tb.stringExists(filterAuthor)) {
 				if (!book.getAuthor().equals(filterAuthor)) {
 					continue;
 				}
 			}
-			// check if already in bag
+			System.out.println("PA_DEBUG:isBookInBag ");
+			//check if already in bag
 			if (userSession.isBookInBag(book.getId())) {
 				continue;
 			}
+			
 			filteredBooks.add(book);
 		}
 		

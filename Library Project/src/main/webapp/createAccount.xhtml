@@ -12,7 +12,7 @@
 		<h:panelGroup id="createAccount" layout="block"
 			class="align-self-center imgLibrarian background">
 			<c:set var="currentReader" scope="view"
-				value="#{CreateAccount.readerBag.getCurrentReader()}" />
+				value="#{CreateAccount.userSession.getCurrentReader()}" />
 			<h:panelGroup class="container" id="dialog_frame" layout="block">
 				<h:panelGroup class="row" layout="block">
 					<div class="col-6 nopadding">

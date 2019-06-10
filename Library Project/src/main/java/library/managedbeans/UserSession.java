@@ -27,12 +27,9 @@ public class UserSession{
 	public void initialize() throws Exception {
 		InitialContext ctx = new InitialContext();
 		libraryService = (LibraryService)ctx.lookup("java:global/Library-0.0.1/LibraryBean!library.libraryservice.LibraryService");
-
-		booksInBag = new ArrayList<Book>();
-		System.out.println("PA_DEBUG: Init BagBean");
-
+		
 		currentLibrarian = Librarian.convertFromMapList(libraryService.getLibrarians()).get(0);
-		System.out.println("OG_DEBUG: Current Librarian " + currentLibrarian.getFirstname());
+		System.out.println("PA_DEBUG: Init  booksInBag "+getBooksInBag());
 	}
 
 	public Librarian getCurrentLibrarian() {
@@ -45,24 +42,26 @@ public class UserSession{
 
 	public void removeBook(Book b) {
 		System.out.println("OG_DEBUG: Bag Been book remover " + b.getId());
-		booksInBag.remove(b);
+		getBooksInBag().remove(b);
 	}
 
 	public int getBagSize() {
-		return booksInBag.size();
+		return getBooksInBag().size();
 	}
 	
 	public List<Book> getBooksInBag() {
+		if(booksInBag == null)
+			booksInBag = new ArrayList<Book>();
 		return booksInBag;
 	}
 
 	public void addBookToBag(Book b) {
-		System.out.println("OG_DEBUG: ReaderBag managedbean adding book to bag with ID " + b.getId() + " / " + booksInBag);
-		booksInBag.add(b);
+		System.out.println("OG_DEBUG: ReaderBag managedbean adding book to bag with ID " + b.getId() + " / " + getBooksInBag());
+		getBooksInBag().add(b);
 	}
 
 	public void removeBookFromBag(int bId) {
-		for (Book b : booksInBag) {
+		for (Book b : getBooksInBag()) {
 			if (b.getId() == bId) {
 				removeBook(b);
 				break;
@@ -79,8 +78,8 @@ public class UserSession{
 	}
 
 	public boolean isBookInBag(long bookId) {
-		for (Book b : booksInBag) {
-			if (b.getId() == bookId) {
+		for(Book book : getBooksInBag()) {		
+			if (book.getId() == bookId) {
 				return true;
 			}
 		}

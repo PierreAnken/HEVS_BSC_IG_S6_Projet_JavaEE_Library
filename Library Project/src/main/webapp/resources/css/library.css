@@ -48,11 +48,14 @@ html{
 	background-image:url(#{resource['img:librarian.jpg']});
 }
 
+.imgShelfs{
+	background-image:url(#{resource['img:shelfs.jpg']});
+}
+
 .imgPaper{
 	background-color:white;
 	margin:3%;
 	border: 1px solid gray;
-	
 }
 
 .container{
@@ -63,6 +66,9 @@ div.background{
      padding:7%;
      background-repeat:no-repeat;
 	 background-position:center;
+	 border:1px solid gray;
+	 border-radius: 10px;
+	 background-size:cover
 }
 
 
@@ -86,8 +92,10 @@ img.centered {
 }
 
 img{
-	max-width: 100%;
+	width: 100%;
   	height: auto;
+  	border-radius: 10px;
+	background-size:cover
 }
 
 .pointer {

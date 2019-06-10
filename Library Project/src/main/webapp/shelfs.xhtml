@@ -10,7 +10,7 @@
 
 <ui:composition template="/WEB-INF/templates/template.xhtml">
 	<ui:define name="content">
-		<h:panelGroup id="grid">
+		<h:panelGroup id="grid" class="imgShelfs background" layout="block">
 			<h:form>
 				<div class="row boxLight">
 					<c:set var="currentLibrarian" scope="view" value="#{Shelfs.userSession.getCurrentLibrarian().firstname}" />
@@ -44,7 +44,6 @@
 					</div>
 				</div>
 			</h:form>
-
 			<div class="row">
 				<div class="col-3">
 					<b>Title</b>

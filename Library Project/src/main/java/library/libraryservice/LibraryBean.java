@@ -194,10 +194,10 @@ public class LibraryBean implements LibraryService{
 		
 		books.add(new Book("Testbook", "Description bla","Heinrich Heine", "FR",lib1));
 		books.add(new Book("Testbook2", "Description bla","Heinrich Heine", "FR",lib1));
-		books.add(new Book("Testbook3", "Description bla","Heinrich Heine", "DE",lib1));
+		books.add(new Book("Testbook3", "Description bla","Erich Kaestner", "DE",lib1));
 		books.add(new Book("Testbook4", "Description bla","Heinrich Heine", "FR",lib1));
 		books.add(new Book("Testbook5", "Description bla","Heinrich Heine", "EN",lib1));
-		books.add(new Book("Testbook6", "Description bla","Heinrich Heine", "FR",lib1));
+		books.add(new Book("Testbook6", "Description bla","Friedrich Schiller", "FR",lib1));
 		books.add(new Book("Testbook7", "Description bla","Heinrich Heine", "FR",lib1));
 		
 		System.out.println("PA_DEBUG: Books in DB: "+getBooks().size());	 

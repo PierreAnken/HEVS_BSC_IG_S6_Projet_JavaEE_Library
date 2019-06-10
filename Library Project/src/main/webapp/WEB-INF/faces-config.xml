@@ -24,6 +24,15 @@
 	    </managed-property>
 	</managed-bean>
 	<managed-bean>
+		<managed-bean-name>Shelfs</managed-bean-name>
+		<managed-bean-class>library.managedbeans.Shelfs</managed-bean-class>
+		<managed-bean-scope>view</managed-bean-scope>
+		<managed-property>
+	    	<property-name>readerBag</property-name>
+	    	<value>#{ReaderBag}</value>
+	    </managed-property>
+	</managed-bean>
+	<managed-bean>
 		<managed-bean-name>CreateAccount</managed-bean-name>
 		<managed-bean-class>library.managedbeans.CreateAccount</managed-bean-class>
 		<managed-bean-scope>view</managed-bean-scope>

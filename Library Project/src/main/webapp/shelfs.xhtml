@@ -1,0 +1,108 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:fn="http://java.sun.com/jsp/jstl/functions"
+	xmlns:c="http://java.sun.com/jsp/jstl/core">
+
+<ui:composition template="/WEB-INF/templates/template.xhtml">
+	<ui:define name="content">
+		<h:panelGroup id="grid">
+			<h:form>
+				<div class="row">
+					<div class="col_sm-4">
+						<b>
+							Search : <h:inputText class="width100" />
+						</b>
+					</div>
+					<div class="col-sm-4">
+						<b> <h:commandLink id="bagLink"
+								action="#{navigationController.showPage}"
+								value="#{Shelfs.readerBag.getBooksInBag().size()} items in your Bag!">
+								<f:param name="pageId" value="viewbag" />
+							</h:commandLink>
+						</b>
+					</div>
+					<div class="col-sm-4 text-right">
+						<h:panelGroup>
+							<b>
+								<h:commandLink value="Remove filters!" rendered="#{not empty Shelfs.getFilterAuthor() or not empty Shelfs.getFilterText() or not empty Shelfs.getFilterLanguage()}">
+									<f:ajax listener="#{Shelfs.removeFilters()}" render="grid" />
+								</h:commandLink>
+							</b>
+						</h:panelGroup>
+					</div>
+				</div>
+			</h:form>
+
+			<div></div>
+			<div class="row">
+				<div class="col-sm-3">
+					<b>Title</b>
+				</div>
+				<div class="col-sm-5">
+					<b>Description</b>
+				</div>
+				<div class="col-sm-2">
+					<b>Author</b>
+				</div>
+				<div class="col-sm-1">
+					<b>Language</b>
+				</div>
+				<div class="col-sm-1">
+					<b>Action</b>
+				</div>
+			</div>
+			<h:panelGroup layout="block">
+				<ui:repeat var="book" value="#{Shelfs.filteredBooks}"
+					varStatus="status">
+					<div class="row box bline">
+
+						<div class="col-sm-3 tpad10">
+							<h:form>
+								<h:commandLink action="#{navigationController.showPage}"
+									value="#{book.title}">
+									<f:param name="pageId" value="bookdetail" />
+									<f:param name="objectId" value="#{book.id}" />
+								</h:commandLink>
+							</h:form>
+						</div>
+						<div class="col-sm-5 tpad10">
+							<c:set var="string1" value="#{book.description}" />
+							<c:set var="descr_string" value="${fn:substring(string1, 0, 5)}" />
+							#{descr_string} ...
+						</div>
+						<div class="col-sm-2 tpad10">
+							<h:form>
+								<h:commandLink value="#{book.author}">
+									<f:ajax listener="#{Shelfs.setFilterAuthor(book.author)}"
+										render="grid" />
+								</h:commandLink>
+							</h:form>
+						</div>
+						<div class="col-sm-1 tpad10">
+							<h:form>
+								<h:commandLink value="#{book.language}">
+									<f:ajax listener="#{Shelfs.setFilterLanguage(book.language)}"
+										render="grid" />
+								</h:commandLink>
+							</h:form>
+						</div>
+						<div class="col-sm-1 tpad10">
+							<h:form>
+								<h:commandLink action="#{Shelfs.addBookToBag(book)}">
+									<i class="fas fa-shopping-bag" />
+									<f:param name="objectId" value="null" />
+								</h:commandLink>
+							</h:form>
+						</div>
+					</div>
+				</ui:repeat>
+			</h:panelGroup>
+		</h:panelGroup>
+	</ui:define>
+</ui:composition>
+</html>

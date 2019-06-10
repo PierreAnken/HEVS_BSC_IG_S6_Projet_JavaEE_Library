@@ -48,11 +48,10 @@ public interface LibraryService{
 
 	Book getBook(String bookId);
 	void populateLibraryDB();
-	List<Book> getBooksByAuthor(String author);
-	List<Book> getBooksByLanguage(String lang);
 	Map<String, Object> getReader(long id);
 	Map<String, Object> getReaderFromCardId(int cardId);
 	Map<String, Object> getReaderFromCardId(String cardId);
 	List<Map<String, Object>> getReadersFromEmail(String email);
 	int getMaxCardId();
+	List<Book> getAvailableBooks();
 }

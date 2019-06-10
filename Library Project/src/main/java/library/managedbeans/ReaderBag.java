@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import javax.annotation.PostConstruct;
 import javax.ejb.Stateful;
 import javax.faces.bean.SessionScoped;
 
@@ -17,6 +18,11 @@ public class ReaderBag{
 	private List<Book> booksInBag;
 	private Reader currentReader;
 	
+	@PostConstruct
+	public void initialize() {
+		booksInBag = new ArrayList<Book>();
+		System.out.println("PA_DEBUG: Init BagBean");
+	}
 	
 	public void removeBook(Book b) {
 		System.out.println("OG_DEBUG: Bag Been book remover " + b.getId());
@@ -27,15 +33,16 @@ public class ReaderBag{
 		return booksInBag.size();
 	}
 	
-	public List<Book> getBagBooks() {
+	public List<Book> getBooksInBag() {
 		return booksInBag;
 	}
 
-	public void addBook(Book b) {
+	public void addBookToBag(Book b) {
+		System.out.println("OG_DEBUG: ReaderBag managedbean adding book to bag with ID " + b.getId() + " / " + booksInBag);
 		booksInBag.add(b);
 	}
 
-	public void removeBook(int bId) {
+	public void removeBookFromBag(int bId) {
 		for (Book b : booksInBag) {
 			if (b.getId() == bId) {
 				removeBook(b);
@@ -52,23 +59,12 @@ public class ReaderBag{
 		currentReader = Reader.convertFromMap(reader);
 	}
 
-	public void initialize() {
-		booksInBag = new ArrayList<Book>();
-		System.out.println("PA_DEBUG: Init BagBean");
-	}
-
-	public boolean isBookInBag(String bookId) {
-		boolean found = false;
-		if (booksInBag.size() == 0) {
-			
-			return false;
-		}
+	public boolean isBookInBag(long bookId) {
 		for (Book b : booksInBag) {
-			if (b.getId() == Integer.parseInt(bookId)) {
-				found = true;
-				break;
+			if (b.getId() == bookId) {
+				return true;
 			}
 		}
-		return found;
+		return false;
 	}
 }

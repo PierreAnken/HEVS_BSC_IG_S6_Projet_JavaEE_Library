@@ -36,45 +36,76 @@ public class Shelfs implements Serializable{
 	public void initialize() throws Exception{
 
 		System.out.println("OG_DEBUG: init Shelfs");
+		filterText = "";
+		filterAuthor = "";
+		filterLanguage = "";
 		InitialContext ctx = new InitialContext();
 		libraryService = (LibraryService)ctx.lookup("java:global/Library-0.0.1/LibraryBean!library.libraryservice.LibraryService");
-
 		filteredBooks = libraryService.getBooks();
+		filterBooks();
 	}
 
 	public void filterBooks() {
+		System.out.println("OG_DEBUG: entering book filter method");
 		filteredBooks = new ArrayList<Book>();
-		List<Book> allBooks = libraryService.getBooks(); // to do create query get only books without active reservations
+		List<Book> allBooks = libraryService.getAvailableBooks(); // to do create query get only books without active reservations
 		for (Book book : allBooks) {
 			// check text filter
-			if (!filterText.isEmpty() && filterText != null) {
+			if (!filterText.isEmpty()) {
 				if (!book.getDescription().contains(filterText) && !book.getTitle().contains(filterText) && !book.getAuthor().contains(filterText)) {
 					continue;
 				}
 			}
 			// check filter language
-			if (!filterLanguage.isEmpty() && filterLanguage != null) {
+			if (!filterLanguage.isEmpty()) {
 				if (!book.getLanguage().equals(filterLanguage)) {
 					continue;
 				}
 			}
 			// check filter author
-			if (!filterAuthor.isEmpty() && filterAuthor != null) {
+			if (!filterAuthor.isEmpty()) {
 				if (!book.getAuthor().equals(filterAuthor)) {
 					continue;
 				}
+			}
+			// check if already in bag
+			if (readerBag.isBookInBag(book.getId())) {
+				continue;
 			}
 			filteredBooks.add(book);
 		}
 		
 	}
 	
+	public void removeFilters() {
+		filterAuthor = "";
+		filterLanguage = "";
+		filterText = "";
+		filterBooks();
+	}
+	
+	public List<Book> getAvailableBooks() {
+		return libraryService.getAvailableBooks();
+	}
+	
+	public void addBookToBag(Book b) {
+		readerBag.addBookToBag(b);
+		filterBooks();
+	}
+
+	public void removeBookFromBag(Book b) {
+		readerBag.removeBook(b);
+		filterBooks();
+	}
+
 	public String getFilterAuthor() {
 		return filterAuthor;
 	}
 
 	public void setFilterAuthor(String filterAuthor) {
+		System.out.println("OG_DEBUG : filtering by author " + filterAuthor);
 		this.filterAuthor = filterAuthor;
+		filterBooks();
 	}
 
 	public LibraryService getLibraryService() {
@@ -91,6 +122,7 @@ public class Shelfs implements Serializable{
 
 	public void setFilterText(String filterText) {
 		this.filterText = filterText;
+		filterBooks();
 	}
 
 	public String getFilterLanguage() {
@@ -99,6 +131,7 @@ public class Shelfs implements Serializable{
 
 	public void setFilterLanguage(String filterLanguage) {
 		this.filterLanguage = filterLanguage;
+		filterBooks();
 	}
 
 	public int getDetailBookId() {

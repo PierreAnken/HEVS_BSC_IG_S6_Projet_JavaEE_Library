@@ -21,6 +21,11 @@ public class LibraryBean implements LibraryService{
 	@PersistenceContext(name = "LibraryPU")
 	private EntityManager em;
 	
+	@Override
+	public List<Book> getAvailableBooks() {
+		return (List<Book>) em.createQuery("SELECT b FROM Book b where b.id NOT IN (select r.book.id from Reservation r)").getResultList();
+	}
+
 	// add
 	public Book addBook(Book b) {
 		em.persist(b);
@@ -125,20 +130,10 @@ public class LibraryBean implements LibraryService{
 	public List<Book> getBooks() {
 		return (List<Book>) em.createQuery("FROM Book b").getResultList();
 	}
-
+	
 	@Override
 	public Book getBook(String bookId) {
 		return (Book) em.createQuery("FROM Book b WHERE b.id = :bookId").setParameter("bookId", Long.parseLong(bookId)).getSingleResult();
-	}
-
-	@Override
-	public List<Book> getBooksByAuthor(String author) {
-		return (List<Book>) em.createQuery("FROM Book b WHERE b.author = :author").setParameter("author", author).getResultList();
-	}
-
-	@Override
-	public List<Book> getBooksByLanguage(String lang) {
-		return (List<Book>) em.createQuery("FROM Book b WHERE b.language = :lang").setParameter("lang", lang).getResultList();
 	}
 
 	@Override
@@ -217,12 +212,12 @@ public class LibraryBean implements LibraryService{
 		// Creating the books 
 		List<Book> books = new ArrayList<Book>();
 		
-		books.add(new Book("Testbook", "Description bla","Heinrich Heine", "FR",lib1));
+		books.add(new Book("You Deserve This", "Gesunde und natürliche Ernährung ist das, was Körper und Seele täglich verdienen. Und das hat rein gar nichts mit Verzicht zu tun! Sich langfristig grossartig zu fühlen, vor Energie zu sprühen und der Gesundheit etwas Gutes zu tun, ist auch im Alltag möglich – mit Bowls! Dabei werden einfache, natürliche und vollwertige Gerichte ohne stundenlange Küchenarbeit in schönen Schalen angerichtet und serviert. Hierfür hat Pamela Reif ihre liebsten Rezepte fotografiert und niedergeschrieben. Ergänzt wird das Bowl-Kochbuch durch eine grundlegende Lebensmittelkunde, die den Sinn und die Vorteile dieser ausgewogenen Ernährung leicht verständlich erläutert. Die ultimative Ernährungsformel ist nicht zwangsläufig low carb oder low fat - es kommt darauf an, dass die Nahrung echt und natürlich ist.", "Pamela Reif", "DE",lib1));
 		books.add(new Book("Testbook2", "Description bla","Heinrich Heine", "FR",lib1));
-		books.add(new Book("Testbook3", "Description bla","Heinrich Heine", "DE",lib1));
+		books.add(new Book("Testbook3", "Description bla","Erich Kaestner", "DE",lib1));
 		books.add(new Book("Testbook4", "Description bla","Heinrich Heine", "FR",lib1));
 		books.add(new Book("Testbook5", "Description bla","Heinrich Heine", "EN",lib1));
-		books.add(new Book("Testbook6", "Description bla","Heinrich Heine", "FR",lib1));
+		books.add(new Book("Testbook6", "Description bla","Friedrich Schiller", "FR",lib1));
 		books.add(new Book("Testbook7", "Description bla","Heinrich Heine", "FR",lib1));
 		
 		System.out.println("PA_DEBUG: Books in DB: "+getBooks().size());	 
@@ -257,8 +252,5 @@ public class LibraryBean implements LibraryService{
 		
 		System.out.println("PA_DEBUG: End of database init");
 	}
-
-
-	
 
 }

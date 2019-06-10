@@ -16,7 +16,7 @@
 			<h:panelGroup class="container" id="dialog_frame" layout="block">
 				<h:panelGroup class="row" layout="block">
 					<div class="col-6 nopadding">
-						<h:panelGroup rendered="#{empty currentReader}">
+						<h:panelGroup rendered="#{empty currentReader}" layout="block">
 							<h:form>
 								<div class="dialog_left container">
 									<p>Sure, please just complete this form :</p>
@@ -38,10 +38,51 @@
 												value="#{CreateAccount.newReader.email}" />
 										</div>
 									</div>
+									<h:panelGroup rendered="#{CreateAccount.error}">
+										<h:outputText class="error" value="#{CreateAccount.error}" />
+									</h:panelGroup>
 								</div>
 							</h:form>
 						</h:panelGroup>
 					</div>
+					<div class="w-100" />
+					<h:panelGroup rendered="#{empty currentReader}" layout="block">
+						<div class="col-6 offset-6 nopadding">
+							<h:form>
+								<div class="dialog_right">
+									I'm done, can you please
+									<h:commandButton value="check it" type="button">
+										<f:ajax listener="#{CreateAccount.formValidator}"
+											render="dialog_frame" />
+									</h:commandButton>
+									?
+								</div>
+							</h:form>
+						</div>
+					</h:panelGroup>
+
+					<h:panelGroup
+						rendered="#{currentReader and not CreateAccount.readerCreated}">
+						<div class="dialog_left">
+							<h:outputText
+								value="But... #{currentReader.firstname}, you already have an account ?!" />
+						</div>
+						<div class="w-100" />
+						<div class="col-6 offset-6 nopadding">
+							<div class="dialog_right">
+								<h:commandLink action="#{navigationController.showPage}"
+									value="Sorry, I'm a bit tired...">
+									<f:param name="pageId" value="inside" />
+								</h:commandLink>
+							</div>
+						</div>
+					</h:panelGroup>
+					<h:panelGroup rendered="#{CreateAccount.error}">
+						<div class="dialog_left container">
+							<p>It'seems like the form is not correctly filled in, please
+								correct it and let me know.</p>
+						</div>
+					</h:panelGroup>
 				</h:panelGroup>
 			</h:panelGroup>
 		</div>

@@ -97,3 +97,7 @@ ul {
 .width100{
 	width:100%;
 }
+
+.error{
+	color:red;
+}

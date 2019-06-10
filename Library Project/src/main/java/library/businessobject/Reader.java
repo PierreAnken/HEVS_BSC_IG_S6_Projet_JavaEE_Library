@@ -16,6 +16,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 public class Reader extends User implements Serializable{
 
 	private static final long serialVersionUID = -7085265629390248126L;
+	
+	
 	private int cardId;
 	private double accountBalance;
 	
@@ -45,6 +47,10 @@ public class Reader extends User implements Serializable{
 	public Reader(String email, String firstname, String lastname, int cardId, Address address) {
 		super(email,  firstname, lastname, address);
 		this.cardId = cardId;
+	}
+	
+	public Reader(Address address) {
+		super(address);
 	}
 
 	public double getAccountBalance() {

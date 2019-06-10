@@ -21,6 +21,10 @@ public class Librarian extends User {
 	public Librarian() {
 	}
 
+	public Librarian(Address address) {
+		super(address);
+	}
+	
 	public Librarian(String email, String firstname, String lastname) {
 		super(email, firstname, lastname);
 	}

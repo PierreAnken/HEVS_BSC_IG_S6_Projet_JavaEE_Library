@@ -19,6 +19,10 @@ public interface LibraryService{
 	Library addLibrary(Library l);
 	Librarian addLibrarian(Librarian l);
 	Reader addReader(Reader r);
+	
+	Map<String, Object> addLibrarian(Map<String, Object> l);
+	Map<String, Object> addReader(Map<String, Object> r);
+	
 	Reservation addReservation(Reservation r);
 	
 	//update
@@ -47,5 +51,7 @@ public interface LibraryService{
 	Map<String, Object> getReader(long id);
 	Map<String, Object> getReaderFromCardId(int cardId);
 	Map<String, Object> getReaderFromCardId(String cardId);
+	List<Map<String, Object>> getReadersFromEmail(String email);
+	int getMaxCardId();
 	List<Book> getAvailableBooks();
 }

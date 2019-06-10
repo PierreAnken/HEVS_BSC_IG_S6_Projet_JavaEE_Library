@@ -32,9 +32,10 @@ body {
 }
 
 .imgPaper{
-	background-image:url(#{resource['img:paper.jpg']});
+	background-color:white;
 	margin:3%;
 	border: 1px solid gray;
+	
 }
 
 .container{
@@ -112,4 +113,11 @@ ul {
 
 .error{
 	color:red;
+}
+
+#createAccount input[type="text"]{
+	margin-bottom: 3px;
+	background-color: transparent;
+	border: none;
+	border-bottom: 1px dashed black;;
 }

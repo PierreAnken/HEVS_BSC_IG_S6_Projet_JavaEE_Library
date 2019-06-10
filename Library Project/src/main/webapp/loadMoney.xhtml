@@ -86,11 +86,13 @@
 					<div class="w-100"/>
 					<div class="col-6 offset-6 nopadding">
 						<h:panelGroup rendered="#{amount ne 0}">
+						<h:form>
 							<div class="dialog_right">
 								<h:commandLink action="#{navigationController.showPage}" value="Thanks you.">
 							  <f:param name = "pageId" value = "inside" />
 	  						</h:commandLink>
 							</div>
+							</h:form>
 						</h:panelGroup>
 					</div>
 				</h:panelGroup>

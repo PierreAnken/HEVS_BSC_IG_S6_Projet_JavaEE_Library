@@ -9,7 +9,7 @@
 
 <ui:composition template="/WEB-INF/templates/template.xhtml">
 	<ui:define name="content">
-		<div id="loadAccount"
+		<h:panelGroup id="createAccount" layout="block"
 			class="align-self-center imgLibrarian background">
 			<c:set var="currentReader" scope="view"
 				value="#{CreateAccount.readerBag.getCurrentReader()}" />
@@ -20,27 +20,50 @@
 							<h:form>
 								<div class="dialog_left container">
 									<p>Sure, please just complete this form :</p>
-									<br />
 									<div class="row imgPaper background nomargin">
 										<div class="col-xl-6">Firstname</div>
 										<div class="col-xl-6">
-											<h:inputText class="width100" required="true"
-												value="#{CreateAccount.newReader.firstname}" />
+											<h:inputText class="width100"
+												value="#{CreateAccount.newReader.firstname}">
+												<f:ajax />
+											</h:inputText>
 										</div>
 										<div class="col-xl-6">Lastname</div>
 										<div class="col-xl-6">
-											<h:inputText class="width100" required="true"
-												value="#{CreateAccount.newReader.lastname}" />
+											<h:inputText class="width100"
+												value="#{CreateAccount.newReader.lastname}">
+												<f:ajax />
+											</h:inputText>
 										</div>
 										<div class="col-xl-6">Email</div>
 										<div class="col-xl-6">
-											<h:inputText class="width100" required="true"
-												value="#{CreateAccount.newReader.email}" />
+											<h:inputText class="width100"
+												value="#{CreateAccount.newReader.email}">
+												<f:ajax />
+											</h:inputText>
+										</div>
+										<div class="col-xl-6">Street</div>
+										<div class="col-xl-6">
+											<h:inputText class="width100"
+												value="#{CreateAccount.newReader.address.street}">
+												<f:ajax />
+											</h:inputText>
+										</div>
+										<div class="col-xl-6">City</div>
+										<div class="col-xl-6">
+											<h:inputText class="width100"
+												value="#{CreateAccount.newReader.address.city}">
+												<f:ajax />
+											</h:inputText>
+										</div>
+										<div class="col-xl-6">City Code</div>
+										<div class="col-xl-6">
+											<h:inputText class="width100"
+												value="#{CreateAccount.newReader.address.zipCode}">
+												<f:ajax />
+											</h:inputText>
 										</div>
 									</div>
-									<h:panelGroup rendered="#{CreateAccount.error}">
-										<h:outputText class="error" value="#{CreateAccount.error}" />
-									</h:panelGroup>
 								</div>
 							</h:form>
 						</h:panelGroup>
@@ -53,39 +76,74 @@
 									I'm done, can you please
 									<h:commandButton value="check it" type="button">
 										<f:ajax listener="#{CreateAccount.formValidator}"
-											render="dialog_frame" />
+											render="createAccount" />
 									</h:commandButton>
 									?
 								</div>
 							</h:form>
 						</div>
 					</h:panelGroup>
-
-					<h:panelGroup
-						rendered="#{currentReader and not CreateAccount.readerCreated}">
-						<div class="dialog_left">
-							<h:outputText
-								value="But... #{currentReader.firstname}, you already have an account ?!" />
+					<h:panelGroup rendered="#{not empty currentReader and not CreateAccount.readerCreated}">
+						<div class="col-6 nopadding">
+							<div class="dialog_left">
+								<h:outputText
+									value="But... #{currentReader.firstname}, you already have an account ?!" />
+							</div>
 						</div>
 						<div class="w-100" />
 						<div class="col-6 offset-6 nopadding">
 							<div class="dialog_right">
-								<h:commandLink action="#{navigationController.showPage}"
-									value="Sorry, I'm a bit tired...">
-									<f:param name="pageId" value="inside" />
-								</h:commandLink>
+								<h:form>
+									<h:commandLink action="#{navigationController.showPage}"
+										value="Sorry, I'm a bit tired...">
+										<f:param name="pageId" value="inside" />
+									</h:commandLink>
+								</h:form>
 							</div>
 						</div>
 					</h:panelGroup>
-					<h:panelGroup rendered="#{CreateAccount.error}">
-						<div class="dialog_left container">
-							<p>It'seems like the form is not correctly filled in, please
-								correct it and let me know.</p>
+					<h:panelGroup rendered="#{not empty CreateAccount.error}">>
+						<div class="w-100" />
+						<div class="col-6 nopadding">
+							<h:form>
+								<h:panelGroup class="dialog_left"
+									rendered="#{not CreateAccount.alreadyExist}" layout="block">
+									It'seems like the form is not correctly filled in, please
+									correct following fields:
+									<h:outputText class="error" value="#{CreateAccount.error}" />
+								</h:panelGroup>
+								<h:panelGroup class="dialog_left"
+									rendered="#{CreateAccount.alreadyExist}" layout="block">
+									Sorry but someone else already used 
+									<h:outputText class="error"
+										value=" #{CreateAccount.newReader.email} " />
+									to register, please choose another email address.
+								</h:panelGroup>
+							</h:form>
+						</div>
+					</h:panelGroup>
+					<h:panelGroup rendered="#{CreateAccount.readerCreated}">>
+						<div class="w-100" />
+						<div class="col-6 nopadding">
+							Your account was successfully created. Here is you new card with
+							ID:
+							<h:outputText value=" #{CreateAccount.newReader.cardId}" />
+						</div>
+						<div class="w-100" />
+						<div class="col-6 offset-6 nopadding">
+							<h:form>
+								<div class="dialog_right">
+									<h:commandLink action="#{navigationController.showPage}"
+										value="Thanks you.">
+										<f:param name="pageId" value="inside" />
+									</h:commandLink>
+								</div>
+							</h:form>
 						</div>
 					</h:panelGroup>
 				</h:panelGroup>
 			</h:panelGroup>
-		</div>
+		</h:panelGroup>
 	</ui:define>
 </ui:composition>
 </html>

@@ -1,8 +1,8 @@
 package library.toolbox;
 
-public class Tb {
+public class Tb{
 	
-	public boolean stringExists(String str) {
+	public static boolean stringExists(String str) {
 		if(str == null)
 			return false;
 		

@@ -11,6 +11,7 @@ import javax.naming.InitialContext;
 
 import library.businessobject.Reader;
 import library.libraryservice.LibraryService;
+import library.toolbox.Tb;
 
 @ManagedBean(name = "loadMoney")
 @ViewScoped
@@ -39,7 +40,7 @@ public class LoadMoney implements Serializable{
 	}
 	
 	public void onSelectedCardId(){
-		if(cardId != null && !cardId.isEmpty()) {
+		if(Tb.stringExists(cardId)) {
 			Reader reader = Reader.convertFromMap(libraryService.getReaderFromCardId(cardId));
 			if(reader != null) {
 				userSession.setCurrentReader(Reader.convertToMap(reader));

@@ -31,7 +31,7 @@ public class Shelfs implements Serializable{
 
 	@PostConstruct
 	public void initialize() throws Exception{
-
+		
 		System.out.println("OG_DEBUG: init Shelfs ");
 		InitialContext ctx = new InitialContext();
 		setLibraryService((LibraryService)ctx.lookup("java:global/Library-0.0.1/LibraryBean!library.libraryservice.LibraryService"));

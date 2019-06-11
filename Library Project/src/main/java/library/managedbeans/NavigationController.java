@@ -4,27 +4,32 @@ package library.managedbeans;
 
 import java.io.Serializable;
 
+import javax.ejb.Stateless;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 
 @ManagedBean(name = "navigationController", eager = true)
+@Stateless
 public class NavigationController implements Serializable {
 
-
+	
     private static final long serialVersionUID = -652163167414303398L;
+    
 	@ManagedProperty(value = "#{param.pageId}")
 	private String pageId;
-   
-	@ManagedProperty(value = "#{param.objectId}")
-	private String objectId;
+	
+	@ManagedProperty(value="#{UserSession}")
+    private UserSession userSession;
 
+	
 	public String showPage() {
 		if (pageId == null)
-			return "index";
-		if (objectId != null) 
-			return pageId + "?faces-redirect=true&objectId=" + objectId;
-		else
+			return "inside";
+		else {
+			if(pageId.equals("index"))
+				userSession.reset();
 			return pageId + "?faces-redirect=true";
+		}
 	}
 
 	public String getPageId() {
@@ -34,12 +39,13 @@ public class NavigationController implements Serializable {
 	public void setPageId(String pageId) {
 		this.pageId = pageId;
 	}
-	
-	public String getObjectId() {
-		return objectId;
+
+	public UserSession getUserSession() {
+		return userSession;
 	}
 
-	public void setObjectId(String objectId) {
-		this.objectId = objectId;
+	public void setUserSession(UserSession userSession) {
+		this.userSession = userSession;
 	}
+
 }

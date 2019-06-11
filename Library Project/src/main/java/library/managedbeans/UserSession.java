@@ -26,12 +26,18 @@ public class UserSession{
 	@PostConstruct
 	public void initialize() throws Exception {
 		InitialContext ctx = new InitialContext();
-		libraryService = (LibraryService)ctx.lookup("java:global/Library-0.0.1/LibraryBean!library.libraryservice.LibraryService");
+		setLibraryService((LibraryService)ctx.lookup("java:global/Library-0.0.1/LibraryBean!library.libraryservice.LibraryService"));
 		
-		currentLibrarian = Librarian.convertFromMapList(libraryService.getLibrarians()).get(0);
-		System.out.println("PA_DEBUG: Init  booksInBag "+getBooksInBag());
+		System.out.println("PA_DEBUG: Init  UserSession");
 	}
 
+	public void reset() {
+		currentLibrarian = null;
+		currentReader = null;
+		booksInBag = new ArrayList<Book>();
+		System.out.println("PA_DEBUG: Init  UserSession reseted");
+	}
+	
 	public Librarian getCurrentLibrarian() {
 		return currentLibrarian;
 	}
@@ -84,5 +90,13 @@ public class UserSession{
 			}
 		}
 		return false;
+	}
+
+	public LibraryService getLibraryService() {
+		return libraryService;
+	}
+
+	public void setLibraryService(LibraryService libraryService) {
+		this.libraryService = libraryService;
 	}
 }

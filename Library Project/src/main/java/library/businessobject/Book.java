@@ -20,7 +20,8 @@ public class Book implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	private String title, description, author, language;
-
+	private boolean visible;
+	
     @ManyToOne private Library library;
   
     @OneToMany(mappedBy="book", cascade={CascadeType.REMOVE})
@@ -65,7 +66,6 @@ public class Book implements Serializable {
 	public void setLanguage(String language) {
 		this.language = language;
 	}
-	
 
 	// constructors
 	public Book() {
@@ -77,6 +77,15 @@ public class Book implements Serializable {
 		this.author = author;
 		this.language = language;
 		this.library = library;
+		visible = true;
+	}
+
+	public boolean isVisible() {
+		return visible;
+	}
+
+	public void setVisible(boolean visible) {
+		this.visible = visible;
 	}
 
 

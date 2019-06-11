@@ -36,4 +36,22 @@
 	    	<value>#{UserSession}</value>
 	    </managed-property>
 	</managed-bean>
+	<managed-bean>
+		<managed-bean-name>Door</managed-bean-name>
+		<managed-bean-class>library.managedbeans.Door</managed-bean-class>
+		<managed-bean-scope>view</managed-bean-scope>
+		<managed-property>
+	    	<property-name>userSession</property-name>
+	    	<value>#{UserSession}</value>
+	    </managed-property>
+	</managed-bean>
+	<managed-bean>
+		<managed-bean-name>NavigationController</managed-bean-name>
+		<managed-bean-class>library.managedbeans.NavigationController</managed-bean-class>
+		<managed-bean-scope>request</managed-bean-scope>
+		<managed-property>
+	    	<property-name>userSession</property-name>
+	    	<value>#{UserSession}</value>
+	    </managed-property>
+	</managed-bean>
 </faces-config>

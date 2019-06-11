@@ -52,6 +52,8 @@ public interface LibraryService{
 	Map<String, Object> getReaderFromCardId(int cardId);
 	Map<String, Object> getReaderFromCardId(String cardId);
 	List<Map<String, Object>> getReadersFromEmail(String email);
+	Map<String, Object> getLibrarianFromEmail(String email);
+	
 	int getMaxCardId();
 	List<Book> getAvailableBooks();
 }

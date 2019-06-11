@@ -19,6 +19,33 @@ html{
     transform: translate(-50%,-50%);
 }
 
+#panelShelf{
+	margin: 1%;
+    padding: 1%;
+    background-color: rgba(134, 122, 122, 0.8);
+    border: 1px solid #111315;
+}
+
+#titleShelf{
+	margin: 1% 1% 0 1%;
+    padding: 1%;
+    background-color: rgba(134, 122, 122, 0.8);
+    border: 1px  solid #111315;
+}
+
+#bookList{
+	overflow-y: auto;
+	height: 50vh;
+	margin: 0 1% 1% 1%;
+    padding: 1%;
+    background-color: rgba(134, 122, 122, 0.8);
+   	border-style: solid;
+   	border-color:#111315;
+    border-width: 0 1px 1px 1px;
+}
+
+
+
 .navbar-static-top {
 	margin-bottom: 19px;
 }
@@ -52,6 +79,14 @@ html{
 	background-image:url(#{resource['img:shelfs.jpg']});
 }
 
+.imgDoorFree{
+	background-image:url(#{resource['img:doorFree.jpg']});
+}
+
+.imgDoorLocked{
+	background-image:url(#{resource['img:doorLocked.jpg']});
+}
+
 .imgPaper{
 	background-color:white;
 	margin:3%;
@@ -64,8 +99,16 @@ html{
 
 .booksFrame{
 	background-color: rgba(255,255,255,0.8);
-	border: 1px solid #6abcf9;
+	border: 1px solid #5c646b;
 	border-radius: 10px;
+}
+
+#loadAccount{
+	min-height:620px;
+}
+
+#createAccount{
+	min-height:710px;
 }
 
 div.background{
@@ -75,20 +118,6 @@ div.background{
 	 border:1px solid gray;
 	 border-radius: 10px;
 	 background-size:cover
-}
-
-
-.tpad10 {
-	padding-top: 10px;
-}
-
-.bpad10 {
-	padding-bottom: 10px;
-}
-
-.bline {
-	height: 50px;
-	vertical-align: middle;
 }
 
 img.centered {
@@ -125,6 +154,15 @@ ul {
 	background-color: rgba(217, 237, 249, 0.9);
 	padding:10px;
 	border:2px solid #2a5772;
+	border-radius: 10px;
+	margin:0;
+	margin-top:15px;
+}
+
+.dialog_right_librarian{
+	background-color: rgba(234, 222, 142, 0.9);
+	padding:10px;
+	border:2px solid #67492b;
 	border-radius: 10px;
 	margin:0;
 	margin-top:15px;

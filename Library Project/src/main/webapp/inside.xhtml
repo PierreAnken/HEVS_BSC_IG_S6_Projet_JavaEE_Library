@@ -13,8 +13,8 @@
 				<h:form>
 					<div class="row">
 						<div class="col-6 nopadding">
-							<div class="dialog_left">Welcome to city library, how can
-								we help you?</div>
+							<div class="dialog_left">Welcome to the public library.
+							<br/>How can we help you?</div>
 						</div>
 						<div class="w-100" />
 						<div class="col-6 offset-6 nopadding">
@@ -25,13 +25,13 @@
 									<f:param name="pageId" value="createAccount" />
 								</h:commandLink>
 							</div>
-							<div class="dialog_right">
+							<h:panelGroup class="dialog_right" rendered="#{empty UserSession.booksInBag}" layout="block">
 								I would like to
 								<h:commandLink action="#{navigationController.showPage}"
 									value=" return some books.">
 									<f:param name="pageId" value="returnBook" />
 								</h:commandLink>
-							</div>
+							</h:panelGroup>
 							<div class="dialog_right">
 								Could I
 								<h:commandLink action="#{navigationController.showPage}"
@@ -40,13 +40,13 @@
 								</h:commandLink>
 								&nbsp;on my account?
 							</div>
-							<div class="dialog_right">
+							<h:panelGroup class="dialog_right" rendered="#{not empty UserSession.booksInBag}" layout="block">
 								I want to
 								<h:commandLink action="#{navigationController.showPage}"
 									value="borrow those books.">
 									<f:param name="pageId" value="borrowBooks" />
 								</h:commandLink>
-							</div>
+							</h:panelGroup>
 							<div class="dialog_right">
 								I'm
 								<h:commandLink action="#{navigationController.showPage}"
@@ -54,17 +54,20 @@
 									<f:param name="pageId" value="shelfs" />
 								</h:commandLink>
 							</div>
-							<div class="dialog_right">
-								I'm done thanks.
-								<h:commandLink action="#{navigationController.showPage}"
-									value=" (Leave the library)">
-									<f:param name="pageId" value="index" />
+							<div class="dialog_right_librarian">
+								Hello Sophia! 
+								<br/>Could you prepare me a cup of coffee?
+								<br/>I'm
+								<h:commandLink action="#{navigationController.showPage}" value=" joining my desk">.
+									<f:param name="pageId" value="door" />
 								</h:commandLink>
 							</div>
+							</div>
+							<div class="col-3 offset-6 nopadding">
 							<div class="dialog_right">
-								<h:commandLink action="#{navigationController.showPage}"
-									value="Edit the book list">
-									<f:param name="pageId" value="adminBook" />
+								<h:commandLink action="#{navigationController.showPage}">
+									Leave the library <i class="fas fa-sign-out-alt"></i>
+									<f:param name="pageId" value="index" />
 								</h:commandLink>
 							</div>
 						</div>

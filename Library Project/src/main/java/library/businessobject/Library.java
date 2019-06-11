@@ -30,7 +30,7 @@ public class Library implements Serializable {
 	@OneToMany(mappedBy="library", cascade={CascadeType.REMOVE})
 	private Set<Book> books = new HashSet<Book>();
 	
-	@ManyToMany(cascade = {CascadeType.PERSIST,CascadeType.MERGE})
+	@ManyToMany(cascade = {CascadeType.PERSIST,CascadeType.REMOVE})
 	@JoinTable(name = "library_manager")
 	private Set<Librarian> librarians = new HashSet<Librarian>();
 	

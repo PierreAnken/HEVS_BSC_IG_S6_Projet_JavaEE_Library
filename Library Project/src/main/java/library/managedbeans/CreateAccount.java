@@ -92,9 +92,11 @@ public class CreateAccount implements Serializable{
 	}
 	
 	public void createNewReader() {
+		System.out.println("PA_DEBUG: CreateAccount>createNewReader");
 		newReader.setCardId(libraryService.getMaxCardId()+1);
 		newReader = Reader.convertFromMap(libraryService.addReader(Reader.convertToMap(newReader)));
 		readerCreated = true;
+		System.out.println("PA_DEBUG: yyy");
 		userSession.setCurrentReader(Reader.convertToMap(newReader));
 		System.out.println("PA_DEBUG: CreateAccount>createNewReader "+newReader.getCardId());
 	}

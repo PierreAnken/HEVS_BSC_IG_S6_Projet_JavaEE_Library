@@ -25,6 +25,77 @@ public class LibraryBean implements LibraryService{
 	public List<Book> getAvailableBooks() {
 		return (List<Book>) em.createQuery("SELECT b FROM Book b where b.id NOT IN (select r.book.id from Reservation r)").getResultList();
 	}
+	
+	@Override
+	public Map<String, Object> getLibrarianFromEmail(String email) {
+		Librarian librarian = (Librarian) em.createQuery("FROM User u WHERE u.id = :email").setParameter("email", email).getSingleResult();
+		return Librarian.convertToMap(librarian);
+	}
+
+	//get all 
+		@Override
+		public List<Book> getBooks() {
+			return (List<Book>) em.createQuery("FROM Book b").getResultList();
+		}
+		
+		@Override
+		public Book getBook(String bookId) {
+			return (Book) em.createQuery("FROM Book b WHERE b.id = :bookId").setParameter("bookId", Long.parseLong(bookId)).getSingleResult();
+		}
+
+		@Override
+		public List<Library> getLibraries() {
+			return (List<Library>) em.createQuery("FROM Library l").getResultList();
+		}
+		
+		@Override
+		public int getMaxCardId() {
+			return (int) em.createQuery("select max(r.cardId) FROM Reader r").getSingleResult();
+		}
+
+		@Override
+		public List<Map<String, Object>> getLibrarians() {
+			
+			List<Librarian> librarians = (List<Librarian>) em.createQuery("FROM Librarian l").getResultList();
+			return Librarian.convertToMapList(librarians);
+		}
+		
+		private List<Librarian> getLibrariansP() {
+			return (List<Librarian>) em.createQuery("FROM Librarian l").getResultList();
+		}
+
+		@Override
+		public List<Map<String, Object>> getReaders() {
+			List<Reader> readers = (List<Reader>) em.createQuery("FROM Reader r").getResultList();
+			return Reader.convertToMapList(readers);
+		}
+		
+		private List<Reader> getReadersP() {
+			return (List<Reader>) em.createQuery("FROM Reader r").getResultList();
+		}
+
+		@Override
+		public List<Reservation> getReservations() {
+			return (List<Reservation>) em.createQuery("FROM Reservation r").getResultList();
+		}
+		
+		@Override
+		public Map<String, Object> getReader(long readerId) {
+			Reader reader = (Reader) em.createQuery("FROM User u WHERE u.id = :readerId").setParameter("readerId", readerId).getSingleResult();
+			return Reader.convertToMap(reader);
+		}
+
+		@Override
+		public Map<String, Object> getReaderFromCardId(int cardId) {
+			Reader reader = (Reader) em.createQuery("FROM Reader r WHERE r.cardId = :cardId").setParameter("cardId", cardId).getSingleResult();
+			return Reader.convertToMap(reader);
+		}
+		
+		@Override
+		public List<Map<String, Object>> getReadersFromEmail(String email) {
+			List<Reader> readers = (List<Reader>) em.createQuery("FROM Reader r WHERE r.email = :email").setParameter("email", email).getResultList();
+			return Reader.convertToMapList(readers);
+		}
 
 	// add
 	public Book addBook(Book b) {
@@ -125,62 +196,7 @@ public class LibraryBean implements LibraryService{
 	}
 	
 	
-	//get all 
-	@Override
-	public List<Book> getBooks() {
-		return (List<Book>) em.createQuery("FROM Book b").getResultList();
-	}
 	
-	@Override
-	public Book getBook(String bookId) {
-		return (Book) em.createQuery("FROM Book b WHERE b.id = :bookId").setParameter("bookId", Long.parseLong(bookId)).getSingleResult();
-	}
-
-	@Override
-	public List<Library> getLibraries() {
-		return (List<Library>) em.createQuery("FROM Library l").getResultList();
-	}
-	
-	@Override
-	public int getMaxCardId() {
-		return (int) em.createQuery("select max(r.cardId) FROM Reader r").getSingleResult();
-	}
-
-	@Override
-	public List<Map<String, Object>> getLibrarians() {
-		
-		List<Librarian> librarians = (List<Librarian>) em.createQuery("FROM Librarian l").getResultList();
-		return Librarian.convertToMapList(librarians);
-	}
-
-	@Override
-	public List<Map<String, Object>> getReaders() {
-		List<Reader> readers = (List<Reader>) em.createQuery("FROM Reader r").getResultList();
-		return Reader.convertToMapList(readers);
-	}
-
-	@Override
-	public List<Reservation> getReservations() {
-		return (List<Reservation>) em.createQuery("FROM Reservation r").getResultList();
-	}
-	
-	@Override
-	public Map<String, Object> getReader(long readerId) {
-		Reader reader = (Reader) em.createQuery("FROM User u WHERE u.id = :readerId").setParameter("readerId", readerId).getSingleResult();
-		return Reader.convertToMap(reader);
-	}
-
-	@Override
-	public Map<String, Object> getReaderFromCardId(int cardId) {
-		Reader reader = (Reader) em.createQuery("FROM Reader r WHERE r.cardId = :cardId").setParameter("cardId", cardId).getSingleResult();
-		return Reader.convertToMap(reader);
-	}
-	
-	@Override
-	public List<Map<String, Object>> getReadersFromEmail(String email) {
-		List<Reader> readers = (List<Reader>) em.createQuery("FROM Reader r WHERE r.email = :email").setParameter("email", email).getResultList();
-		return Reader.convertToMapList(readers);
-	}
 	
 	@Override
 	public Map<String, Object> getReaderFromCardId(String cardId) {
@@ -205,24 +221,25 @@ public class LibraryBean implements LibraryService{
 		// == Clear DB ==
 		
 		//Delete all book (cascade reservation)
-		List<Book>books = getBooks();
-		for(int i=0; i<books.size();i++)
-			em.remove(books.get(i));
+		List<Book>booksTodelete = getBooks();
+		for(int i=0; i<booksTodelete.size();i++)
+			em.remove(booksTodelete.get(i));
 		
 		//delete old readers
-		List<Reader> readers = Reader.convertFromMapList(getReaders()); 
+		List<Reader> readers = getReadersP(); 
 		for(int i=0; i<readers.size();i++)
 			em.remove(readers.get(i));
-
-		//Delete librarians
-		List<Librarian> librarians = getLibrarians();
-		for(int i=0; i<librarians.size();i++)
-			em.remove(librarians.get(i));
 		
-		//Delete libraries
+		//Delete libraries and linked librarians
 		List<Library> libraries = getLibraries(); 
 		for(int i=0; i<libraries.size();i++)
 			em.remove(libraries.get(i));
+		
+		//delete old librarians
+		List<Librarian> librarians = getLibrariansP(); 
+		for(int i=0; i<librarians.size();i++)
+			em.remove(librarians.get(i));
+		
 		
 		System.out.println("PA_DEBUG: DB> Populating");
 		
@@ -236,6 +253,9 @@ public class LibraryBean implements LibraryService{
 		Address flanthey1 = new Address("3978", "Rue du moulin 13", "Flanthey");
 	
 		Library lib1 = new Library("Bibliotheque Sierre", sierre);
+		em.persist(lib1);
+		
+		System.out.println("PA_DEBUG: DB> Library populated");
 		
 		// Creating the books
 		List<Book> books = new ArrayList<Book>();
@@ -245,8 +265,7 @@ public class LibraryBean implements LibraryService{
 		books.add(new Book("Glacé", "Dans une vallée encaissée des Pyrénées, au petit matin d'une journée glaciale de décembre, les ouvriers d'une centrale hydroélectrique découvrent le corps sans tête d'un cheval, accroché à la falaise. Ce même jour une jeune psychologue prend son premier poste dans le centre psychiatrique de haute sécurité qui surplombe la vallée. Le commandant Servaz, flic hypocondriaque et intuitif, se voit confier l'enquête la plus étrange de toute sa carrière.","Bernard Minier", "FR",lib1));
 		books.add(new Book("Nuit", "Nuit de tempête en mer du Nord. Secoué par des vents violents, l'hélicoptère dépose Kirsten Nigaard sur la plate-forme pétrolière. L'inspectrice norvégienne enquête sur le meurtre d'une technicienne de la base offshore. Un homme manque à l'appel. En fouillant sa cabine, Kirsten découvre une série de photos. Quelques jours plus tard, elle est dans le bureau de Martin Servaz. L'absent s'appelle Julian Hirtmann, le tueur retors et insaisissable que le policier poursuit depuis des années. Étrangement, sur plusieurs clichés, Martin Servaz apparaît. Kirsten lui tend alors une autre photo. Celle d'un enfant. Au dos, juste un prénom : Gustav. ","Bernard Minier", "FR",lib1));
 		books.add(new Book("Le Dernier Secret du Vatican", "25. L'empereur Constantin convoque à Nicée un concile général des évêques de l'Empire romain afin de fixer les dogmes de l'Église chrétienne. 1070. L'Ordre religieux et militaire de Saint-Jean de Jérusalem est créé. Après l'expulsion des croisés de Terre sainte, il s'installe à Malte et reçoit, en 1312, les biens des Templiers. En 1798, sur les traces d'un secret bien gardé, Bonaparte arrive dans l'île et provoque l'éclatement de l'Ordre.  2019. À la mort du pape, un conclave se réunit. Une conspiration se trame alors autour de mystérieux documents, datant du concile de Nicée, qui, s'ils étaient dévoilés, pourraient mettre l'Église en péril. En quête de ceux-ci, Cotton Malone va devoir affronter une société occulte et décrypter bon nombre d'énigmes historiques et religieuses pour percer le dernier secret du Vatican. Plus de 5 millions d'amateurs de thrillers et de passionnés d'histoire ont déjà plébiscité à travers le monde les romans de Steve Berry où ésotérisme, action et suspense se conjuguent à merveille. ","Steve Berry", "FR",lib1));
-		books.add(new Book("La Conspiration Hoover", "Description bla","Steve Berry", "FR",lib1));
-		books.add(new Book("Testbook5", "2000. Officier de marine, Cotton Malone est recruté par le ministère de la Justice pour récupérer au fond des mers une pièce de collection extrêmement rare. Celle-ci doit servir de monnaie d'échange pour obtenir d'un ancien opérationnel de la CIA des dossiers secrets relatifs aux agissements occultes du FBI dans les années 1960.  Alors que se dessine l'implication d'une branche clandestine du FBI dans un assassinat qui, en 1968, a bouleversé l'histoire, Malone est engagé dans une quête périlleuse, semée d'intrigues et de complots. Au centre de la toile, la figure d'Edgar J. Hoover, dont les secrets sont aussi nombreux qu'inavouables. Dans cette douzième aventure, Cotton Malone se remémore la création de la division Magellan, branche secrète du ministère de la Justice, et sa première enquête au sein de celle-ci. Les nombreux fans de Steve Berry ne seront pas déçus !","Steve Berry", "FR",lib1));
+		books.add(new Book("La Conspiration Hoover", "2000. Officier de marine, Cotton Malone est recruté par le ministère de la Justice pour récupérer au fond des mers une pièce de collection extrêmement rare. Celle-ci doit servir de monnaie d'échange pour obtenir d'un ancien opérationnel de la CIA des dossiers secrets relatifs aux agissements occultes du FBI dans les années 1960.  Alors que se dessine l'implication d'une branche clandestine du FBI dans un assassinat qui, en 1968, a bouleversé l'histoire, Malone est engagé dans une quête périlleuse, semée d'intrigues et de complots. Au centre de la toile, la figure d'Edgar J. Hoover, dont les secrets sont aussi nombreux qu'inavouables. Dans cette douzième aventure, Cotton Malone se remémore la création de la division Magellan, branche secrète du ministère de la Justice, et sa première enquête au sein de celle-ci. Les nombreux fans de Steve Berry ne seront pas déçus !","Steve Berry", "FR",lib1));
 		books.add(new Book("L'héritage des Templiers", "1118 : Jérusalem, Terre sainte. Neuf chevaliers créent un ordre militaire, les ' Pauvres Chevaliers du Christ ' Le roi Baudoin II leur cède une partie de son palais, bâti sur les ruines du Temple de Salomon. Ils deviennent les ' chevaliers du Temple ', puis les ' Templiers '. 1307: Jacques de Molay, grand maître des Templiers, est arrêté sur ordre de Philippe le Bel. Il garde le silence sur le trésor des Templiers. 2006 : Cotton Malone, ex-agent du département de la Justice américaine, et son amie Stéphanie, entrent en possession de documents liés au fameux trésor. Commence alors une quête qui les mènera à Rennes-le-Château, cœur du mystère.","Steve Berry", "FR",lib1));
 		books.add(new Book("Die dunklen Lande", "1629. Der 30 Jährige Krieg mit seinen Konflikten erschüttert Europa und tobt besonders gnadenlos in Deutschland. Die junge Abenteurerin Aenlin Kane reist in die neutrale Stadt Hamburg, um das Erbe ihres berühmten Vaters Solomon Kane zu ergründen. Zusammen mit ihrer Freundin Tahmina, einer persischen Mystikerin, gerät sie in die Wirren des Krieges. Sie nehmen einen folgenschweren Auftrag der West-Indischen Compagnie an: Eine zusammengewürfelte Truppe soll sich durch die Linien nach Süddeutschland durchschlagen, bis nach Bamberg, wo grausamste Hexenprozesse die Scheiterhaufen brennen lassen - doch es kommt vieles anders. Zu viel für einen Zufall! Aenlin und Tahmina wissen um das Böse und die Dämonen, die sich auf der Erde tummeln und die Wirren des Krieges zu ihrem Vorteil nutzen. Schon bald geht es um mehr als einen Auftrag der Compagnie. Und der Anführer der Truppe, Nicolas, hat ein düsteres Geheimnis …","Markus Heitz ", "DE",lib1));
 		books.add(new Book("Die Klinge des Schicksals", "Seit vor 150 Jahren der Wald in Yarkin begonnen hat, sich unaufhaltsam auszubreiten, sind die Menschen immer weniger geworden. Die letzten Überlebenden wurden auf eine Halbinsel zurückgedrängt. Immer wieder hat man Expeditionen ausgesandt, um ein Mittel gegen das Vordringen der Bäume zu finden – keine kehrte zurück. Bis die legendäre Kriegerin Danèstra auf Kalenia trifft, die eine schier unglaubliche Geschichte erzählt: von einer Siedlung im Wald und einem grausamen Überfall, der das wahre Böse offenbart habe; und von einer Verschwörung unter den Menschen, die nur sie, Kalenia, aufdecken könne. Sie bittet die Kriegerin um Hilfe. Doch kann Danèstra ihr wirklich trauen?","Markus Heitz ", "DE",lib1));
@@ -261,24 +280,33 @@ public class LibraryBean implements LibraryService{
 		books.add(new Book("Time's Convert", "On the battlefields of the American Revolution, Matthew de Clermont meets Marcus MacNeil, a young surgeon from Massachusetts, during a moment of political awakening when it seems that the world is on the brink of a brighter future. When Matthew offers him a chance at immortality and a new life free from the restraints of his puritanical upbringing, Marcus seizes the opportunity to become a vampire. But his transformation is not an easy one and the ancient traditions and responsibilities of the de Clermont family clash with Marcus's deeply held beliefs in liberty, equality, and brotherhood. Fast-forward to contemporary Paris, where Phoebe Taylor--the young employee at Sotheby's whom Marcus has fallen for--is about to embark on her own journey to immortality. Though the modernized version of the process at first seems uncomplicated, the couple discovers that the challenges facing a human who wishes to be a vampire are no less formidable than they were in the eighteenth century. The shadows that Marcus believed he'd escaped centuries ago may return to haunt them both--forever. A passionate love story and a fascinating exploration of the power of tradition and the possibilities not just for change but for revolution, Time's Convert channels the supernatural world-building and slow-burning romance that made the All Souls Trilogy instant bestsellers to illuminate a new and vital moment in history, and a love affair that will bridge centuries.","Deborah Harkness ", "EN",lib1));
 		books.add(new Book("A Discovery of Witches", "A richly inventive novel about a centuries-old vampire, a spellbound witch, and the mysterious manuscript that draws them together. Deep in the stacks of Oxford's Bodleian Library, young scholar Diana Bishop unwittingly calls up a bewitched alchemical manuscript in the course of her research. Descended from an old and distinguished line of witches, Diana wants nothing to do with sorcery; so after a furtive glance and a few notes, she banishes the book to the stacks. But her discovery sets a fantastical underworld stirring, and a horde of daemons, witches, and vampires soon descends upon the library. Diana has stumbled upon a coveted treasure lost for centuries-and she is the only creature who can break its spell. Debut novelist Deborah Harkness has crafted a mesmerizing and addictive read, equal parts history and magic, romance and suspense. Diana is a bold heroine who meets her equal in vampire geneticist Matthew Clairmont, and gradually warms up to him as their alliance deepens into an intimacy that violates age-old taboos. This smart, sophisticated story harks back to the novels of Anne Rice, but it is as contemporary and sensual as the Twilight series-with an extra serving of historical realism.","Deborah Harkness ", "EN",lib1));	
 	
+		for(int i=0; i<books.size();i++)
+			em.persist(books.get(i));
+		
+		System.out.println("PA_DEBUG: DB> Books populated");
+		
 		Librarian l1 = new Librarian("hans.walther@gotank.lib", "Hans", "Walther",  sierre2);
 		Librarian l2 = new Librarian("wilhelm.gebhardt@gotank.lib", "Wilhelm", "Gebhardt", sierre3);
+		em.persist(l1);
+		em.persist(l2);
 		
 		lib1.addLibrarian(l1);
 		lib1.addLibrarian(l2);
 		
-		// Saving the library (with books and librarians linked)
-		em.persist(lib1);
+		System.out.println("PA_DEBUG: DB> Librarians populated");
 		
 		Reader r1 = new Reader("george.p@gmail.com", "George", "Pochon", 25314, flanthey1);
 		Reader r2 = new Reader("rodolf.ruth@live.com", "Rodolf", "Ruth", 23456, brig1);
-		Reader r3 = new Reader("louis.d@bluewin.ch", "Louis", "Devanthery", 23456, sierre2);
+		Reader r3 = new Reader("louis.d@bluewin.ch", "Louis", "Devanthery", 23458, sierre2);
 		
 		em.persist(r1);
 		em.persist(r2);
 		em.persist(r3);
 		
-		System.out.println("PA_DEBUG: End of database init: books "+getBooks().size()+" librarians "+getLibrarians().size()+ "readers "+Reader.convertFromMapList(getReaders()).size());
+		System.out.println("PA_DEBUG: DB> Readers populated");
+		
+		System.out.println("PA_DEBUG: End of database init: books "+getBooks().size()+" librarians "+getLibrariansP().size()+ "readers "+getReadersP().size());
 	}
+
 
 }

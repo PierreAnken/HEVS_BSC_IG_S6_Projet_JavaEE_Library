@@ -11,126 +11,110 @@
 <ui:composition template="/WEB-INF/templates/template.xhtml">
 	<ui:define name="content">
 		<h:panelGroup id="grid" class="imgShelfs background" layout="block">
-			<div class="container booksFrame">
+
 			<h:form>
-				<div class="row boxLight">
-					<c:set var="currentLibrarian" scope="view" value="#{Shelfs.userSession.getCurrentLibrarian().firstname}" />
-					<div class="col-3">
-					<h:outputText value="#{currentLibrarian}" />
-						<b> <h:commandLink id="bagLink"
-								action="#{navigationController.showPage}"
-								value="#{Shelfs.userSession.getBooksInBag().size()} items in your Bag!">
-								<f:param name="pageId" value="viewbag" />
-							</h:commandLink>
-						</b>
-					</div>
-					<div class="col-6 text-center">
-						<b> Search : <h:inputText size="20"
-								value="#{Shelfs.filterText}">
-							</h:inputText>&nbsp; <h:commandButton value="OK" type="button">
+				<c:set var="currentLibrarian" scope="view"
+					value="#{Shelfs.userSession.getCurrentLibrarian()}" />
+				<c:set var="currentReader" scope="view"
+					value="#{Shelfs.userSession.getCurrentReader()}" />
+				<div class="container booksFrame">
+					<div class="row" id="panelShelf">
+						<div class="col-3 ">
+							<h:inputText size="20" value="#{Shelfs.filterText}" />
+						</div>
+						<div class="col-2">
+							<h:commandButton value="OK" type="button">
 								<f:ajax listener="#{Shelfs.filterBooks()}" render="grid"
 									execute="@form" />
 							</h:commandButton>
-						</b>
+						</div>
+						<div class="col-3">
+							<h:commandButton value="Remove filters"
+								rendered="#{not empty Shelfs.filterAuthor or not empty Shelfs.filterText or not empty Shelfs.filterLanguage}"
+								render="grid">
+								<f:ajax listener="#{Shelfs.removeFilters()}" render="grid" />
+							</h:commandButton>
+						</div>
+						<div class="col-4">
+							<h:commandLink action="#{navigationController.showPage}">
+								<f:param name="pageId" value="inside" />
+									Back to front office <i class="fas fa-sign-out-alt" />
+							</h:commandLink>
+						</div>
 					</div>
-					<div class="col-3 text-right">
-						<h:panelGroup>
-							<b> <h:commandLink value="Remove filters!"
-									rendered="#{not empty Shelfs.filterAuthor or not empty Shelfs.filterText or not empty Shelfs.filterLanguage}"
-									render="grid">
-									<f:ajax listener="#{Shelfs.removeFilters()}" render="grid" />
-								</h:commandLink>
-							</b>
+					<div class="row" id="titleShelf">
+						<h:form />
+						<div class="col-4">
+							<b>Title</b>
+						</div>
+						<div class="col-3">
+							<b>Author</b>
+						</div>
+						<div class="col-2">
+							<b>Language</b>
+						</div>
+						<div class="col-3">
+							<b>Action</b>
+						</div>
+					</div>
+					<div class="row" id="bookList">
+						<h:panelGroup rendered="#{empty Shelfs.filteredBooks}"
+							layout="block">
+							<div class="col-12">No search results</div>
 						</h:panelGroup>
-					</div>
-				</div>
-			</h:form>
-			<div class="row">
-				<div class="col-3">
-					<b>Title</b>
-				</div>
-				<div class="col-5">
-					<b>Description</b>
-				</div>
-				<div class="col-2">
-					<b>Author</b>
-				</div>
-				<div class="col-1">
-					<b>Language</b>
-				</div>
-				<div class="col-1">
-					<b>Action</b>
-				</div>
-			</div>
-			<h:panelGroup layout="block">
-				<ui:repeat var="book" value="#{Shelfs.filteredBooks}"
-					varStatus="status">
-					<div class="row box">
-						<div class="col-3 tpad10">
-							<h:form>
+						<ui:repeat var="book" value="#{Shelfs.filteredBooks}"
+							varStatus="status">
+							<div class="col-4">
+								<h:form>
 								#{book.title}
 							</h:form>
-						</div>
-						<div class="col-5 tpad10">
-							<h:panelGroup>
-								<c:set var="string1" value="#{book.description}" />
-								<c:set var="descr_string"
-									value="${fn:substring(string1, 0, 20)}" />
+							</div>
+							<div class="col-3">
 								<h:form>
-									<h:panelGroup rendered="#{Shelfs.getDetailBookId() ne book.id}">
-										#{descr_string}... <h:commandLink
-											action="#{Shelfs.setDetailBookId(book.id)}">
-											<i class="fas fa-search-plus" />
-										</h:commandLink>
-									</h:panelGroup>
-									<h:panelGroup rendered="#{Shelfs.getDetailBookId() eq book.id}">
-										#{string1}<h:commandLink action="#{Shelfs.setDetailBookId(0)}">
-											<i class="fas fa-search-minus" />
-										</h:commandLink>
-									</h:panelGroup>
+									<h:commandLink value="#{book.author}"
+										rendered="#{empty shelfs.filterAuthor}">
+										<f:ajax listener="#{Shelfs.setFilterAuthor(book.author)}"
+											render="grid" />
+									</h:commandLink>
+									<h:outputText value="#{book.author}"
+										rendered="#{not empty shelfs.filterAuthor}" />
 								</h:form>
-							</h:panelGroup>
-						</div>
-						<div class="col-2 tpad10">
-							<h:form>
-
-								<h:commandLink value="#{book.author}"
-									rendered="#{Shelfs.getFilterAuthor() eq ''}">
-									<f:ajax listener="#{Shelfs.setFilterAuthor(book.author)}"
-										render="grid" />
-								</h:commandLink>
-								<h:outputText value="#{book.author}"
-									rendered="#{Shelfs.getFilterAuthor() ne ''}" />
-							</h:form>
-						</div>
-						<div class="col-1 tpad10">
-							<h:form>
+							</div>
+							<div class="col-2">
 								<h:commandLink value="#{book.language}"
-									rendered="#{Shelfs.getFilterLanguage() eq ''}">
+									rendered="#{empty shelfs.filterLanguage}">
 									<f:ajax listener="#{Shelfs.setFilterLanguage(book.language)}"
 										render="grid" />
 								</h:commandLink>
 								<h:outputText value="#{book.language}"
-									rendered="#{Shelfs.getFilterLanguage() ne ''}" />
-							</h:form>
-						</div>
-						<div class="col-1 tpad10">
-							<h:form>
-								<h:commandLink action="#{Shelfs.addBookToBag(book)}" rendered="#{empty currentLibrarian}">
+									rendered="#{not empty shelfs.filterLanguage}" />
+							</div>
+							<div class="col-3">
+								<h:commandLink action="#{shelfs.addBookToBag(book)}"
+									rendered="#{empty currentLibrarian}">
 									<i class="fas fa-shopping-bag" />
 								</h:commandLink>
-								<h:commandLink action="#{Shelfs.setEditBookId(book.id)}" rendered="#{not empty currentLibrarian}">
+								<h:commandLink action="#{shelfs.setEditBookId(book.id)}"
+									rendered="#{not empty currentLibrarian}">
 									<i class="fas fa-edit" />
 								</h:commandLink>
-								<h:commandLink action="#{Shelfs.deleteBookFromShelf(book)}" rendered="#{not empty currentLibrarian}">
+								<h:commandLink action="#{shelfs.deleteBookFromShelf(book)}"
+									rendered="#{not empty currentLibrarian}">
 									<i class="fas fa-trash-alt" />
 								</h:commandLink>
-							</h:form>
-						</div>
+								<h:commandLink action="#{shelfs.setDetailBookId(book.id)}">
+									<i class="fas fa-search-plus" />
+								</h:commandLink>
+							</div>
+							<h:panelGroup class="description col-12" layout="block"
+								rendered="#{book.id eq shelfs.detailBookId}">
+								<h:outputText value="#{book.description}" />
+							</h:panelGroup>
+						</ui:repeat>
+						<div />
 					</div>
-				</ui:repeat>
-			</h:panelGroup>
-		</div>
+				</div>
+			</h:form>
 		</h:panelGroup>
 	</ui:define>
 </ui:composition>

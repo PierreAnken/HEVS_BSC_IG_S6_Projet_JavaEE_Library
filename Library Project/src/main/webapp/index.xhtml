@@ -2,26 +2,25 @@
     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
 <html xmlns="http://www.w3.org/1999/xhtml"
-    xmlns:ui="http://java.sun.com/jsf/facelets"
-    xmlns:h="http://java.sun.com/jsf/html"
-    xmlns:f="http://java.sun.com/jsf/core">
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core">
 
 <ui:composition template="/WEB-INF/templates/template.xhtml">
-    	<ui:define name="content">
-	    	<div>
-	    		<p>
-	    			<h:form>
-		    			<h:commandLink action = "#{navigationController.showPage}">
-							<h:graphicImage 
-								value="#{resource['img:library.jpg']}" 
-								class = "img-responsive centered pointer" 
-								onmouseover="this.src='#{resource['img:library_light.jpg']}'"
-								onmouseout="this.src='#{resource['img:library.jpg']}'"/>
-						  <f:param name = "pageId" value = "inside" />
-  						</h:commandLink>
- 						</h:form>
-				</p>
-			</div>
-    	</ui:define>
-	</ui:composition>
+	<ui:define name="content">
+		<div>
+			<p>
+				<h:form>
+					<h:commandLink action="#{navigationController.showPage}">
+						<h:graphicImage value="#{resource['img:library.jpg']}"
+							class="img-responsive centered pointer"
+							onmouseover="this.src='#{resource['img:library_light.jpg']}'"
+							onmouseout="this.src='#{resource['img:library.jpg']}'" />
+						<f:param name="pageId" value="inside" />
+					</h:commandLink>
+				</h:form>
+			</p>
+		</div>
+	</ui:define>
+</ui:composition>
 </html>

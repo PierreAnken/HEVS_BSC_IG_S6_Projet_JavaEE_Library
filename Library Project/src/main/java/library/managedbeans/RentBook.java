@@ -13,16 +13,16 @@ import library.businessobject.Reader;
 import library.libraryservice.LibraryService;
 import library.toolbox.Tb;
 
-@ManagedBean(name = "loadMoney")
+@ManagedBean(name = "RentBook")
 @ViewScoped
-public class LoadMoney implements Serializable{
+public class RentBook implements Serializable{
 
 	private static final long serialVersionUID = 7078809928413778000L;
 
 	private LibraryService libraryService;
 
 	private String cardId;
-	private int amount;
+	private boolean paid;
 
 	@ManagedProperty(value="#{UserSession}")
     private UserSession userSession;
@@ -34,36 +34,31 @@ public class LoadMoney implements Serializable{
 		InitialContext ctx = new InitialContext();
 		libraryService = (LibraryService)ctx.lookup("java:global/Library-0.0.1/LibraryBean!library.libraryservice.LibraryService");
 
-		amount = 0;
 	}
 	
 	public void onSelectedCardId(){
+		System.out.println("PA_DEBUG: RentBook > onSelectedCardId");
 		if(Tb.stringExists(cardId)) {
 			Reader reader = Reader.convertFromMap(libraryService.getReaderFromCardId(cardId));
 			if(reader != null) {
 				userSession.setCurrentReader(Reader.convertToMap(reader));
 			}
 		}
-		amount = 0;
 	}
 	
-	public void onSelectedAmount() {
-		if(amount > 0) {
-			Reader reader = Reader.convertFromMap(userSession.getCurrentReader());
-			reader.setAccountBalance(reader.getAccountBalance()+amount);
-			libraryService.updateReader(Reader.convertToMap(reader));
-		}
+	public void performPayment() {
+		System.out.println("PA_DEBUG: RentBook > performPayment");
 	}
-
-	public int getAmount() {
-		return amount;
+	
+	public double getAccountBalance() {
+		if(userSession.getCurrentReader() == null)
+			return 0;
+		else
+			return Reader.convertFromMap(userSession.getCurrentReader()).getAccountBalance();
 	}
-
-	public void setAmount(int a) {
-		amount = a;
-	}
+	
 	public List<Reader> getReaders() {
-		return  Reader.convertFromMapList(libraryService.getReaders());
+		return Reader.convertFromMapList(libraryService.getReaders());
 	}
 
 	public String getCardId() {
@@ -88,6 +83,14 @@ public class LoadMoney implements Serializable{
 
 	public void setUserSession(UserSession userSession) {
 		this.userSession = userSession;
+	}
+
+	public boolean isPaid() {
+		return paid;
+	}
+
+	public void setPaid(boolean paid) {
+		this.paid = paid;
 	}
 	
 

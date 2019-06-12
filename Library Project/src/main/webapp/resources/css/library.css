@@ -22,14 +22,14 @@ html{
 #panelShelf{
 	margin: 1%;
     padding: 1%;
-    background-color: rgba(134, 122, 122, 0.8);
+    background-color: #b7a998cc;
     border: 1px solid #111315;
 }
 
 #titleShelf{
 	margin: 1% 1% 0 1%;
     padding: 1%;
-    background-color: rgba(134, 122, 122, 0.8);
+    background-color: #b7a998cc;
     border: 1px  solid #111315;
 }
 
@@ -38,34 +38,22 @@ html{
 	height: 50vh;
 	margin: 0 1% 1% 1%;
     padding: 1%;
-    background-color: rgba(134, 122, 122, 0.8);
+    background-color:#b7a998cc;
    	border-style: solid;
    	border-color:#111315;
     border-width: 0 1px 1px 1px;
 }
 
 
+#bookList > div:nth-child(odd){
+	background-color:#a7a094;
+}
+
 
 .navbar-static-top {
 	margin-bottom: 19px;
 }
 
-.box:nth-of-type(even) {
-	background-color: #A8C4EF;
-	color: black;
-}
-
-.box:nth-of-type(odd) {
-	background-color: #f9f9f9;
-	color: black;
-}
-
-.boxLight {
-	background-color: #f9f9f9;
-}
-.box {
-	border: 1px solid #00;
-}
 
 .imgInside{
 	background-image:url(#{resource['img:reception.jpg']});

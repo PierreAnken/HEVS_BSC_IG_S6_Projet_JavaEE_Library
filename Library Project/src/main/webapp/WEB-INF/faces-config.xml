@@ -54,4 +54,13 @@
 	    	<value>#{UserSession}</value>
 	    </managed-property>
 	</managed-bean>
+	<managed-bean>
+		<managed-bean-name>RentBook</managed-bean-name>
+		<managed-bean-class>library.managedbeans.RentBook</managed-bean-class>
+		<managed-bean-scope>view</managed-bean-scope>
+		<managed-property>
+	    	<property-name>userSession</property-name>
+	    	<value>#{UserSession}</value>
+	    </managed-property>
+	</managed-bean>
 </faces-config>

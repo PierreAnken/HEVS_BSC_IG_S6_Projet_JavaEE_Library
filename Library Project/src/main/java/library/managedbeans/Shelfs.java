@@ -70,21 +70,23 @@ public class Shelfs implements Serializable{
 					continue;
 				}
 			}
-			System.out.println("PA_DEBUG:isBookInBag ");
-			//check if already in bag
-			if (userSession.isBookInBag(book.getId())) {
-				continue;
-			}
 			
 			filteredBooks.add(book);
 		}
-		
+	}
+	
+	public int getBagSize() {
+		return userSession.getBagSize();
+	}
+	
+	public boolean isBookInBag(int id) {
+		return userSession.isBookInBag(id);
 	}
 	
 	public void removeFilters() {
-		filterAuthor = "";
-		filterLanguage = "";
-		filterText = "";
+		filterAuthor = null;
+		filterLanguage = null;
+		filterText = null;
 		filterBooks();
 	}
 	
@@ -92,23 +94,24 @@ public class Shelfs implements Serializable{
 		return libraryService.getAvailableBooks();
 	}
 	
-	public void addBookToBag(Book b) {
+	public String addBookToBag(Book b) {
 		userSession.addBookToBag(b);
-		filterBooks();
+		return "";
 	}
 
-	public void removeBookFromBag(Book b) {
+	public String removeBookFromBag(Book b) {
 		userSession.removeBook(b);
-		filterBooks();
+		return "";
 	}
 
 	public String getFilterAuthor() {
 		return filterAuthor;
 	}
 	
-	public void deleteBookFromShelf(Book b) {
+	public String deleteBookFromShelf(Book b) {
 		libraryService.deleteBook(b);
 		filterBooks();
+		return "";
 	}
 
 	public void setFilterAuthor(String filterAuthor) {
@@ -155,8 +158,9 @@ public class Shelfs implements Serializable{
 		return detailBookId;
 	}
 
-	public void setDetailBookId(int detailBookId) {
+	public String setDetailBookId(int detailBookId) {
 		this.detailBookId = detailBookId;
+		return "";
 	}
 
 	public List<Book> getFilteredBooks() {
@@ -174,5 +178,10 @@ public class Shelfs implements Serializable{
 	public void setUserSession(UserSession userSession) {
 		this.userSession = userSession;
 	}
+
+	public int getSizeBottom() {
+		return (19-filteredBooks.size())*24;
+	}
+
 
 }

@@ -9,9 +9,9 @@
 
 <ui:composition template="/WEB-INF/templates/template.xhtml">
 	<ui:define name="content">
-		<div id="loadAccount" class="align-self-center imgLibrarian background">
-			<c:set var="currentReader" value="#{loadMoney.userSession.getCurrentReader()}" />
-			<h:panelGroup class="container" id="dialog_frame" layout="block">
+		<div class="imgLibrarian background">
+			<c:set var="currentReader" value="#{RentBook.userSession.getCurrentReader()}" />
+			<h:panelGroup class="container" layout="block" id="rentBookDialog">
 				<h:panelGroup class="row" layout="block" rendered="#{empty currentReader}">
 					<div class="col-6 nopadding">
 						<div class="dialog_left">Sure , do you have your reader's
@@ -23,12 +23,12 @@
 						<div class="dialog_right">
 								<h:panelGroup>
 									Just a moment.
-									<h:selectOneMenu value="#{loadMoney.cardId}" >
-										<f:ajax listener="#{loadMoney.onSelectedCardId}"
-											render="dialog_frame" />
+									<h:selectOneMenu value="#{RentBook.cardId}" >
+										<f:ajax listener="#{RentBook.onSelectedCardId()}"
+											render="rentBookDialog" />
 										<f:selectItem itemLabel="Looking into my pocket  ..."
 											itemValue="#{null}"/>
-										<f:selectItems value="#{loadMoney.getReaders()}" var="reader"
+										<f:selectItems value="#{RentBook.getReaders()}" var="reader"
 											itemValue="#{reader.cardId}"
 											itemLabel="Card #{reader.cardId} (#{reader.firstname} #{reader.lastname})" />
 									</h:selectOneMenu>
@@ -36,45 +36,52 @@
 								<h:outputText value="Here it is: #{currentReader.cardId}" rendered="#{not empty currentReader}"/>
 							</div>
 							<h:panelGroup class="dialog_right" rendered="#{empty currentReader}" layout="block">
-								Hum, seems  
+								I don't have one yet. Could you
 								<h:commandLink action="#{navigationController.showPage}"
-									value=" I forget ">
-									<f:param name="pageId" value="inside" />
+									value=" create an account ">
+									<f:param name="pageId" value="createAccount" />
 								</h:commandLink>
-								it.
+								for me?
 							</h:panelGroup>
 						</h:form>
 					</div>
 				</h:panelGroup>
-				<h:panelGroup rendered="#{not empty currentReader}" layout="block" class="row" id="dialog_frame_2">
-				<c:set var="amount" value="#{loadMoney.getAmount()}" />
+				
+				<h:panelGroup rendered="#{not empty currentReader}" layout="block" class="row">
+				<c:set var="amountToPay" value="#{RentBook.userSession.getBagSize()*0.5}" />
+				<c:set var="accountBalance" value="#{RentBook.getAccountBalance()}"/>
 					<div class="col-6 nopadding">
 						<div class="dialog_left">
 							<h:outputText value="Hi #{currentReader.firstname}."/> 
 							<br/>
-							<h:outputText value="Your current account balance is #{currentReader.accountBalance}CHF."/>
+							<h:outputText value="So you selected #{RentBook.userSession.getBagSize()} book(s)"/>
 							<br/>
-							Which amount would you like to load?
+							<h:outputText value="It make a total amount of #{amountToPay} CHF"/>
 						</div>
 					</div>
 					<div class="w-100" />
-					<div class="col-6 offset-6 nopadding">
+					
+					<h:panelGroup class="col-2 offset-6 nopadding" rendered="#{not empty currentReader and amountToPay le accountBalance}">
 						<h:form>
 							<div class="dialog_right">
-								Could you load 
-								<h:selectOneMenu value="#{loadMoney.amount}" rendered="#{amount eq 0}">
-									<f:ajax listener="#{loadMoney.onSelectedAmount()}" process="@this" render="dialog_frame_2"/>
-									<f:selectItem itemLabel="..." itemValue="#{null}" />
-									<f:selectItem itemLabel="10" itemValue="#{10}"/>
-									<f:selectItem itemLabel="20" itemValue="#{20}"/>
-									<f:selectItem itemLabel="50" itemValue="#{50}"/>
-									<f:selectItem itemLabel="100" itemValue="#{100}"/>
-								</h:selectOneMenu>
-								<h:outputText value="#{loadMoney.amount}"  rendered="#{amount ne 0}"/>
-								CHF?
+								<h:commandButton value="Pay" type="button">
+								<f:ajax listener="#{RentBook.performPayment()}" render="rentBookDialog"
+									execute="@form" />
+								</h:commandButton>
 							</div>
 						</h:form>
-					</div>
+					</h:panelGroup>
+					<h:panelGroup class="col-6 offset-6 nopadding" rendered="#{not empty currentReader and amountToPay gt accountBalance}">
+						<h:form>
+							<div class="dialog_right">
+								I don't have enough money on my account, could I 
+								<h:commandLink action="#{navigationController.showPage}"
+									value="load it">
+									<f:param name="pageId" value="loadMoney" />
+								</h:commandLink>?
+							</div>
+						</h:form>
+					</h:panelGroup>
 					<div class="w-100"/>
 					<h:panelGroup class="col-6 nopadding" rendered="#{amount ne 0}">
 						<div class="dialog_left">

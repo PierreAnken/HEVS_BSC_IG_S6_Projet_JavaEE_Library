@@ -35,7 +35,7 @@ public class UserSession{
 		currentLibrarian = null;
 		currentReader = null;
 		booksInBag = new ArrayList<Book>();
-		System.out.println("PA_DEBUG: Init  UserSession reseted");
+		 
 	}
 	
 	public Librarian getCurrentLibrarian() {
@@ -47,8 +47,9 @@ public class UserSession{
 	}
 
 	public void removeBook(Book b) {
-		System.out.println("OG_DEBUG: Bag Been book remover " + b.getId());
-		getBooksInBag().remove(b);
+		for(int i = 0; i<booksInBag.size(); i++)
+			if(booksInBag.get(i).getId() == b.getId())
+				getBooksInBag().remove(i);
 	}
 
 	public int getBagSize() {

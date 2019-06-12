@@ -11,7 +11,6 @@
 <ui:composition template="/WEB-INF/templates/template.xhtml">
 	<ui:define name="content">
 		<h:panelGroup id="grid" class="imgShelfs background" layout="block">
-
 			<h:form>
 				<c:set var="currentLibrarian" scope="view"
 					value="#{Shelfs.userSession.getCurrentLibrarian()}" />
@@ -23,7 +22,7 @@
 							<h:inputText size="20" value="#{Shelfs.filterText}" />
 						</div>
 						<div class="col-2">
-							<h:commandButton value="OK" type="button">
+							<h:commandButton value="Search" type="button">
 								<f:ajax listener="#{Shelfs.filterBooks()}" render="grid"
 									execute="@form" />
 							</h:commandButton>
@@ -57,60 +56,74 @@
 							<b>Action</b>
 						</div>
 					</div>
-					<div class="row" id="bookList">
+					<div class="row nopadding" id="bookList">
 						<h:panelGroup rendered="#{empty Shelfs.filteredBooks}"
 							layout="block">
 							<div class="col-12">No search results</div>
 						</h:panelGroup>
 						<ui:repeat var="book" value="#{Shelfs.filteredBooks}"
 							varStatus="status">
-							<div class="col-4">
-								<h:form>
-								#{book.title}
-							</h:form>
-							</div>
-							<div class="col-3">
-								<h:form>
+							<div class="bookLine col-12 row nopadding nomargin">
+								<div class="col-4">#{book.title}</div>
+								<div class="col-3">
 									<h:commandLink value="#{book.author}"
-										rendered="#{empty shelfs.filterAuthor}">
+										rendered="#{empty Shelfs.filterAuthor}">
 										<f:ajax listener="#{Shelfs.setFilterAuthor(book.author)}"
 											render="grid" />
 									</h:commandLink>
 									<h:outputText value="#{book.author}"
-										rendered="#{not empty shelfs.filterAuthor}" />
-								</h:form>
+										rendered="#{not empty Shelfs.filterAuthor}" />
+								</div>
+								<div class="col-2">
+									<h:commandLink value="#{book.language}"
+										rendered="#{empty Shelfs.filterLanguage}">
+										<f:ajax listener="#{Shelfs.setFilterLanguage(book.language)}"
+											render="grid" />
+									</h:commandLink>
+									<h:outputText value="#{book.language}"
+										rendered="#{not empty Shelfs.filterLanguage}" />
+								</div>
+								<div class="col-3">
+								<c:set var="bookInBag" value="#{Shelfs.isBookInBag(book.id)}" />
+								<c:set var="bagSize" value="#{Shelfs.getBagSize()}" />
+									<h:commandLink action="#{Shelfs.addBookToBag(book)}"
+										rendered="#{empty currentLibrarian and not bookInBag and bagSize lt 4}">
+										<i class="fas fa-shopping-bag"/>
+									</h:commandLink>
+									<h:commandLink  class="text-secondary" rendered="#{empty currentLibrarian and not bookInBag and bagSize gt 3}">
+										<i class="fas fa-shopping-bag"/>
+									</h:commandLink>
+									<h:commandLink action="#{Shelfs.removeBookFromBag(book)}"
+										rendered="#{empty currentLibrarian and bookInBag}">
+										<i class="fas fa-minus-circle"/>
+									</h:commandLink>									
+									<h:commandLink action="#{Shelfs.setEditBookId(book.id)}"
+										rendered="#{not empty currentLibrarian}">
+										<i class="fas fa-edit" />
+									</h:commandLink>
+									
+									<h:commandLink action="#{Shelfs.deleteBookFromShelf(book)}"
+										rendered="#{not empty currentLibrarian}">
+										<i class="fas fa-trash-alt" />
+										
+									</h:commandLink>
+									<h:commandLink action="#{Shelfs.setDetailBookId(book.id)}"
+										rendered="#{book.id ne Shelfs.detailBookId}">
+										<i class="fas fa-search-plus" />
+									</h:commandLink>
+									
+									<h:commandLink action="#{Shelfs.setDetailBookId(0)}"
+										rendered="#{book.id eq Shelfs.detailBookId}">
+										<i class="fas fa-search-minus" />
+									</h:commandLink>
+								</div>
+								<h:panelGroup class="description col-12" layout="block"
+									rendered="#{book.id eq Shelfs.detailBookId}">
+									<h:outputText value="#{book.description}" />
+								</h:panelGroup>
 							</div>
-							<div class="col-2">
-								<h:commandLink value="#{book.language}"
-									rendered="#{empty shelfs.filterLanguage}">
-									<f:ajax listener="#{Shelfs.setFilterLanguage(book.language)}"
-										render="grid" />
-								</h:commandLink>
-								<h:outputText value="#{book.language}"
-									rendered="#{not empty shelfs.filterLanguage}" />
-							</div>
-							<div class="col-3">
-								<h:commandLink action="#{shelfs.addBookToBag(book)}"
-									rendered="#{empty currentLibrarian}">
-									<i class="fas fa-shopping-bag" />
-								</h:commandLink>
-								<h:commandLink action="#{shelfs.setEditBookId(book.id)}"
-									rendered="#{not empty currentLibrarian}">
-									<i class="fas fa-edit" />
-								</h:commandLink>
-								<h:commandLink action="#{shelfs.deleteBookFromShelf(book)}"
-									rendered="#{not empty currentLibrarian}">
-									<i class="fas fa-trash-alt" />
-								</h:commandLink>
-								<h:commandLink action="#{shelfs.setDetailBookId(book.id)}">
-									<i class="fas fa-search-plus" />
-								</h:commandLink>
-							</div>
-							<h:panelGroup class="description col-12" layout="block"
-								rendered="#{book.id eq shelfs.detailBookId}">
-								<h:outputText value="#{book.description}" />
-							</h:panelGroup>
 						</ui:repeat>
+						<div class="col-12" style="height:#{Shelfs.getSizeBottom()}px"/>
 						<div />
 					</div>
 				</div>

@@ -48,7 +48,7 @@ public interface LibraryService{
 	List<Reservation> getReservations();
 
 	Book getBook(String bookId);
-	List<Reservation> getActiveReservationFromReader(String email);
+	List<Map<String, Object>> getActiveReservationFromReader(String email);
 	void populateLibraryDB();
 	Map<String, Object> getReader(long id);
 	Map<String, Object> getReaderFromCardId(int cardId);

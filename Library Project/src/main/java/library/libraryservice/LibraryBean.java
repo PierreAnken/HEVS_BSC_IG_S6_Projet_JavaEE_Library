@@ -28,9 +28,10 @@ public class LibraryBean implements LibraryService{
 	}
 	
 	@Override
-	public List<Reservation> getActiveReservationFromReader(String email) {
-		System.out.println("PA_DEBUG: getActiveReservationFromReader "+email);
-		return (List<Reservation>) em.createQuery("SELECT r FROM Reservation r JOIN r.reader u WHERE u.email =:email").setParameter("email", email).getResultList();
+	public List<Map<String, Object>> getActiveReservationFromReader(String email) {
+		
+		List<Reservation> reservations = (List<Reservation>) em.createQuery("SELECT r FROM Reservation r JOIN r.reader u WHERE u.email =:email").setParameter("email", email).getResultList();
+		return Reservation.convertToMapList(reservations);
 	}
 	
 	@Override

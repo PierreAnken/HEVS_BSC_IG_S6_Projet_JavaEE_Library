@@ -63,4 +63,13 @@
 	    	<value>#{UserSession}</value>
 	    </managed-property>
 	</managed-bean>
+	<managed-bean>
+		<managed-bean-name>ReturnBook</managed-bean-name>
+		<managed-bean-class>library.managedbeans.ReturnBook</managed-bean-class>
+		<managed-bean-scope>view</managed-bean-scope>
+		<managed-property>
+	    	<property-name>userSession</property-name>
+	    	<value>#{UserSession}</value>
+	    </managed-property>
+	</managed-bean>
 </faces-config>

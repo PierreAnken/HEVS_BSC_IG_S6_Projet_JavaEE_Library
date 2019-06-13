@@ -36,9 +36,9 @@
 								<h:outputText value="Here it is: #{currentReader.cardId}" rendered="#{not empty currentReader}"/>
 							</div>
 							<h:panelGroup class="dialog_right" rendered="#{empty currentReader}" layout="block">
-								Hum, seems  
+								Hum, seems that   
 								<h:commandLink action="#{navigationController.showPage}"
-									value=" I forget ">
+									value=" I forgot ">
 									<f:param name="pageId" value="inside" />
 								</h:commandLink>
 								it.
@@ -87,7 +87,7 @@
 						<h:panelGroup rendered="#{amount ne 0}">
 						<h:form>
 							<div class="dialog_right">
-								<h:commandLink action="#{navigationController.showPage}" value="Thanks you.">
+								<h:commandLink action="#{navigationController.showPage}" value="Thank you.">
 							  <f:param name = "pageId" value = "inside" />
 	  						</h:commandLink>
 							</div>

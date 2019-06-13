@@ -65,9 +65,9 @@
 							<div class="bookLine col-12 row nopadding nomargin">
 								<div class="col-4">
 									<h:outputText value="#{book.title}"
-										rendered="#{book.id ne Shelfs.editBookId}"></h:outputText>
-									<h:inputText value="#{book.title}"
-										rendered="#{book.id eq Shelfs.editBookId}"></h:inputText>
+										rendered="#{book.id ne Shelfs.editBookId}"/>
+									<h:inputText value="#{Shelfs.bookInEdit.title}"
+										rendered="#{book.id eq Shelfs.editBookId}"><f:ajax /></h:inputText>
 								</div>
 								<div class="col-3">
 									<h:commandLink value="#{book.author}"
@@ -75,8 +75,8 @@
 										<f:ajax listener="#{Shelfs.setFilterAuthor(book.author)}"
 											render="grid" />
 									</h:commandLink>
-									<h:inputText value="#{book.author}"
-										rendered="#{book.id eq Shelfs.editBookId}"></h:inputText>
+									<h:inputText value="#{Shelfs.bookInEdit.author}"
+										rendered="#{book.id eq Shelfs.editBookId}"><f:ajax /></h:inputText>
 									<h:outputText value="#{book.author}"
 										rendered="#{not empty Shelfs.filterAuthor and book.id ne Shelfs.editBookId}" />
 								</div>
@@ -86,8 +86,8 @@
 										<f:ajax listener="#{Shelfs.setFilterLanguage(book.language)}"
 											render="grid" />
 									</h:commandLink>
-									<h:inputText value="#{book.language}"
-										rendered="#{book.id eq Shelfs.editBookId}" size="2"></h:inputText>
+									<h:inputText value="#{Shelfs.bookInEdit.language}"
+										rendered="#{book.id eq Shelfs.editBookId}" size="2"><f:ajax /> </h:inputText>
 									<h:outputText value="#{book.language}"
 										rendered="#{not empty Shelfs.filterLanguage and book.id ne Shelfs.editBookId}" />
 								</div>
@@ -106,8 +106,16 @@
 										<i class="fas fa-minus-circle"/>
 									</h:commandLink>									
 									<h:commandLink action="#{Shelfs.setEditBookId(book.id)}"
-										rendered="#{not empty currentLibrarian}">
+										rendered="#{not empty currentLibrarian and book.id ne Shelfs.editBookId}">
 										<i class="fas fa-edit" />
+									</h:commandLink>
+									<h:commandLink action="#{Shelfs.setEditBookId(0)}"
+										rendered="#{not empty currentLibrarian and book.id eq Shelfs.editBookId}">
+										<i class="fas fa-ban"></i>
+									</h:commandLink>
+									 <h:commandLink action="#{Shelfs.updateBook()}"
+										rendered="#{book.id eq Shelfs.editBookId}" render="grid">
+										<i class="fas fa-check" />
 									</h:commandLink>
 									<h:commandLink action="#{Shelfs.deleteBookFromShelf(book)}"
 										rendered="#{not empty currentLibrarian}">
@@ -126,12 +134,11 @@
 									rendered="#{book.id eq Shelfs.detailBookId and Shelfs.editBookId eq 0}">
 									<h:outputText value="#{book.description}" />
 								</h:panelGroup>
-								&nbsp;&nbsp;&nbsp;<h:inputTextarea value="#{book.description}"
-									rendered="#{book.id eq Shelfs.editBookId}" rows="5" cols="70"></h:inputTextarea>
-									<h:commandLink action="#{Shelfs.libraryService.updateBook(book)}"
-										rendered="#{book.id eq Shelfs.editBookId}" render="grid">
-										<i class="fas fa-check" />
-									</h:commandLink>
+								<h:panelGroup class="description col-12" layout="block"
+									rendered="#{book.id eq Shelfs.editBookId}">
+									<h:inputTextarea value="#{Shelfs.bookInEdit.description}"
+									 rows="8" cols="70"><f:ajax /></h:inputTextarea>
+								</h:panelGroup>
 							</div>
 						</ui:repeat>
 						<div class="col-12" style="height:#{Shelfs.getSizeBottom()}px"/>

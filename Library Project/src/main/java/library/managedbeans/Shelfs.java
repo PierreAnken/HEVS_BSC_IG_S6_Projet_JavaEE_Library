@@ -25,6 +25,7 @@ public class Shelfs implements Serializable{
 	private int detailBookId;
 	private int editBookId;
 	private List<Book> filteredBooks;
+	private Book bookInEdit;
 
 	@ManagedProperty(value="#{UserSession}")
     private UserSession userSession;
@@ -35,6 +36,7 @@ public class Shelfs implements Serializable{
 		System.out.println("OG_DEBUG: init Shelfs ");
 		InitialContext ctx = new InitialContext();
 		setLibraryService((LibraryService)ctx.lookup("java:global/Library-0.0.1/LibraryBean!library.libraryservice.LibraryService"));
+
 		filterBooks();
 		
 	}
@@ -90,6 +92,14 @@ public class Shelfs implements Serializable{
 		filterAuthor = null;
 		filterLanguage = null;
 		filterText = null;
+		filterBooks();
+	}
+	
+	public void updateBook() {
+		libraryService.updateBook(bookInEdit);
+		System.out.println("PA_DEBUG: book saved  "+bookInEdit.getTitle());
+		setDetailBookId(0);
+		setEditBookId(0);
 		filterBooks();
 	}
 	
@@ -154,15 +164,21 @@ public class Shelfs implements Serializable{
 	}
 
 	public void setEditBookId(int editBookId) {
-		System.out.println("OG_DEBUG: EditBookId set to " + editBookId);
-		if (this.editBookId == editBookId) { 
+		if(this.editBookId == editBookId) { 	
 			this.editBookId = 0;
 			this.detailBookId = 0;
-			} 
+		} 
 		else {
+			
+			for(Book b : filteredBooks)
+				if(b.getId() == (long)editBookId){
+					setBookInEdit(b);
+					break;
+				}
+			
 			this.editBookId = editBookId;
 			this.detailBookId = editBookId;
-			}
+		}
 	}
 
 	public int getDetailBookId() {
@@ -192,6 +208,14 @@ public class Shelfs implements Serializable{
 
 	public int getSizeBottom() {
 		return (19-filteredBooks.size())*24;
+	}
+
+	public Book getBookInEdit() {
+		return bookInEdit;
+	}
+
+	public void setBookInEdit(Book bookInEdit) {
+		this.bookInEdit = bookInEdit;
 	}
 
 

@@ -4,36 +4,50 @@ import java.io.Serializable;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
+import javax.annotation.Resource;
+import javax.ejb.SessionContext;
+import javax.ejb.TransactionManagement;
+import javax.ejb.TransactionManagementType;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
 import javax.naming.InitialContext;
+import javax.persistence.EntityManager;
+import javax.persistence.EntityTransaction;
+import javax.transaction.SystemException;
+import javax.transaction.UserTransaction;
 
+import library.businessobject.Book;
 import library.businessobject.Reader;
+import library.businessobject.Reservation;
 import library.libraryservice.LibraryService;
 import library.toolbox.Tb;
 
 @ManagedBean(name = "RentBook")
 @ViewScoped
 public class RentBook implements Serializable{
-
+	
+	@Resource
+	UserTransaction utx;
+	
 	private static final long serialVersionUID = 7078809928413778000L;
 
 	private LibraryService libraryService;
 
 	private String cardId;
 	private boolean paid;
+	private int overLimit;
+	private boolean error;
 
 	@ManagedProperty(value="#{UserSession}")
     private UserSession userSession;
 	
 	@PostConstruct
 	public void initialize() throws Exception{
-		
 		System.out.println("PA_DEBUG: init LoadMoney");
 		InitialContext ctx = new InitialContext();
 		libraryService = (LibraryService)ctx.lookup("java:global/Library-0.0.1/LibraryBean!library.libraryservice.LibraryService");
-
+		checkBookLimit();
 	}
 	
 	public void onSelectedCardId(){
@@ -42,12 +56,92 @@ public class RentBook implements Serializable{
 			Reader reader = Reader.convertFromMap(libraryService.getReaderFromCardId(cardId));
 			if(reader != null) {
 				userSession.setCurrentReader(Reader.convertToMap(reader));
+				checkBookLimit();
 			}
 		}
 	}
 	
+	public boolean hasEnoughMoney() {
+		if( getCurrentReader() != null){
+			if(userSession.getBagSize()*0.5 <=  getCurrentReader().getAccountBalance())
+				return true;
+		}
+		return false;
+	}
+	
+	public void checkBookLimit() {
+		//max books 5
+		if( getCurrentReader() != null){
+			int activeReservations = libraryService.getActiveReservationFromReader(getCurrentReader().getEmail()).size();
+			
+			setOverLimit(activeReservations+userSession.getBagSize()-5);
+			if(getOverLimit() < 0)
+				setOverLimit(0);
+		}
+	}
+	
+
 	public void performPayment() {
+		
 		System.out.println("PA_DEBUG: RentBook > performPayment");
+		
+		try {
+			
+			InitialContext ctx = new InitialContext();
+			UserTransaction utx = (UserTransaction)ctx.lookup("java:comp/UserTransaction");
+			utx.begin();
+			
+			Reader currentReader =  Reader.convertFromMap(libraryService.updateReader(Reader.convertToMap(getCurrentReader())));
+			System.out.println("PA_DEBUG: RentBook > performPayment"+currentReader.getEmail());
+			List<Book> booksToRent = userSession.getBooksInBag();
+			
+			
+			//1 - remove money from user account
+			double toPay = booksToRent.size() * 0.5;
+			if(currentReader.getAccountBalance() < toPay )
+				throw new Exception("Negative account balance after transaction");
+			
+			currentReader.setAccountBalance(currentReader.getAccountBalance() - toPay);
+			
+			if(booksToRent.size() == 0)
+				throw new Exception("Bag is empty");
+			
+			System.out.println("PA_DEBUG: RentBook > performPayment > money removed");
+			
+			//2 create reservation and remove from bag
+			for(int i = 0; i<booksToRent.size(); i++) {
+				Reservation reservation = new Reservation(booksToRent.get(i),Reader.convertToMap(currentReader));
+				
+				libraryService.updateBook(booksToRent.get(i));
+				System.out.println("PA_DEBUG: RentBook > performPayment > book updated");
+				libraryService.addReservation(reservation);
+				System.out.println("PA_DEBUG: RentBook > performPayment > reservation updated");
+				userSession.removeBookFromBag(booksToRent.get(i).getId().intValue());
+			}
+			
+			System.out.println("PA_DEBUG: RentBook > performPayment > reservation created");
+			
+			utx.commit();
+			
+			paid = true;
+		} 
+		catch (Exception e) {
+				System.out.println("PA_DEBUG: RentBook > performPayment "+ e.getMessage());
+				setError(true);
+			try {
+				utx.rollback();
+			} catch (IllegalStateException e1) {
+				System.err.println(e1.getMessage());
+				setError(true);
+			} catch (SecurityException e1) {
+				System.err.println(e1.getMessage());
+				setError(true);
+			} catch (SystemException e1) {
+				System.err.println(e1.getMessage());
+				setError(true);
+			} 
+		}
+		
 	}
 	
 	public double getAccountBalance() {
@@ -55,6 +149,10 @@ public class RentBook implements Serializable{
 			return 0;
 		else
 			return Reader.convertFromMap(userSession.getCurrentReader()).getAccountBalance();
+	}
+	
+	public Reader getCurrentReader() {
+		return Reader.convertFromMap(userSession.getCurrentReader());
 	}
 	
 	public List<Reader> getReaders() {
@@ -92,6 +190,22 @@ public class RentBook implements Serializable{
 	public void setPaid(boolean paid) {
 		this.paid = paid;
 	}
-	
+
+	public int getOverLimit() {
+		return overLimit;
+	}
+
+	public void setOverLimit(int overLimit) {
+		this.overLimit = overLimit;
+	}
+
+	public boolean isError() {
+		return error;
+	}
+
+	public void setError(boolean error) {
+		this.error = error;
+	}
+
 
 }

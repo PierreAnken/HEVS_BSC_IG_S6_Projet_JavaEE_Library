@@ -42,7 +42,6 @@
 						</div>
 					</div>
 					<div class="row" id="titleShelf">
-						<h:form />
 						<div class="col-4">
 							<b>Title</b>
 						</div>
@@ -64,24 +63,33 @@
 						<ui:repeat var="book" value="#{Shelfs.filteredBooks}"
 							varStatus="status">
 							<div class="bookLine col-12 row nopadding nomargin">
-								<div class="col-4">#{book.title}</div>
+								<div class="col-4">
+									<h:outputText value="#{book.title}"
+										rendered="#{book.id ne Shelfs.editBookId}"></h:outputText>
+									<h:inputText value="#{book.title}"
+										rendered="#{book.id eq Shelfs.editBookId}"></h:inputText>
+								</div>
 								<div class="col-3">
 									<h:commandLink value="#{book.author}"
-										rendered="#{empty Shelfs.filterAuthor}">
+										rendered="#{empty Shelfs.filterAuthor and book.id ne Shelfs.editBookId}">
 										<f:ajax listener="#{Shelfs.setFilterAuthor(book.author)}"
 											render="grid" />
 									</h:commandLink>
+									<h:inputText value="#{book.author}"
+										rendered="#{book.id eq Shelfs.editBookId}"></h:inputText>
 									<h:outputText value="#{book.author}"
-										rendered="#{not empty Shelfs.filterAuthor}" />
+										rendered="#{not empty Shelfs.filterAuthor and book.id ne Shelfs.editBookId}" />
 								</div>
 								<div class="col-2">
 									<h:commandLink value="#{book.language}"
-										rendered="#{empty Shelfs.filterLanguage}">
+										rendered="#{empty Shelfs.filterLanguage and book.id ne Shelfs.editBookId}">
 										<f:ajax listener="#{Shelfs.setFilterLanguage(book.language)}"
 											render="grid" />
 									</h:commandLink>
+									<h:inputText value="#{book.language}"
+										rendered="#{book.id eq Shelfs.editBookId}" size="2"></h:inputText>
 									<h:outputText value="#{book.language}"
-										rendered="#{not empty Shelfs.filterLanguage}" />
+										rendered="#{not empty Shelfs.filterLanguage and book.id ne Shelfs.editBookId}" />
 								</div>
 								<div class="col-3">
 								<c:set var="bookInBag" value="#{Shelfs.isBookInBag(book.id)}" />
@@ -101,26 +109,29 @@
 										rendered="#{not empty currentLibrarian}">
 										<i class="fas fa-edit" />
 									</h:commandLink>
-									
 									<h:commandLink action="#{Shelfs.deleteBookFromShelf(book)}"
 										rendered="#{not empty currentLibrarian}">
 										<i class="fas fa-trash-alt" />
-										
 									</h:commandLink>
 									<h:commandLink action="#{Shelfs.setDetailBookId(book.id)}"
 										rendered="#{book.id ne Shelfs.detailBookId}">
 										<i class="fas fa-search-plus" />
 									</h:commandLink>
-									
 									<h:commandLink action="#{Shelfs.setDetailBookId(0)}"
 										rendered="#{book.id eq Shelfs.detailBookId}">
 										<i class="fas fa-search-minus" />
 									</h:commandLink>
 								</div>
 								<h:panelGroup class="description col-12" layout="block"
-									rendered="#{book.id eq Shelfs.detailBookId}">
+									rendered="#{book.id eq Shelfs.detailBookId and Shelfs.editBookId eq 0}">
 									<h:outputText value="#{book.description}" />
 								</h:panelGroup>
+								&nbsp;&nbsp;&nbsp;<h:inputTextarea value="#{book.description}"
+									rendered="#{book.id eq Shelfs.editBookId}" rows="5" cols="70"></h:inputTextarea>
+									<h:commandLink action="#{Shelfs.libraryService.updateBook(book)}"
+										rendered="#{book.id eq Shelfs.editBookId}" render="grid">
+										<i class="fas fa-check" />
+									</h:commandLink>
 							</div>
 						</ui:repeat>
 						<div class="col-12" style="height:#{Shelfs.getSizeBottom()}px"/>

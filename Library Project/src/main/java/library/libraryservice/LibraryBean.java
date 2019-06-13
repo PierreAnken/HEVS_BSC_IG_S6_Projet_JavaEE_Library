@@ -138,9 +138,13 @@ public class LibraryBean implements LibraryService{
 	}
 	
 	//update
-	public Book updateBook(Book b) {
+	public void updateBook(Book b) {
 		em.merge(b);
-		return b;
+		System.out.println("OG_DEBUG: Starting update Book " + b.getId());
+		System.out.println("OG_DEBUG: Book Language " + b.getLanguage());
+		System.out.println("OG_DEBUG: Book Author " + b.getAuthor());
+		System.out.println("OG_DEBUG: Book Description " + b.getDescription());
+		System.out.println("OG_DEBUG: Update Book successful " + b.getId());
 	}
 	
 	public Library updateLibrary(Library l) {

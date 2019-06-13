@@ -26,7 +26,7 @@ public interface LibraryService{
 	Reservation addReservation(Reservation r);
 	
 	//update
-	Book updateBook(Book b);
+	void updateBook(Book b);
 	Library updateLibrary(Library l);
 	Librarian updateLibrarian(Librarian l);
 	Reader updateReader(Map<String, Object> r);

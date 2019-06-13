@@ -73,6 +73,9 @@ public class Shelfs implements Serializable{
 			
 			filteredBooks.add(book);
 		}
+		
+		setEditBookId(0);
+		
 	}
 	
 	public int getBagSize() {
@@ -151,7 +154,15 @@ public class Shelfs implements Serializable{
 	}
 
 	public void setEditBookId(int editBookId) {
-		this.editBookId = editBookId;
+		System.out.println("OG_DEBUG: EditBookId set to " + editBookId);
+		if (this.editBookId == editBookId) { 
+			this.editBookId = 0;
+			this.detailBookId = 0;
+			} 
+		else {
+			this.editBookId = editBookId;
+			this.detailBookId = editBookId;
+			}
 	}
 
 	public int getDetailBookId() {

@@ -1,0 +1,152 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:fn="http://java.sun.com/jsp/jstl/functions"
+	xmlns:c="http://java.sun.com/jsp/jstl/core">
+
+<ui:composition template="/WEB-INF/templates/template.xhtml">
+	<ui:define name="content">
+		<h:panelGroup id="grid" class="imgShelfs background" layout="block">
+			<h:form>
+				<c:set var="currentLibrarian" scope="view"
+					value="#{Shelfs.userSession.getCurrentLibrarian()}" />
+				<c:set var="currentReader" scope="view"
+					value="#{Shelfs.userSession.getCurrentReader()}" />
+				<div class="container booksFrame">
+					<div class="row" id="panelShelf">
+						<div class="col-3 ">
+							<h:inputText size="20" value="#{Shelfs.filterText}" />
+						</div>
+						<div class="col-2">
+							<h:commandButton value="Search" type="button">
+								<f:ajax listener="#{Shelfs.filterBooks()}" render="grid"
+									execute="@form" />
+							</h:commandButton>
+						</div>
+						<div class="col-3">
+							<h:commandButton value="Remove filters"
+								rendered="#{not empty Shelfs.filterAuthor or not empty Shelfs.filterText or not empty Shelfs.filterLanguage}"
+								render="grid">
+								<f:ajax listener="#{Shelfs.removeFilters()}" render="grid" />
+							</h:commandButton>
+						</div>
+						<div class="col-4">
+							<h:commandLink action="#{navigationController.showPage}">
+								<f:param name="pageId" value="inside" />
+									Back to front office <i class="fas fa-sign-out-alt" />
+							</h:commandLink>
+						</div>
+					</div>
+					<div class="row" id="titleShelf">
+						<div class="col-4">
+							<b>Title</b>
+						</div>
+						<div class="col-3">
+							<b>Author</b>
+						</div>
+						<div class="col-2">
+							<b>Language</b>
+						</div>
+						<div class="col-3">
+							<b>Action</b>
+						</div>
+					</div>
+					<div class="row nopadding" id="bookList">
+						<h:panelGroup rendered="#{empty Shelfs.filteredBooks}"
+							layout="block">
+							<div class="col-12">No search results</div>
+						</h:panelGroup>
+						<ui:repeat var="book" value="#{Shelfs.filteredBooks}"
+							varStatus="status">
+							<div class="bookLine col-12 row nopadding nomargin">
+								<div class="col-4">
+									<h:outputText value="#{book.title}"
+										rendered="#{book.id ne Shelfs.editBookId}"/>
+									<h:inputText value="#{Shelfs.bookInEdit.title}"
+										rendered="#{book.id eq Shelfs.editBookId}"><f:ajax /></h:inputText>
+								</div>
+								<div class="col-3">
+									<h:commandLink value="#{book.author}"
+										rendered="#{empty Shelfs.filterAuthor and book.id ne Shelfs.editBookId}">
+										<f:ajax listener="#{Shelfs.setFilterAuthor(book.author)}"
+											render="grid" />
+									</h:commandLink>
+									<h:inputText value="#{Shelfs.bookInEdit.author}"
+										rendered="#{book.id eq Shelfs.editBookId}"><f:ajax /></h:inputText>
+									<h:outputText value="#{book.author}"
+										rendered="#{not empty Shelfs.filterAuthor and book.id ne Shelfs.editBookId}" />
+								</div>
+								<div class="col-2">
+									<h:commandLink value="#{book.language}"
+										rendered="#{empty Shelfs.filterLanguage and book.id ne Shelfs.editBookId}">
+										<f:ajax listener="#{Shelfs.setFilterLanguage(book.language)}"
+											render="grid" />
+									</h:commandLink>
+									<h:inputText value="#{Shelfs.bookInEdit.language}"
+										rendered="#{book.id eq Shelfs.editBookId}" size="2"><f:ajax /> </h:inputText>
+									<h:outputText value="#{book.language}"
+										rendered="#{not empty Shelfs.filterLanguage and book.id ne Shelfs.editBookId}" />
+								</div>
+								<div class="col-3">
+								<c:set var="bookInBag" value="#{Shelfs.isBookInBag(book.id)}" />
+								<c:set var="bagSize" value="#{Shelfs.getBagSize()}" />
+									<h:commandLink action="#{Shelfs.addBookToBag(book)}"
+										rendered="#{empty currentLibrarian and not bookInBag and bagSize lt 4}">
+										<i class="fas fa-shopping-bag"/>
+									</h:commandLink>
+									<h:commandLink  class="text-secondary" rendered="#{empty currentLibrarian and not bookInBag and bagSize gt 3}">
+										<i class="fas fa-shopping-bag"/>
+									</h:commandLink>
+									<h:commandLink action="#{Shelfs.removeBookFromBag(book)}"
+										rendered="#{empty currentLibrarian and bookInBag}">
+										<i class="fas fa-minus-circle"/>
+									</h:commandLink>									
+									<h:commandLink action="#{Shelfs.setEditBookId(book.id)}"
+										rendered="#{not empty currentLibrarian and book.id ne Shelfs.editBookId}">
+										<i class="fas fa-edit" />
+									</h:commandLink>
+									<h:commandLink action="#{Shelfs.setEditBookId(0)}"
+										rendered="#{not empty currentLibrarian and book.id eq Shelfs.editBookId}">
+										<i class="fas fa-ban"></i>
+									</h:commandLink>
+									 <h:commandLink action="#{Shelfs.updateBook()}"
+										rendered="#{book.id eq Shelfs.editBookId}" render="grid">
+										<i class="fas fa-check" />
+									</h:commandLink>
+									<h:commandLink action="#{Shelfs.deleteBookFromShelf(book)}"
+										rendered="#{not empty currentLibrarian}">
+										<i class="fas fa-trash-alt" />
+									</h:commandLink>
+									<h:commandLink action="#{Shelfs.setDetailBookId(book.id)}"
+										rendered="#{book.id ne Shelfs.detailBookId}">
+										<i class="fas fa-search-plus" />
+									</h:commandLink>
+									<h:commandLink action="#{Shelfs.setDetailBookId(0)}"
+										rendered="#{book.id eq Shelfs.detailBookId or (not empty currentLibrarian and book.id eq Shelfs.editBookId)}">
+										<i class="fas fa-search-minus" />
+									</h:commandLink>
+								</div>
+								<h:panelGroup class="description col-12" layout="block"
+									rendered="#{book.id eq Shelfs.detailBookId and Shelfs.editBookId eq 0}">
+									<h:outputText value="#{book.description}" />
+								</h:panelGroup>
+								<h:panelGroup class="description col-12" layout="block"
+									rendered="#{book.id eq Shelfs.editBookId}">
+									<h:inputTextarea value="#{Shelfs.bookInEdit.description}"
+									 rows="8" cols="70"><f:ajax /></h:inputTextarea>
+								</h:panelGroup>
+							</div>
+						</ui:repeat>
+						<div class="col-12" style="height:#{Shelfs.getSizeBottom()}px"/>
+						<div />
+					</div>
+				</div>
+			</h:form>
+		</h:panelGroup>
+	</ui:define>
+</ui:composition>
+</html>

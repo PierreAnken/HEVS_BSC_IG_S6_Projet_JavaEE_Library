@@ -20,10 +20,17 @@ public class LibraryBean implements LibraryService{
 
 	@PersistenceContext(name = "LibraryPU")
 	private EntityManager em;
-	
+
+
 	@Override
 	public List<Book> getAvailableBooks() {
 		return (List<Book>) em.createQuery("SELECT b FROM Book b where b.id NOT IN (select r.book.id from Reservation r) and b.visible order by b.title asc").getResultList();
+	}
+	
+	@Override
+	public List<Reservation> getActiveReservationFromReader(String email) {
+		System.out.println("PA_DEBUG: getActiveReservationFromReader "+email);
+		return (List<Reservation>) em.createQuery("SELECT r FROM Reservation r JOIN r.reader u WHERE u.email =:email").setParameter("email", email).getResultList();
 	}
 	
 	@Override
@@ -33,69 +40,69 @@ public class LibraryBean implements LibraryService{
 	}
 
 	//get all 
-		@Override
-		public List<Book> getBooks() {
-			return (List<Book>) em.createQuery("FROM Book b order by b.title asc").getResultList();
-		}
-		
-		@Override
-		public Book getBook(String bookId) {
-			return (Book) em.createQuery("FROM Book b WHERE b.id = :bookId").setParameter("bookId", Long.parseLong(bookId)).getSingleResult();
-		}
+	@Override
+	public List<Book> getBooks() {
+		return (List<Book>) em.createQuery("FROM Book b order by b.title asc").getResultList();
+	}
+	
+	@Override
+	public Book getBook(String bookId) {
+		return (Book) em.createQuery("FROM Book b WHERE b.id = :bookId").setParameter("bookId", Long.parseLong(bookId)).getSingleResult();
+	}
 
-		@Override
-		public List<Library> getLibraries() {
-			return (List<Library>) em.createQuery("FROM Library l").getResultList();
-		}
-		
-		@Override
-		public int getMaxCardId() {
-			return (int) em.createQuery("select max(r.cardId) FROM Reader r").getSingleResult();
-		}
+	@Override
+	public List<Library> getLibraries() {
+		return (List<Library>) em.createQuery("FROM Library l").getResultList();
+	}
+	
+	@Override
+	public int getMaxCardId() {
+		return (int) em.createQuery("select max(r.cardId) FROM Reader r").getSingleResult();
+	}
 
-		@Override
-		public List<Map<String, Object>> getLibrarians() {
-			
-			List<Librarian> librarians = (List<Librarian>) em.createQuery("FROM Librarian l").getResultList();
-			return Librarian.convertToMapList(librarians);
-		}
+	@Override
+	public List<Map<String, Object>> getLibrarians() {
 		
-		private List<Librarian> getLibrariansP() {
-			return (List<Librarian>) em.createQuery("FROM Librarian l").getResultList();
-		}
+		List<Librarian> librarians = (List<Librarian>) em.createQuery("FROM Librarian l").getResultList();
+		return Librarian.convertToMapList(librarians);
+	}
+	
+	private List<Librarian> getLibrariansP() {
+		return (List<Librarian>) em.createQuery("FROM Librarian l").getResultList();
+	}
 
-		@Override
-		public List<Map<String, Object>> getReaders() {
-			List<Reader> readers = (List<Reader>) em.createQuery("FROM Reader r").getResultList();
-			return Reader.convertToMapList(readers);
-		}
-		
-		private List<Reader> getReadersP() {
-			return (List<Reader>) em.createQuery("FROM Reader r").getResultList();
-		}
+	@Override
+	public List<Map<String, Object>> getReaders() {
+		List<Reader> readers = (List<Reader>) em.createQuery("FROM Reader r").getResultList();
+		return Reader.convertToMapList(readers);
+	}
+	
+	private List<Reader> getReadersP() {
+		return (List<Reader>) em.createQuery("FROM Reader r").getResultList();
+	}
 
-		@Override
-		public List<Reservation> getReservations() {
-			return (List<Reservation>) em.createQuery("FROM Reservation r").getResultList();
-		}
-		
-		@Override
-		public Map<String, Object> getReader(long readerId) {
-			Reader reader = (Reader) em.createQuery("FROM User u WHERE u.id = :readerId").setParameter("readerId", readerId).getSingleResult();
-			return Reader.convertToMap(reader);
-		}
+	@Override
+	public List<Reservation> getReservations() {
+		return (List<Reservation>) em.createQuery("FROM Reservation r").getResultList();
+	}
+	
+	@Override
+	public Map<String, Object> getReader(long readerId) {
+		Reader reader = (Reader) em.createQuery("FROM User u WHERE u.id = :readerId").setParameter("readerId", readerId).getSingleResult();
+		return Reader.convertToMap(reader);
+	}
 
-		@Override
-		public Map<String, Object> getReaderFromCardId(int cardId) {
-			Reader reader = (Reader) em.createQuery("FROM Reader r WHERE r.cardId = :cardId").setParameter("cardId", cardId).getSingleResult();
-			return Reader.convertToMap(reader);
-		}
-		
-		@Override
-		public List<Map<String, Object>> getReadersFromEmail(String email) {
-			List<Reader> readers = (List<Reader>) em.createQuery("FROM Reader r WHERE r.email = :email").setParameter("email", email).getResultList();
-			return Reader.convertToMapList(readers);
-		}
+	@Override
+	public Map<String, Object> getReaderFromCardId(int cardId) {
+		Reader reader = (Reader) em.createQuery("FROM Reader r WHERE r.cardId = :cardId").setParameter("cardId", cardId).getSingleResult();
+		return Reader.convertToMap(reader);
+	}
+	
+	@Override
+	public List<Map<String, Object>> getReadersFromEmail(String email) {
+		List<Reader> readers = (List<Reader>) em.createQuery("FROM Reader r WHERE r.email = :email").setParameter("email", email).getResultList();
+		return Reader.convertToMapList(readers);
+	}
 
 	// add
 	public Book addBook(Book b) {
@@ -157,10 +164,10 @@ public class LibraryBean implements LibraryService{
 		return l;
 	}
 	
-	public Reader updateReader(Map<String, Object> r) {
+	public Map<String, Object> updateReader(Map<String, Object> r) {
 		Reader reader = Reader.convertFromMap(r);
 		em.merge(reader);
-		return reader;
+		return Reader.convertToMap(reader);
 	}
 	
 	public Reservation updateReservation(Reservation r) {
@@ -171,36 +178,34 @@ public class LibraryBean implements LibraryService{
 	//delete
 	@Override
 	public void deleteBook(Book b) {
-		b = em.find(Book.class,b);
+		System.out.println("PA_DEBUG : delete book " + b.getId());
+		b = em.find(Book.class,b.getId());
 		em.remove(b);
 	}
 
 	@Override
 	public void deleteLibrary(Library l) {
-		l = em.find(Library.class,l);
+		l = em.find(Library.class,l.getId());
 		em.remove(l);
 	}
 
 	@Override
 	public void deleteLibrarian(Librarian l) {
-		l = em.find(Librarian.class,l);
+		l = em.find(Librarian.class,l.getEmail());
 		em.remove(l);
 	}
 
 	@Override
 	public void deleteReader(Reader r) {
-		r = em.find(Reader.class,r);
+		r = em.find(Reader.class,r.getEmail());
 		em.remove(r);
 	}
 
 	@Override
 	public void deleteReservation(Reservation r) {
-		r = em.find(Reservation.class,r);
+		r = em.find(Reservation.class,r.getId());
 		em.remove(r);
 	}
-	
-	
-	
 	
 	@Override
 	public Map<String, Object> getReaderFromCardId(String cardId) {
@@ -210,6 +215,14 @@ public class LibraryBean implements LibraryService{
 	@PostConstruct
 	public void initialize() throws Exception{
 		populateLibraryDB();
+	}
+	
+	public EntityManager getEm() {
+		return em;
+	}
+
+	public void setEm(EntityManager em) {
+		this.em = em;
 	}
 	
 	public void populateLibraryDB() {
@@ -312,5 +325,9 @@ public class LibraryBean implements LibraryService{
 		System.out.println("PA_DEBUG: End of database init: books "+getBooks().size()+" librarians "+getLibrariansP().size()+ "readers "+getReadersP().size());
 	}
 
+	@Override
+	public void flush() {
+		em.flush();
+	}
 
 }

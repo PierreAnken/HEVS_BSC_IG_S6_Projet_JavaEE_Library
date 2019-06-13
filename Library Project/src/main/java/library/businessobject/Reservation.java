@@ -1,7 +1,11 @@
 package library.businessobject;
 
 import java.io.Serializable;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.Map;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -15,6 +19,8 @@ import javax.persistence.TemporalType;
 @Table(name="Reservation")
 public class Reservation implements Serializable{
 	
+	private static final long serialVersionUID = 792822687380340794L;
+	
 	@Temporal(TemporalType.DATE)
 	private Date startDate, endDate;
 	private boolean bookReturned;
@@ -23,12 +29,28 @@ public class Reservation implements Serializable{
 	@GeneratedValue(strategy = GenerationType.SEQUENCE)
 	private Long id;
 	
-	@ManyToOne
+	@ManyToOne(cascade = CascadeType.ALL)
 	private Reader reader;
 	
 	@ManyToOne
 	private Book book;
 
+	
+	public Reservation() {
+		
+	};
+	
+	public Reservation(Book b, Map<String, Object> r) {
+		book = b;
+		reader = Reader.convertFromMap(r);
+		startDate = new Date();
+		
+		Calendar cal = Calendar.getInstance();
+        cal.setTime(startDate);
+        cal.add(Calendar.MONTH, 1);
+		endDate = cal.getTime();
+	};
+	
 	public Book getBook() {
 		return book;
 	}
@@ -60,5 +82,14 @@ public class Reservation implements Serializable{
 	public void setBookReturned(boolean bookReturned) {
 		this.bookReturned = bookReturned;
 	}
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+	
 	
 }

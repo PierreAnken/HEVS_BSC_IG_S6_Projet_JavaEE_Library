@@ -21,7 +21,7 @@ public class Reader extends User implements Serializable{
 	private int cardId;
 	private double accountBalance;
 	
-	@OneToMany(mappedBy="reader", cascade={CascadeType.REMOVE})
+	@OneToMany(mappedBy="reader", cascade={CascadeType.ALL})
 	private Set<Reservation> reservations;
 
 	public Set<Reservation> getReservations() {

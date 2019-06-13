@@ -10,6 +10,7 @@ import javax.persistence.InheritanceType;
 @Entity
 public abstract class User {
 	
+	
 	@Id
 	private String email;
 	private String firstname, lastname;

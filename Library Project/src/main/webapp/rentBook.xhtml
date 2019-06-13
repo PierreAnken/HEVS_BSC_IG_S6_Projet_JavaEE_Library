@@ -10,32 +10,37 @@
 <ui:composition template="/WEB-INF/templates/template.xhtml">
 	<ui:define name="content">
 		<div class="imgLibrarian background">
-			<c:set var="currentReader" value="#{RentBook.userSession.getCurrentReader()}" />
-			<h:panelGroup class="container" layout="block" id="rentBookDialog">
-				<h:panelGroup class="row" layout="block" rendered="#{empty currentReader}">
-					<div class="col-6 nopadding">
-						<div class="dialog_left">Sure , do you have your reader's
-							card with you?</div>
-					</div>
-					<div class="w-100" />
-					<div class="col-6 offset-6 nopadding">
-						<h:form>
-						<div class="dialog_right">
+			<h:form>
+				<c:set var="currentReader"
+					value="#{RentBook.userSession.getCurrentReader()}" />
+				<h:panelGroup class="container" layout="block" id="rentBookDialog">
+					<h:panelGroup class="row" layout="block"
+						rendered="#{empty currentReader}">
+						<div class="col-6 nopadding">
+							<div class="dialog_left">Sure , do you have your reader's
+								card with you?</div>
+						</div>
+						<div class="w-100" />
+						<div class="col-6 offset-6 nopadding">
+
+							<div class="dialog_right">
 								<h:panelGroup>
 									Just a moment.
-									<h:selectOneMenu value="#{RentBook.cardId}" >
+									<h:selectOneMenu value="#{RentBook.cardId}">
 										<f:ajax listener="#{RentBook.onSelectedCardId()}"
 											render="rentBookDialog" />
 										<f:selectItem itemLabel="Looking into my pocket  ..."
-											itemValue="#{null}"/>
+											itemValue="#{null}" />
 										<f:selectItems value="#{RentBook.getReaders()}" var="reader"
 											itemValue="#{reader.cardId}"
 											itemLabel="Card #{reader.cardId} (#{reader.firstname} #{reader.lastname})" />
 									</h:selectOneMenu>
 								</h:panelGroup>
-								<h:outputText value="Here it is: #{currentReader.cardId}" rendered="#{not empty currentReader}"/>
+								<h:outputText value="Here it is: #{currentReader.cardId}"
+									rendered="#{not empty currentReader}" />
 							</div>
-							<h:panelGroup class="dialog_right" rendered="#{empty currentReader}" layout="block">
+							<h:panelGroup class="dialog_right"
+								rendered="#{empty currentReader}" layout="block">
 								I don't have one yet. Could you
 								<h:commandLink action="#{navigationController.showPage}"
 									value=" create an account ">
@@ -43,65 +48,113 @@
 								</h:commandLink>
 								for me?
 							</h:panelGroup>
-						</h:form>
-					</div>
-				</h:panelGroup>
-				
-				<h:panelGroup rendered="#{not empty currentReader}" layout="block" class="row">
-				<c:set var="amountToPay" value="#{RentBook.userSession.getBagSize()*0.5}" />
-				<c:set var="accountBalance" value="#{RentBook.getAccountBalance()}"/>
-					<div class="col-6 nopadding">
-						<div class="dialog_left">
-							<h:outputText value="Hi #{currentReader.firstname}."/> 
-							<br/>
-							<h:outputText value="So you selected #{RentBook.userSession.getBagSize()} book(s)"/>
-							<br/>
-							<h:outputText value="It make a total amount of #{amountToPay} CHF"/>
 						</div>
-					</div>
-					<div class="w-100" />
-					<h:panelGroup class="col-2 offset-6 nopadding" rendered="#{not empty currentReader and amountToPay le accountBalance}">
-						<h:form>
+					</h:panelGroup>
+
+					<h:panelGroup class="row" layout="block"
+						rendered="#{not empty currentReader and RentBook.overLimit gt 0}">
+						<div class="col-6 nopadding">
+							<div class="dialog_left">
+								I'm sorry but you can only borrow up to 5 books.<br /> You
+								already have
+								#{RentBook.overLimit+5-RentBook.userSession.getBagSize()} at
+								home...
+							</div>
+						</div>
+						<div class="w-100" />
+						<div class="col-6 offset-6 nopadding">
+							<h:panelGroup class="dialog_right" layout="block">
+							I'm sorry, I'm going to put them back to
+							<h:commandLink action="#{navigationController.showPage}"
+									value=" shelfs">
+									<f:param name="pageId" value="shelfs" />
+								</h:commandLink>
+							.
+						</h:panelGroup>
+							<h:panelGroup class="dialog_right" layout="block">
+							But I have some book to 
+							<h:commandLink action="#{navigationController.showPage}"
+									value=" return">.
+								<f:param name="pageId" value="returnBook" />
+								</h:commandLink>
+							</h:panelGroup>
+						</div>
+					</h:panelGroup>
+					<h:panelGroup
+						rendered="#{not empty currentReader and RentBook.overLimit eq 0}"
+						layout="block" class="row">
+						<c:set var="amountToPay"
+							value="#{RentBook.userSession.getBagSize()*0.5}" />
+						<c:set var="hasEnoughMoney" value="#{RentBook.hasEnoughMoney()}" />
+						<div class="col-6 nopadding">
+							<div class="dialog_left">
+								<h:outputText value="Hi #{currentReader.firstname}." />
+								<br />
+								<h:outputText
+									value="So you selected #{RentBook.userSession.getBagSize()} book(s)" />
+								<br />
+								<h:outputText
+									value="It make a total amount of #{amountToPay} CHF" />
+							</div>
+						</div>
+						<div class="w-100" />
+
+						<h:panelGroup class="col-4 offset-6 nopadding"
+							rendered="#{not empty currentReader and hasEnoughMoney}">
+
 							<div class="dialog_right">
-								<h:commandButton value="Pay" type="button">
-								<f:ajax listener="#{RentBook.performPayment()}" render="rentBookDialog"
-									execute="@form" />
+								<h:commandButton value="Pay #{amountToPay} CHF" type="button">
+									<f:ajax listener="#{RentBook.performPayment()}"
+										render="rentBookDialog" execute="@this" />
 								</h:commandButton>
 							</div>
-						</h:form>
-					</h:panelGroup>
-					<h:panelGroup class="col-6 offset-6 nopadding" rendered="#{not empty currentReader and amountToPay gt accountBalance}">
-						<h:form>
+						</h:panelGroup>
+						<h:panelGroup class="col-6 offset-6 nopadding"
+							rendered="#{not empty currentReader and not hasEnoughMoney and not RentBook.paid and not RentBook.error}">
 							<div class="dialog_right">
-								I don't have enough money on my account, could I 
+								I don't have enough money on my account, could I
 								<h:commandLink action="#{navigationController.showPage}"
 									value="load it">
 									<f:param name="pageId" value="loadMoney" />
-								</h:commandLink>?
+								</h:commandLink>
+								?
 							</div>
-						</h:form>
-					</h:panelGroup>
-					<div class="w-100"/>
-					<h:panelGroup class="col-6 nopadding" rendered="#{amount ne 0}">
-						<div class="dialog_left">
-							Done.<br/>
-							<h:outputText value=" Your new account balance is #{currentReader.accountBalance+amount} CHF"/>
+						</h:panelGroup>
+						<div class="w-100" />
+						<h:panelGroup class="col-6 nopadding"
+							rendered="#{not not RentBook.error}">
+							<div class="dialog_left">
+								I'm sorry but an error occurred during the transaction.<br />
+								Could you please come back in 5 minutes and
+								<h:commandLink action="#{navigationController.showPage}"
+										value=" try again">?
+										<f:param name="pageId" value="inside" />
+									</h:commandLink>
+							</div>
+						</h:panelGroup>
+						<h:panelGroup class="col-6 nopadding"
+							rendered="#{not RentBook.error and RentBook.paid}">
+							<div class="dialog_left">
+								The payment was successful. Your new account balance is
+								<h:outputText value=" #{currentReader.accountBalance+amount} " />
+								CHF <br/> Have a nice day and enjoy your read.
+							</div>
+						</h:panelGroup>
+						<div class="w-100" />
+						<div class="col-6 offset-6 nopadding">
+							<h:panelGroup rendered="#{not RentBook.error and RentBook.paid}">
+								<div class="dialog_right">
+									Thank you.<br />
+									<h:commandLink action="#{navigationController.showPage}"
+										value=" See you next time.">
+										<f:param name="pageId" value="index" />
+									</h:commandLink>
+								</div>
+							</h:panelGroup>
 						</div>
 					</h:panelGroup>
-					<div class="w-100"/>
-					<div class="col-6 offset-6 nopadding">
-						<h:panelGroup rendered="#{amount ne 0}">
-						<h:form>
-							<div class="dialog_right">
-								<h:commandLink action="#{navigationController.showPage}" value="Thank you.">
-							  <f:param name = "pageId" value = "inside" />
-	  						</h:commandLink>
-							</div>
-							</h:form>
-						</h:panelGroup>
-					</div>
 				</h:panelGroup>
-			</h:panelGroup>
+			</h:form>
 		</div>
 	</ui:define>
 </ui:composition>

@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.ejb.Remote;
+import javax.persistence.EntityManager;
 
 import library.businessobject.Book;
 import library.businessobject.Librarian;
@@ -29,7 +30,7 @@ public interface LibraryService{
 	void updateBook(Book b);
 	Library updateLibrary(Library l);
 	Librarian updateLibrarian(Librarian l);
-	Reader updateReader(Map<String, Object> r);
+	Map<String, Object> updateReader(Map<String, Object> r);
 	Reservation updateReservation(Reservation r);
 	
 	//delete
@@ -47,13 +48,17 @@ public interface LibraryService{
 	List<Reservation> getReservations();
 
 	Book getBook(String bookId);
+	List<Reservation> getActiveReservationFromReader(String email);
 	void populateLibraryDB();
 	Map<String, Object> getReader(long id);
 	Map<String, Object> getReaderFromCardId(int cardId);
 	Map<String, Object> getReaderFromCardId(String cardId);
 	List<Map<String, Object>> getReadersFromEmail(String email);
 	Map<String, Object> getLibrarianFromEmail(String email);
-	
 	int getMaxCardId();
 	List<Book> getAvailableBooks();
+	
+	EntityManager getEm();
+	void setEm(EntityManager em);
+	void flush();
 }

@@ -233,7 +233,6 @@ public class LibraryBean implements LibraryService{
 
 		//if db is empty we populate it
 		if(getBooks().size() > 0){
-			System.out.println("PA_DEBUG: DB> Init not needed");
 			return;
 		}
 		

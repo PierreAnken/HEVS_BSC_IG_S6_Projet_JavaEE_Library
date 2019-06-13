@@ -34,8 +34,7 @@ public class UserSession{
 	public void reset() {
 		currentLibrarian = null;
 		currentReader = null;
-		booksInBag = new ArrayList<Book>();
-		 
+		booksInBag = new ArrayList<Book>(); 
 	}
 	
 	public Librarian getCurrentLibrarian() {

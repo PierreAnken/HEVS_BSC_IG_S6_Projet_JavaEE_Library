@@ -1,6 +1,7 @@
 package library.managedbeans;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
@@ -88,9 +89,8 @@ public class RentBook implements Serializable{
 			
 			Reader currentReader =  getCurrentReader();
 			System.out.println("PA_DEBUG: RentBook > performPayment "+currentReader.getEmail());
-			List<Book> booksToRent = userSession.getBooksInBag();
-
-			System.out.println("PA_DEBUG: RentBook > performPayment > boocks in bag "+booksToRent.size());
+			List<Book> booksToRent = new ArrayList<Book>(userSession.getBooksInBag());
+			System.out.println("PA_DEBUG: RentBook > performPayment > "+booksToRent.size()+" books in bag");
 			
 			//1 - remove money from user account
 			double toPay = booksToRent.size() * 0.5;
@@ -102,17 +102,14 @@ public class RentBook implements Serializable{
 			if(booksToRent.size() == 0)
 				throw new Exception("Bag is empty");
 			
-			
 			//2 create reservation and remove from bag
-			
 			for(int i = 0; i<booksToRent.size(); i++) {
+				System.out.println("PA_DEBUG: RentBook > performPayment > adding reservation");
 				Reservation reservation = new Reservation(booksToRent.get(i),Reader.convertToMap(currentReader));
-				libraryService.updateBook(booksToRent.get(i));
 				libraryService.addReservation(Reservation.convertToMap(reservation));
 				userSession.removeBookFromBag(booksToRent.get(i).getId().intValue());
 			}
 			
-			System.out.println("PA_DEBUG: RentBook > performPayment > reservation created");
 			libraryService.updateReader(Reader.convertToMap(currentReader));	
 			
 			utx.commit();

@@ -10,6 +10,7 @@ import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 @Entity
@@ -24,6 +25,7 @@ public class Reader extends User implements Serializable{
 	@OneToMany(mappedBy="reader", cascade={CascadeType.ALL})
 	private Set<Reservation> reservations;
 
+	@JsonIgnore
 	public Set<Reservation> getReservations() {
 		return reservations;
 	}

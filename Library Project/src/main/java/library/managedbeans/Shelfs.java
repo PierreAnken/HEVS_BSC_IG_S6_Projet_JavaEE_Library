@@ -47,11 +47,7 @@ public class Shelfs implements Serializable{
 		List<Book> allBooks = new ArrayList<Book>();
 		setFilteredBooks(new ArrayList<Book>());
 		
-		if (userSession.getCurrentLibrarian() != null) {
-			allBooks = libraryService.getBooks(); 
-		} else {
-			allBooks = libraryService.getBooks();
-		}
+		allBooks = libraryService.getAvailableBooks(); 
 		
 		for (Book book : allBooks) {
 			// check text filter

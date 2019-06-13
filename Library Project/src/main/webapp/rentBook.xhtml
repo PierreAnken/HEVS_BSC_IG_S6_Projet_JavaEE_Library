@@ -83,7 +83,8 @@
 						<c:set var="amountToPay"
 							value="#{RentBook.userSession.getBagSize()*0.5}" />
 						<c:set var="hasEnoughMoney" value="#{RentBook.hasEnoughMoney()}" />
-						<h:panelGroup class="col-6 nopadding" rendered="#{not RentBook.paid}">
+						<h:panelGroup class="col-6 nopadding"
+							rendered="#{not RentBook.paid}">
 							<div class="dialog_left">
 								<h:outputText value="Hi #{currentReader.firstname}." />
 								<br />
@@ -123,18 +124,16 @@
 								I'm sorry but an error occurred during the transaction.<br />
 								Could you please come back in 5 minutes and
 								<h:commandLink action="#{navigationController.showPage}"
-										value=" try again">?
+									value=" try again">?
 										<f:param name="pageId" value="inside" />
-									</h:commandLink>
+								</h:commandLink>
 							</div>
 						</h:panelGroup>
 						<h:panelGroup class="col-6 nopadding"
 							rendered="#{not RentBook.error and RentBook.paid}">
 							<div class="dialog_left">
-								The payment was successful.<br/>
-								Your new account balance is
-								<h:outputText value=" #{currentReader.accountBalance} " />
-								CHF <br/> Have a nice day and enjoy your read.
+								The payment was successful.<br /> Have a nice day and enjoy your
+								read.
 							</div>
 						</h:panelGroup>
 						<div class="w-100" />

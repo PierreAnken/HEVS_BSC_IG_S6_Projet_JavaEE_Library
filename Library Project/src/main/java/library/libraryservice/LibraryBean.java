@@ -24,7 +24,7 @@ public class LibraryBean implements LibraryService{
 
 	@Override
 	public List<Book> getAvailableBooks() {
-		return (List<Book>) em.createQuery("SELECT b FROM Book b where b.id NOT IN (select r.book.id from Reservation r) and b.visible order by b.title asc").getResultList();
+		return (List<Book>) em.createQuery("SELECT b FROM Book b where b.id NOT IN (select r.book.id from Reservation r) order by b.title asc").getResultList();
 	}
 	
 	@Override

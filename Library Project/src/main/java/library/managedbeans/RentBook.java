@@ -40,7 +40,7 @@ public class RentBook implements Serializable{
 	
 	@PostConstruct
 	public void initialize() throws Exception{
-		System.out.println("PA_DEBUG: init LoadMoney");
+		System.out.println("PA_DEBUG: init RentBook");
 		InitialContext ctx = new InitialContext();
 		libraryService = (LibraryService)ctx.lookup("java:global/Library-0.0.1/LibraryBean!library.libraryservice.LibraryService");
 		checkBookLimit();

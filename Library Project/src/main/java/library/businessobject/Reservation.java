@@ -1,8 +1,10 @@
 package library.businessobject;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 import java.util.Map;
 
 import javax.persistence.Entity;
@@ -113,5 +115,21 @@ public class Reservation implements Serializable{
 		ObjectMapper oMapper = new ObjectMapper();
 		Reservation reservation = oMapper.convertValue(reservationMap, Reservation.class);
 		return reservation;
+	}
+	
+	public static List<Map<String, Object>> convertToMapList(List<Reservation> reservations) {
+		ArrayList<Map<String, Object>> reservationMap = new ArrayList<Map<String,Object>>();
+		for(Reservation r :  reservations) {
+			reservationMap.add(Reservation.convertToMap(r));
+		}
+		return reservationMap;
+	}
+	
+	public static List<Reservation> convertFromMapList(List<Map<String, Object>> reservationMap) {
+		ArrayList<Reservation> reservations = new ArrayList<Reservation>();
+		for(Map<String, Object> r :  reservationMap) {
+			reservations.add(Reservation.convertFromMap(r));
+		}
+		return reservations;
 	}
 }

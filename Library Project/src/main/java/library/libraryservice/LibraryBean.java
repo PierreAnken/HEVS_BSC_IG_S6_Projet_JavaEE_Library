@@ -125,9 +125,11 @@ public class LibraryBean implements LibraryService{
 		return r;
 	}
 	
-	public Reservation addReservation(Reservation r) {
-		em.persist(r);
-		return r;
+	public Map<String, Object> addReservation(Map<String, Object> r) {
+		Reservation res = Reservation.convertFromMap(r);
+		System.out.println("PA_DEBUG: Add Reservation "+ res.getReader().getEmail());
+		em.persist(res);
+		return Reservation.convertToMap(res);
 	}
 	
 	@Override
@@ -170,9 +172,10 @@ public class LibraryBean implements LibraryService{
 		return Reader.convertToMap(reader);
 	}
 	
-	public Reservation updateReservation(Reservation r) {
-		em.merge(r);
-		return r;
+	public Map<String, Object> updateReservation(Map<String, Object> r) {
+		Reservation res = Reservation.convertFromMap(r);
+		em.merge(res);
+		return Reservation.convertToMap(res);
 	}
 	
 	//delete
@@ -196,7 +199,8 @@ public class LibraryBean implements LibraryService{
 	}
 
 	@Override
-	public void deleteReader(Reader r) {
+	public void deleteReader(Map<String, Object> reader) {
+		Reader r = Reader.convertFromMap(reader);
 		r = em.find(Reader.class,r.getEmail());
 		em.remove(r);
 	}

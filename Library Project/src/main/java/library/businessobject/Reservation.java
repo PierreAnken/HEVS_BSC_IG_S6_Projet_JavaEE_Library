@@ -5,7 +5,6 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Map;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -14,6 +13,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 @Entity
 @Table(name="Reservation")
@@ -29,9 +30,11 @@ public class Reservation implements Serializable{
 	@GeneratedValue(strategy = GenerationType.SEQUENCE)
 	private Long id;
 	
-	@ManyToOne(cascade = CascadeType.ALL)
+	@ManyToOne
 	private Reader reader;
 	
+
+
 	@ManyToOne
 	private Book book;
 
@@ -41,6 +44,7 @@ public class Reservation implements Serializable{
 	};
 	
 	public Reservation(Book b, Map<String, Object> r) {
+		
 		book = b;
 		reader = Reader.convertFromMap(r);
 		startDate = new Date();
@@ -91,5 +95,23 @@ public class Reservation implements Serializable{
 		this.id = id;
 	}
 	
+	public Reader getReader() {
+		return reader;
+	}
+
+	public void setReader(Reader reader) {
+		this.reader = reader;
+	}
 	
+	public static Map<String, Object> convertToMap(Reservation r){
+		ObjectMapper oMapper = new ObjectMapper();
+		Map<String, Object> reservationMap = oMapper.convertValue(r, Map.class);
+		return reservationMap;
+	}
+	
+	public static Reservation convertFromMap(Map<String, Object> reservationMap){
+		ObjectMapper oMapper = new ObjectMapper();
+		Reservation reservation = oMapper.convertValue(reservationMap, Reservation.class);
+		return reservation;
+	}
 }

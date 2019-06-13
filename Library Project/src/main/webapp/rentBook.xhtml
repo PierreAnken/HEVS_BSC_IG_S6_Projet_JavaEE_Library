@@ -22,7 +22,6 @@
 						</div>
 						<div class="w-100" />
 						<div class="col-6 offset-6 nopadding">
-
 							<div class="dialog_right">
 								<h:panelGroup>
 									Just a moment.
@@ -52,7 +51,7 @@
 					</h:panelGroup>
 
 					<h:panelGroup class="row" layout="block"
-						rendered="#{not empty currentReader and RentBook.overLimit gt 0}">
+						rendered="#{not empty currentReader and RentBook.overLimit gt 0 and not RentBook.paid}">
 						<div class="col-6 nopadding">
 							<div class="dialog_left">
 								I'm sorry but you can only borrow up to 5 books.<br /> You
@@ -68,8 +67,7 @@
 							<h:commandLink action="#{navigationController.showPage}"
 									value=" shelfs">
 									<f:param name="pageId" value="shelfs" />
-								</h:commandLink>
-							.
+								</h:commandLink>.
 						</h:panelGroup>
 							<h:panelGroup class="dialog_right" layout="block">
 							But I have some book to 
@@ -98,7 +96,6 @@
 							</div>
 						</div>
 						<div class="w-100" />
-
 						<h:panelGroup class="col-4 offset-6 nopadding"
 							rendered="#{not empty currentReader and hasEnoughMoney}">
 
@@ -135,8 +132,9 @@
 						<h:panelGroup class="col-6 nopadding"
 							rendered="#{not RentBook.error and RentBook.paid}">
 							<div class="dialog_left">
-								The payment was successful. Your new account balance is
-								<h:outputText value=" #{currentReader.accountBalance+amount} " />
+								The payment was successful.<br/>
+								Your new account balance is
+								<h:outputText value=" #{currentReader.accountBalance} " />
 								CHF <br/> Have a nice day and enjoy your read.
 							</div>
 						</h:panelGroup>

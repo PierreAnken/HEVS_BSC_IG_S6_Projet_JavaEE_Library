@@ -79,6 +79,10 @@ public class UserSession{
 	public Map<String, Object> getCurrentReader() {
 		return Reader.convertToMap(currentReader);
 	}
+	
+	public void reloadCurrentReader() {
+		currentReader = Reader.convertFromMap(libraryService.getReaderFromCardId(currentReader.getEmail()));
+	}
 
 	public void setCurrentReader(Map<String, Object> reader) {
 		currentReader = Reader.convertFromMap(reader);

@@ -5,15 +5,10 @@ import java.util.List;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
-import javax.ejb.SessionContext;
-import javax.ejb.TransactionManagement;
-import javax.ejb.TransactionManagementType;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
 import javax.naming.InitialContext;
-import javax.persistence.EntityManager;
-import javax.persistence.EntityTransaction;
 import javax.transaction.SystemException;
 import javax.transaction.UserTransaction;
 
@@ -91,10 +86,11 @@ public class RentBook implements Serializable{
 			UserTransaction utx = (UserTransaction)ctx.lookup("java:comp/UserTransaction");
 			utx.begin();
 			
-			Reader currentReader =  Reader.convertFromMap(libraryService.updateReader(Reader.convertToMap(getCurrentReader())));
-			System.out.println("PA_DEBUG: RentBook > performPayment"+currentReader.getEmail());
+			Reader currentReader =  getCurrentReader();
+			System.out.println("PA_DEBUG: RentBook > performPayment "+currentReader.getEmail());
 			List<Book> booksToRent = userSession.getBooksInBag();
-			
+
+			System.out.println("PA_DEBUG: RentBook > performPayment > boocks in bag "+booksToRent.size());
 			
 			//1 - remove money from user account
 			double toPay = booksToRent.size() * 0.5;
@@ -106,20 +102,18 @@ public class RentBook implements Serializable{
 			if(booksToRent.size() == 0)
 				throw new Exception("Bag is empty");
 			
-			System.out.println("PA_DEBUG: RentBook > performPayment > money removed");
 			
 			//2 create reservation and remove from bag
+			
 			for(int i = 0; i<booksToRent.size(); i++) {
 				Reservation reservation = new Reservation(booksToRent.get(i),Reader.convertToMap(currentReader));
-				
 				libraryService.updateBook(booksToRent.get(i));
-				System.out.println("PA_DEBUG: RentBook > performPayment > book updated");
-				libraryService.addReservation(reservation);
-				System.out.println("PA_DEBUG: RentBook > performPayment > reservation updated");
+				libraryService.addReservation(Reservation.convertToMap(reservation));
 				userSession.removeBookFromBag(booksToRent.get(i).getId().intValue());
 			}
 			
 			System.out.println("PA_DEBUG: RentBook > performPayment > reservation created");
+			libraryService.updateReader(Reader.convertToMap(currentReader));	
 			
 			utx.commit();
 			
@@ -147,8 +141,10 @@ public class RentBook implements Serializable{
 	public double getAccountBalance() {
 		if(userSession.getCurrentReader() == null)
 			return 0;
-		else
+		else {
+			userSession.reloadCurrentReader();
 			return Reader.convertFromMap(userSession.getCurrentReader()).getAccountBalance();
+		}
 	}
 	
 	public Reader getCurrentReader() {

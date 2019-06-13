@@ -24,20 +24,20 @@ public interface LibraryService{
 	Map<String, Object> addLibrarian(Map<String, Object> l);
 	Map<String, Object> addReader(Map<String, Object> r);
 	
-	Reservation addReservation(Reservation r);
+	Map<String, Object> addReservation(Map<String, Object> r);
 	
 	//update
 	void updateBook(Book b);
 	Library updateLibrary(Library l);
 	Librarian updateLibrarian(Librarian l);
 	Map<String, Object> updateReader(Map<String, Object> r);
-	Reservation updateReservation(Reservation r);
+	Map<String, Object> updateReservation(Map<String, Object> r);
 	
 	//delete
 	void deleteBook(Book b);
 	void deleteLibrary(Library l);
 	void deleteLibrarian(Librarian l);
-	void deleteReader(Reader r);
+	void deleteReader(Map<String, Object> r);
 	void deleteReservation(Reservation r);
 	
 	//getall

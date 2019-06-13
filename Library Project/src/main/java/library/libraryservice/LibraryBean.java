@@ -30,7 +30,7 @@ public class LibraryBean implements LibraryService{
 	@Override
 	public List<Map<String, Object>> getActiveReservationFromReader(String email) {
 		
-		List<Reservation> reservations = (List<Reservation>) em.createQuery("SELECT r FROM Reservation r JOIN r.reader u WHERE u.email =:email").setParameter("email", email).getResultList();
+		List<Reservation> reservations = (List<Reservation>) em.createQuery("SELECT r FROM Reservation r JOIN r.reader u WHERE u.email =:email and r.bookReturned = FALSE").setParameter("email", email).getResultList();
 		return Reservation.convertToMapList(reservations);
 	}
 	

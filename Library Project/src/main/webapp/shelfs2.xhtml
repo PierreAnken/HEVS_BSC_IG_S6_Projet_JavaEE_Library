@@ -94,6 +94,10 @@
 								<div class="col-3">
 								<c:set var="bookInBag" value="#{Shelfs.isBookInBag(book.id)}" />
 								<c:set var="bagSize" value="#{Shelfs.getBagSize()}" />
+									 <h:commandLink action="#{Shelfs.updateBook()}"
+										rendered="#{book.id eq Shelfs.editBookId}" render="grid">
+										<i class="fas fa-check" />
+									</h:commandLink>
 									<h:commandLink action="#{Shelfs.addBookToBag(book)}"
 										rendered="#{empty currentLibrarian and not bookInBag and bagSize lt 4}">
 										<i class="fas fa-shopping-bag"/>
@@ -113,12 +117,8 @@
 										rendered="#{not empty currentLibrarian and book.id eq Shelfs.editBookId}">
 										<i class="fas fa-ban"></i>
 									</h:commandLink>
-									 <h:commandLink action="#{Shelfs.updateBook()}"
-										rendered="#{book.id eq Shelfs.editBookId}" render="grid">
-										<i class="fas fa-check" />
-									</h:commandLink>
 									<h:commandLink action="#{Shelfs.deleteBookFromShelf(book)}"
-										rendered="#{not empty currentLibrarian}">
+										rendered="#{not empty currentLibrarian and (Shelfs.editBookId eq 0)}">
 										<i class="fas fa-trash-alt" />
 									</h:commandLink>
 									<h:commandLink action="#{Shelfs.setDetailBookId(book.id)}"
@@ -126,7 +126,7 @@
 										<i class="fas fa-search-plus" />
 									</h:commandLink>
 									<h:commandLink action="#{Shelfs.setDetailBookId(0)}"
-										rendered="#{book.id eq Shelfs.detailBookId or (not empty currentLibrarian and book.id eq Shelfs.editBookId)}">
+										rendered="#{book.id eq Shelfs.detailBookId and (Shelfs.editBookId eq 0)}">
 										<i class="fas fa-search-minus" />
 									</h:commandLink>
 								</div>

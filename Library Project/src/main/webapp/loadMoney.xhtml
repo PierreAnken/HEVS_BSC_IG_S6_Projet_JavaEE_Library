@@ -79,7 +79,7 @@
 					<h:panelGroup class="col-6 nopadding" rendered="#{amount ne 0}">
 						<div class="dialog_left">
 							Done.<br/>
-							<h:outputText value=" Your new account balance is #{currentReader.accountBalance+amount} CHF"/>
+							<h:outputText value=" Your new account balance is #{currentReader.accountBalance-amount} CHF"/>
 						</div>
 					</h:panelGroup>
 					<div class="w-100"/>

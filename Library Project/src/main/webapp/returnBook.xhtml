@@ -60,7 +60,7 @@
 							</div>
 							</h:panelGroup>
 							<div class="w-100" />
-							<div class="col-6 offset-6 nopadding">
+							<h:panelGroup class="col-6 offset-6 nopadding" rendered="#{not empty activeReservations}">
 								<div class="dialog_right">
 									Yes.<br/>
 									<h:commandButton value="Please take them" type="button">
@@ -68,7 +68,7 @@
 											render="returnBookDialog" execute="@this" />
 									</h:commandButton>
 								</div>
-							</div>
+							</h:panelGroup>
 						<h:panelGroup class="col-6 nopadding" layout="block"
 							rendered="#{empty activeReservations}">
 							<div class="dialog_left">

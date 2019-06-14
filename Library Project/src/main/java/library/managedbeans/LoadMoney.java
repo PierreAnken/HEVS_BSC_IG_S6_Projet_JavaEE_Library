@@ -51,6 +51,7 @@ public class LoadMoney implements Serializable{
 		if(amount > 0) {
 			Reader reader = Reader.convertFromMap(userSession.getCurrentReader());
 			reader.setAccountBalance(reader.getAccountBalance()+amount);
+			userSession.setCurrentReader(Reader.convertToMap(reader));
 			libraryService.updateReader(Reader.convertToMap(reader));
 		}
 	}

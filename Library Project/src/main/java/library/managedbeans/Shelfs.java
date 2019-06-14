@@ -48,7 +48,9 @@ public class Shelfs implements Serializable{
 		setFilteredBooks(new ArrayList<Book>());
 		
 		allBooks = libraryService.getAvailableBooks(); 
-		
+		if(userSession.getCurrentLibrarian() != null)
+		allBooks = libraryService.getBooks();
+			
 		for (Book book : allBooks) {
 			// check text filter
 			if (Tb.stringExists(filterText)) {

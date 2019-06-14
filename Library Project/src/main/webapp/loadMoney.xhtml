@@ -52,7 +52,7 @@
 						<div class="dialog_left">
 							<h:outputText value="Hi #{currentReader.firstname}."/> 
 							<br/>
-							<h:outputText value="Your current account balance is #{currentReader.accountBalance}CHF."/>
+							<h:outputText value="Your current account balance is #{currentReader.accountBalance-amount}CHF."/>
 							<br/>
 							Which amount would you like to load?
 						</div>
@@ -79,7 +79,7 @@
 					<h:panelGroup class="col-6 nopadding" rendered="#{amount ne 0}">
 						<div class="dialog_left">
 							Done.<br/>
-							<h:outputText value=" Your new account balance is #{currentReader.accountBalance+amount} CHF"/>
+							<h:outputText value=" Your new account balance is #{currentReader.accountBalance} CHF"/>
 						</div>
 					</h:panelGroup>
 					<div class="w-100"/>

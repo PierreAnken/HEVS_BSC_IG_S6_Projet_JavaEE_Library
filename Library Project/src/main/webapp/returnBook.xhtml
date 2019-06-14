@@ -70,7 +70,7 @@
 								</div>
 							</h:panelGroup>
 						<h:panelGroup class="col-6 nopadding" layout="block"
-							rendered="#{empty activeReservations}">
+							rendered="#{empty activeReservations and not ReturnBook.returned}">
 							<div class="dialog_left">
 								<h:outputText value="Hi #{currentReader.firstname}." />
 								<br /> You have no registered reservations. <br /> Maybe you
